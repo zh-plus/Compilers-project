@@ -4,6 +4,8 @@
 #include <math.h>
 %}
 
+%option yylineno
+
 DIGIT [0-9]
 ID    [a-z][a-z0-9]
 
@@ -17,7 +19,7 @@ ID    [a-z][a-z0-9]
     printf("A float: %s (%g)\n", yytext, atof(yytext));
 }
 
-if|then|begin|end|procedure|function {
+if|then|begin|end|procedure|function|while {
     printf("A keyword: %s\n", yytext);
 }
 
@@ -31,6 +33,11 @@ if|then|begin|end|procedure|function {
 
 "{"[^{}\n]*"}" {
     /* Eat up one-line comments */
+}
+
+"//" {
+    char c;
+    while((c = input()) != '\n');
 }
 
 [ \t\n]+ {
@@ -48,6 +55,7 @@ int main(int argc, char **argv){
     --argc;
     yyin = (argc > 0) ? fopen(argv[0], "r") : stdin;
     yylex();
+    printf("Line num: %d\n", yylineno);
 
     return 0;
 }

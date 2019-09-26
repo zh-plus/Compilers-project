@@ -3,4 +3,5 @@ project(lab C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(lab1 lab1/main.c lab1/linked_list.c lab1/linked_list.h)
+add_executable(test spl_lexer/test.c)
+add_executable(helpler spl_lexer/helpler.c)
