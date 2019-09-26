@@ -54,6 +54,78 @@ int|float|char {        // reserved type
     printf("%s\n", strupr(yytext));
 }
 
+{ID} {
+    printf("ID %s\n", yytext);
+}
+
+"." {
+    printf("DOT\n");
+}
+
+";" {
+    printf("SEMI\n");
+}
+
+"," {
+    printf("COMMA\n");
+}
+
+"==" {
+    printf("EQ\n");
+}
+
+"=" {
+    printf("ASSIGN\n");
+}
+
+"<=" {
+    printf("LE\n");
+}
+
+"<" {
+    printf("LT\n");
+}
+
+">=" {
+    printf("GE\n");
+}
+
+">" {
+    printf("GT\n");
+}
+
+"!=" {
+    printf("NE\n");
+}
+
+"!" {
+    printf("NOT\n");
+}
+
+"+" {
+    printf("ADD\n");
+}
+
+"-" {
+    printf("MINUS\n");
+}
+
+"*" {
+    printf("MUL\n");
+}
+
+"/" {
+    printf("DIV\n");
+}
+
+"&&" {
+    printf("AND\n");
+}
+
+"||" {
+    printf("OR\n");
+}
+
 "("|")" {
     printf("%s\n", strequal(yytext, "(") ? "LP" : "RP");
 }
@@ -62,28 +134,8 @@ int|float|char {        // reserved type
     printf("%s\n", strequal(yytext, "{") ? "LC" : "RC");
 }
 
-"=" {
-    printf("ASSIGN\n");
-}
-
-"," {
-    printf("COMMA\n");
-}
-
-";" {
-    printf("SEMI\n");
-}
-
-{ID} {
-    printf("ID %s\n", yytext);
-}
-
-"+"|"-"|"*"|"/" {
-    printf("An operator: %s\n", yytext);
-}
-
-"{"[^{}\n]*"}" {
-    /* Eat up one-line comments */
+"["|"]" {
+    printf("%s\n", strequal(yytext, "[") ? "LB" : "RB");
 }
 
 "//" {
@@ -96,8 +148,6 @@ int|float|char {        // reserved type
 }
 
 . {
-//    if (strequal(yytext, "\r"))
-//        printf("\\n! === ");
     printf("Unrecognized character: %s\n", yytext);
 }
 
