@@ -1,18 +1,18 @@
 /* scanner for a toy Pascal-like language */
 
 %{
-#ifndef LAB_HELPLER_H
-#define LAB_HELPLER_H
-#include "helpler.h"
-#endif //LAB_HELPLER_H
+	#include <iostream>
+	#include <cstdio>
+	#include <cstdlib>
+	#include "helpler.h"
+	#include "parser.tab.hpp"
 
-#include <string.h>
-//#include <ctype.h>
-//#include <stdlib.h>
-
+	using namespace std;
 %}
 
 %option yylineno
+%option noyywrap
+%option c++
 
 DIGIT                   [0-9]
 
@@ -26,6 +26,8 @@ DECIMAL_INT_OVERFLOW    {DIGIT}{10}{DIGIT}*
 FLOAT                   {DIGIT}+"."{DIGIT}*
 
 KEYWORD                 (struct|if|else|while|return)
+
+LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 
 %%
 
@@ -127,20 +129,19 @@ int|float|char {        // reserved type
 }
 
 "("|")" {
-    printf("%s\n", strequal(yytext, "(") ? "LP" : "RP");
+    printf("%s\n", yytext[0] == '(' ? "LP" : "RP");
 }
 
 "{"|"}" {
-    printf("%s\n", strequal(yytext, "{") ? "LC" : "RC");
+    printf("%s\n", yytext[0] == '{' ? "LC" : "RC");
 }
 
 "["|"]" {
-    printf("%s\n", strequal(yytext, "[") ? "LB" : "RB");
+    printf("%s\n", yytext[0] == '[' ? "LB" : "RB");
 }
 
-"//" {
-    char c;
-    while((c = input()) != '\n');
+{LINE_COMMENT} {
+    printf("line comment: %s", &yytext[2]);
 }
 
 [ \r\t\n]+ {
@@ -152,13 +153,3 @@ int|float|char {        // reserved type
 }
 
 %%
-
-int main(int argc, char **argv){
-    ++argv;
-    --argc;
-    yyin = (argc > 0) ? fopen(argv[0], "r") : stdin;
-    yylex();
-    printf("Line num: %d\n", yylineno);
-
-    return 0;
-}

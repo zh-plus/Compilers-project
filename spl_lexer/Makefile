@@ -1,16 +1,11 @@
-CC=gcc
-LIBS = -lfl
-FLEX=flex
-
-OBJS = helpler.o
-
-lex.o: $(OBJS)
-	$(FLEX) lex.l
-	$(CC) lex.yy.c $(OBJS) $(LIBS) -o $@
-	rm -f $(OBJS)
-
-helpler.o: helpler.h
+splc:
+	flex -o scanner.yy.cpp scanner.l
+	bison -t -d parser.y -o parser.tab.cpp
+	g++ -g -std=c++17 splc.cpp scanner.yy.cpp parser.tab.cpp helpler.cpp -o $@
 
 clean:
-	@rm -f lex.yy.c $(OBJS)
+	rm -rf scanner.yy.cpp
+	rm -rf parser.tab.cpp parser.tab.hpp
+	rm -rf a.out
+
 .PHONY: clean

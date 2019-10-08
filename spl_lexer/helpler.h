@@ -5,14 +5,12 @@
 #ifndef LAB_HELPLER_H
 #define LAB_HELPLER_H
 
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cmath>
+#include <cstring>
+#include <cctype>
+#include <cstdlib>
 
 #endif //LAB_HELPLER_H
 
 char *strupr(char *str);
-
-int strequal(char *s1, char *s2);
