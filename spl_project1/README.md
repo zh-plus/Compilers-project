@@ -1,4 +1,4 @@
-#SUSTech Programming Language(SPL) project 1
+# SUSTech Programming Language(SPL) project 1
 
 1. Flex for Scanner
 2. Bison for Parser
