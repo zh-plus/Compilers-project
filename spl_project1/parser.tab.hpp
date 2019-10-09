@@ -45,6 +45,7 @@
    namespace SPL {
       class SPL_Driver;
       class SPL_Scanner;
+      class ARGS_Node;
    }
 
    ///* include for all AST functions */
@@ -61,7 +62,7 @@
 # endif
 
 
-#line 65 "parser.tab.hpp" // lalr1.cc:377
+#line 66 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -138,7 +139,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 142 "parser.tab.hpp" // lalr1.cc:377
+#line 143 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -884,7 +885,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 888 "parser.tab.hpp" // lalr1.cc:377
+#line 889 "parser.tab.hpp" // lalr1.cc:377
 
 
 

@@ -873,12 +873,13 @@ case 17:
 YY_RULE_SETUP
 #line 133 "scanner.l"
 {
+	yylval->build<int>(token::ASSIGN);
 	return token::ASSIGN;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 137 "scanner.l"
+#line 138 "scanner.l"
 {
 	yylval->build<int>(token::LE);
     return token::LE;
@@ -886,7 +887,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 142 "scanner.l"
+#line 143 "scanner.l"
 {
 	yylval->build<int>(token::LT);
     return token::LT;
@@ -894,7 +895,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 147 "scanner.l"
+#line 148 "scanner.l"
 {
 	yylval->build<int>(token::GE);
     return token::GE;
@@ -902,7 +903,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 152 "scanner.l"
+#line 153 "scanner.l"
 {
 	yylval->build<int>(token::GT);
     return token::GT;
@@ -910,7 +911,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 157 "scanner.l"
+#line 158 "scanner.l"
 {
 	yylval->build<int>(token::NE);
     return token::NE;
@@ -918,7 +919,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 162 "scanner.l"
+#line 163 "scanner.l"
 {
 	yylval->build<int>(token::NOT);
     return token::NOT;
@@ -926,7 +927,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 167 "scanner.l"
+#line 168 "scanner.l"
 {
 	yylval->build<int>(token::PLUS);
 	return token::PLUS;
@@ -934,7 +935,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 172 "scanner.l"
+#line 173 "scanner.l"
 {
 	yylval->build<int>(token::MINUS);
 	return token::MINUS;
@@ -942,7 +943,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 177 "scanner.l"
+#line 178 "scanner.l"
 {
 	yylval->build<int>(token::MUL);
 	return token::MUL;
@@ -950,7 +951,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 182 "scanner.l"
+#line 183 "scanner.l"
 {
 	yylval->build<int>(token::DIV);
 	return token::DIV;
@@ -958,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 187 "scanner.l"
+#line 188 "scanner.l"
 {
 	yylval->build<int>(token::AND);
 	return token::AND;
@@ -966,7 +967,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 192 "scanner.l"
+#line 193 "scanner.l"
 {
 	yylval->build<int>(token::OR);
 	return token::OR;
@@ -974,7 +975,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 197 "scanner.l"
+#line 198 "scanner.l"
 {
 	int _token = yytext[0] == '(' ? token::LP : token::RP;
 	yylval->build<int>(_token);
@@ -983,7 +984,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 203 "scanner.l"
+#line 204 "scanner.l"
 {
 	int _token = yytext[0] == '{' ? token::LC : token::RC;
     yylval->build<int>(_token);
@@ -992,7 +993,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 209 "scanner.l"
+#line 210 "scanner.l"
 {
 	int _token = yytext[0] == '[' ? token::LB : token::RB;
     yylval->build<int>(_token);
@@ -1002,7 +1003,7 @@ YY_RULE_SETUP
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 215 "scanner.l"
+#line 216 "scanner.l"
 {
 	yylval->build<std::string>(&yytext[2]);
     return token::LINE_COMMENT;
@@ -1011,24 +1012,24 @@ YY_RULE_SETUP
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 220 "scanner.l"
+#line 221 "scanner.l"
 {
     /* Eat up one-line comments */
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 224 "scanner.l"
+#line 225 "scanner.l"
 {
 	std::cerr << "Unrecognized character: " << yytext << std::endl;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 228 "scanner.l"
+#line 229 "scanner.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1032 "scanner.yy.cpp"
+#line 1033 "scanner.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2000,5 +2001,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 228 "scanner.l"
+#line 229 "scanner.l"
 

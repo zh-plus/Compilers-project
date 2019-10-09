@@ -30,9 +30,9 @@ namespace SPL {
 
         void parse(std::istream &is);
 
-//        void set_root(SPL::ARGS_Node *node);
-//
-//        SPL::ARGS_Node * get_root();
+        void set_root(SPL::ARGS_Node *node);
+
+        SPL::ARGS_Node * get_root();
 
         void scan_int(const int &number);
 
@@ -80,7 +80,7 @@ namespace SPL {
         SPL::SPL_Parser *parser = nullptr;
         SPL::SPL_Scanner *scanner = nullptr;
 
-//        SPL::ARGS_Node *root = nullptr;
+        SPL::ARGS_Node *root = new ARGS_Node("test", 1);
 
         /* define some pretty colors */
         const std::string red = "\033[1;31m";

@@ -11,5 +11,5 @@ SPL::AST_Node::~AST_Node() = default;
 SPL::ARGS_Node::~ARGS_Node() = default;
 
 void SPL::ARGS_Node::push_back(std::string id) {
-    std::cout << "push back!" << std::endl;
+    list.push_back(id);
 }

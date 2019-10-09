@@ -9,6 +9,7 @@
    namespace SPL {
       class SPL_Driver;
       class SPL_Scanner;
+      class ARGS_Node;
    }
 
    ///* include for all AST functions */
@@ -166,7 +167,9 @@ VarList
   ;
 
 ParamDec
-  : Specifier VarDec
+  : Specifier VarDec {
+  	std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
+  }
   ;
 
 
@@ -279,11 +282,13 @@ Exp
 
 Args
   : Exp COMMA Args {
-  	//driver.set_root(new ARGS_Node("test", 1));
+  	std::cout << "set root done!" << std::endl;
+  	driver.set_root(new ARGS_Node("test", 1));
   	std::cout << "Args - > (ID) " << std::endl;
   }
   | Exp {
-  	//driver.get_root()->push_back("2");
+  	std::cout << "push root!" << std::endl;
+  	driver.get_root()->push_back("2");
         std::cout << "Args - > (ID) " << std::endl;
   }
   ;

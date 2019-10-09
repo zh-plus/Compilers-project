@@ -34,9 +34,11 @@ namespace SPL {
 
     class ARGS_Node : AST_Node {
     public:
+        std::vector<std::string> list;
+
         ~ARGS_Node() override;
 
-        ARGS_Node(std::string id, int value) : id{std::move(id)}, value{value} {
+        ARGS_Node(std::string id, int value) : id{std::move(id)}, value{value}, list{} {
             std::cout << "ARGS Node initialized!" << std::endl;
         };
 
