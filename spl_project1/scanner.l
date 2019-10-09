@@ -8,6 +8,9 @@
 	#undef YY_DECL
 	#define YY_DECL int SPL::SPL_Scanner::yylex(SPL::SPL_Parser::semantic_type * const lval, SPL::SPL_Parser::location_type *location)
 
+	/* Helping function */
+    #include "utils.hpp"
+
 	/* using "token" to make the returns for the tokens shorter to type */
 	using token = SPL::SPL_Parser::token;
 
@@ -32,12 +35,12 @@ ID                      [a-zA-Z_][0-9a-zA-Z_]*
 
 DECIMAL_INT             ([1-9]{DIGIT}{0,9}|0)
 HEX_INT                 0[xX]([1-9A-Fa-f][0-9A-Fa-f]*|0)
-
 DECIMAL_INT_OVERFLOW    {DIGIT}{10}{DIGIT}*
 
-FLOAT                   {DIGIT}+"."{DIGIT}*
+CHAR                    '.'
+HEX_CHAR                '\\x[0-0A-Fa-f][0-0A-Fa-f]'
 
-KEYWORD                 (struct|if|else|while|return)
+FLOAT                   {DIGIT}+"."{DIGIT}*
 
 LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 
@@ -61,6 +64,11 @@ LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
            yylineno, yytext);
 }
 
+{CHAR}|{HEX_CHAR} {
+	yylval->build<char>(trim(yytext, "'").c_str()[0]);
+    return token::CHAR;
+}
+
 {FLOAT} {
     yylval->build<float>(atof(yytext));
     return token::FLOAT;
@@ -71,9 +79,29 @@ int|float|char {        // reserved type
     return token::TYPE;
 }
 
-{KEYWORD} {             // reserved key word
-    yylval->build<std::string>(yytext);
-    return token::KEYWORD;
+"struct" {             // reserved key word
+    yylval->build<int>(token::STRUCT);
+    return token::STRUCT;
+}
+
+"if" {             // reserved key word
+    yylval->build<int>(token::IF);
+    return token::IF;
+}
+
+"else" {             // reserved key word
+    yylval->build<int>(token::ELSE);
+    return token::ELSE;
+}
+
+"while" {             // reserved key word
+    yylval->build<int>(token::WHILE);
+    return token::WHILE;
+}
+
+"return" {             // reserved key word
+    yylval->build<int>(token::RETURN);
+    return token::RETURN;
 }
 
 {ID} {
@@ -137,8 +165,8 @@ int|float|char {        // reserved type
 }
 
 "+" {
-	yylval->build<int>(token::ADD);
-	return token::ADD;
+	yylval->build<int>(token::PLUS);
+	return token::PLUS;
 }
 
 "-" {

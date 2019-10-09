@@ -20,7 +20,9 @@ int main(const int argc, const char **argv) {
             std::cout << "use -h to get this menu" << std::endl;
             return EXIT_SUCCESS;
         } else {
+            std::cout << "start" << std::endl;
             driver.parse(argv[1]);
+            std::cout << "end" << std::endl;
         }
 //        driver.print(std::cout) << std::endl;
     } else {

@@ -1,10 +1,7 @@
-int test_spl() {
-    // This is a comment
-    //int b = 1000000000000;
-    int b = 10000;
-    int i = -2, j = 1;
-    int hi = 0xA1;
-    float i = 1;
-}
+char i, j;
 
-@
+int test_1_r01(int a)
+{
+    a = 10;
+    c = '1';
+}

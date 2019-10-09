@@ -47,6 +47,10 @@
       class SPL_Scanner;
    }
 
+   ///* include for all AST functions */
+   //#include "ast.hpp"
+
+
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -57,7 +61,7 @@
 # endif
 
 
-#line 61 "parser.tab.hpp" // lalr1.cc:377
+#line 65 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -134,7 +138,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 138 "parser.tab.hpp" // lalr1.cc:377
+#line 142 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -301,21 +305,29 @@ namespace SPL {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // CHAR
+      char dummy1[sizeof(char)];
+
       // FLOAT
-      char dummy1[sizeof(float)];
+      char dummy2[sizeof(float)];
 
       // INT
+      // STRUCT
+      // IF
+      // ELSE
+      // WHILE
+      // RETURN
+      // ASSIGN
       // DOT
       // SEMI
       // COMMA
-      // ASSIGN
       // EQ
       // LE
       // LT
       // GE
       // GT
       // NE
-      // ADD
+      // PLUS
       // MINUS
       // MUL
       // DIV
@@ -328,13 +340,12 @@ namespace SPL {
       // RC
       // LB
       // RB
-      char dummy2[sizeof(int)];
+      char dummy3[sizeof(int)];
 
       // TYPE
-      // KEYWORD
       // ID
       // LINE_COMMENT
-      char dummy3[sizeof(std::string)];
+      char dummy4[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -360,33 +371,40 @@ namespace SPL {
         END = 0,
         INT = 258,
         FLOAT = 259,
-        TYPE = 260,
-        KEYWORD = 261,
+        CHAR = 260,
+        TYPE = 261,
         ID = 262,
-        DOT = 263,
-        SEMI = 264,
-        COMMA = 265,
-        ASSIGN = 266,
-        EQ = 267,
-        LE = 268,
-        LT = 269,
-        GE = 270,
-        GT = 271,
-        NE = 272,
-        ADD = 273,
-        MINUS = 274,
-        MUL = 275,
-        DIV = 276,
-        AND = 277,
-        OR = 278,
-        NOT = 279,
-        LP = 280,
-        RP = 281,
-        LC = 282,
-        RC = 283,
-        LB = 284,
-        RB = 285,
-        LINE_COMMENT = 286
+        STRUCT = 263,
+        IF = 264,
+        ELSE = 265,
+        WHILE = 266,
+        RETURN = 267,
+        ASSIGN = 268,
+        DOT = 269,
+        SEMI = 270,
+        COMMA = 271,
+        EQ = 272,
+        LE = 273,
+        LT = 274,
+        GE = 275,
+        GT = 276,
+        NE = 277,
+        PLUS = 278,
+        MINUS = 279,
+        MUL = 280,
+        DIV = 281,
+        AND = 282,
+        OR = 283,
+        NOT = 284,
+        LP = 285,
+        RP = 286,
+        LC = 287,
+        RC = 288,
+        LB = 289,
+        RB = 290,
+        LINE_COMMENT = 291,
+        ADD = 292,
+        SUB = 293
       };
     };
 
@@ -423,6 +441,8 @@ namespace SPL {
       /// Constructor for valueless symbols, and symbols from each type.
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const char v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const float v, const location_type& l);
 
@@ -511,15 +531,39 @@ namespace SPL {
 
     static inline
     symbol_type
+    make_CHAR (const char& v, const location_type& l);
+
+    static inline
+    symbol_type
     make_TYPE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_KEYWORD (const std::string& v, const location_type& l);
+    make_ID (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ID (const std::string& v, const location_type& l);
+    make_STRUCT (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_IF (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ELSE (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_WHILE (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RETURN (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ASSIGN (const int& v, const location_type& l);
 
     static inline
     symbol_type
@@ -532,10 +576,6 @@ namespace SPL {
     static inline
     symbol_type
     make_COMMA (const int& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_ASSIGN (const int& v, const location_type& l);
 
     static inline
     symbol_type
@@ -563,7 +603,7 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_ADD (const int& v, const location_type& l);
+    make_PLUS (const int& v, const location_type& l);
 
     static inline
     symbol_type
@@ -616,6 +656,14 @@ namespace SPL {
     static inline
     symbol_type
     make_LINE_COMMENT (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ADD (const location_type& l);
+
+    static inline
+    symbol_type
+    make_SUB (const location_type& l);
 
 
     /// Build a parser object.
@@ -684,7 +732,7 @@ namespace SPL {
     // Tables.
   // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
   // STATE-NUM.
-  static const signed char yypact_[];
+  static const short int yypact_[];
 
   // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
   // Performed when YYTABLE does not specify something else to do.  Zero
@@ -720,7 +768,7 @@ namespace SPL {
     static const char* const yytname_[];
 
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned char yyrline_[];
+  static const unsigned short int yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -819,12 +867,12 @@ namespace SPL {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 63,     ///< Last index in yytable_.
-      yynnts_ = 4,  ///< Number of nonterminal symbols.
-      yyfinal_ = 34, ///< Termination state number.
+      yylast_ = 296,     ///< Last index in yytable_.
+      yynnts_ = 20,  ///< Number of nonterminal symbols.
+      yyfinal_ = 9, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 32  ///< Number of tokens.
+      yyntokens_ = 39  ///< Number of tokens.
     };
 
 
@@ -836,7 +884,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 840 "parser.tab.hpp" // lalr1.cc:377
+#line 888 "parser.tab.hpp" // lalr1.cc:377
 
 
 

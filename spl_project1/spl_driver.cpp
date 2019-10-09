@@ -56,6 +56,7 @@ void SPL::SPL_Driver::parse_helper(std::istream &is) {
     }
 
     const int accept = 0;
+    std::cout << "start parse!" << std::endl;
     if (parser->parse() != accept) {
         std::cerr << "Parse failed!" << std::endl;
     }
@@ -90,3 +91,11 @@ void SPL::SPL_Driver::scan_symbol(const int &symbol) {
 void SPL::SPL_Driver::scan_line_comment(const std::string &line_comment) {
     std::cout << "Line comment: " << line_comment;
 }
+
+//void SPL::SPL_Driver::set_root(SPL::ARGS_Node *node) {
+//    root = node;
+//}
+//
+//SPL::ARGS_Node * SPL::SPL_Driver::get_root() {
+//    return root;
+//}

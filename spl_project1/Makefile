@@ -1,5 +1,8 @@
-splc: scanner.yy.cpp parser.tab.cpp main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp
-	g++ -g -std=c++17 main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp -o $@
+
+SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp
+
+splc: $(SRCS)
+	g++ -g -std=c++17 $(SRCS) -o $@
 
 scanner.yy.cpp: scanner.l
 	flex -o scanner.yy.cpp scanner.l
