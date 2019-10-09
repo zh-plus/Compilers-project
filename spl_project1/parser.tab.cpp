@@ -192,7 +192,41 @@ namespace SPL {
   {
       switch (other.type_get ())
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.copy< float > (other.value);
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.copy< int > (other.value);
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.copy< std::string > (other.value);
         break;
 
@@ -213,7 +247,41 @@ namespace SPL {
     (void) v;
       switch (this->type_get ())
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.copy< float > (v);
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.copy< int > (v);
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.copy< std::string > (v);
         break;
 
@@ -229,6 +297,20 @@ namespace SPL {
   SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const location_type& l)
     : Base (t)
     , value ()
+    , location (l)
+  {}
+
+  template <typename Base>
+  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const float v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
+    : Base (t)
+    , value (v)
     , location (l)
   {}
 
@@ -265,7 +347,41 @@ namespace SPL {
     // Type destructor.
     switch (yytype)
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.template destroy< float > ();
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.template destroy< int > ();
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.template destroy< std::string > ();
         break;
 
@@ -292,7 +408,41 @@ namespace SPL {
     super_type::move(s);
       switch (this->type_get ())
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.move< float > (s.value);
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.move< int > (s.value);
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.move< std::string > (s.value);
         break;
 
@@ -348,33 +498,177 @@ namespace SPL {
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_UPPER (const location_type& l)
+  SPL_Parser::make_INT (const int& v, const location_type& l)
   {
-    return symbol_type (token::UPPER, l);
+    return symbol_type (token::INT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LOWER (const location_type& l)
+  SPL_Parser::make_FLOAT (const float& v, const location_type& l)
   {
-    return symbol_type (token::LOWER, l);
+    return symbol_type (token::FLOAT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_WORD (const std::string& v, const location_type& l)
+  SPL_Parser::make_TYPE (const std::string& v, const location_type& l)
   {
-    return symbol_type (token::WORD, v, l);
+    return symbol_type (token::TYPE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_NEWLINE (const location_type& l)
+  SPL_Parser::make_KEYWORD (const std::string& v, const location_type& l)
   {
-    return symbol_type (token::NEWLINE, l);
+    return symbol_type (token::KEYWORD, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_CHAR (const location_type& l)
+  SPL_Parser::make_ID (const std::string& v, const location_type& l)
   {
-    return symbol_type (token::CHAR, l);
+    return symbol_type (token::ID, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_DOT (const int& v, const location_type& l)
+  {
+    return symbol_type (token::DOT, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_SEMI (const int& v, const location_type& l)
+  {
+    return symbol_type (token::SEMI, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_COMMA (const int& v, const location_type& l)
+  {
+    return symbol_type (token::COMMA, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_ASSIGN (const int& v, const location_type& l)
+  {
+    return symbol_type (token::ASSIGN, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_EQ (const int& v, const location_type& l)
+  {
+    return symbol_type (token::EQ, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LE (const int& v, const location_type& l)
+  {
+    return symbol_type (token::LE, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LT (const int& v, const location_type& l)
+  {
+    return symbol_type (token::LT, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_GE (const int& v, const location_type& l)
+  {
+    return symbol_type (token::GE, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_GT (const int& v, const location_type& l)
+  {
+    return symbol_type (token::GT, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_NE (const int& v, const location_type& l)
+  {
+    return symbol_type (token::NE, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_ADD (const int& v, const location_type& l)
+  {
+    return symbol_type (token::ADD, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_MINUS (const int& v, const location_type& l)
+  {
+    return symbol_type (token::MINUS, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_MUL (const int& v, const location_type& l)
+  {
+    return symbol_type (token::MUL, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_DIV (const int& v, const location_type& l)
+  {
+    return symbol_type (token::DIV, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_AND (const int& v, const location_type& l)
+  {
+    return symbol_type (token::AND, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_OR (const int& v, const location_type& l)
+  {
+    return symbol_type (token::OR, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_NOT (const int& v, const location_type& l)
+  {
+    return symbol_type (token::NOT, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LP (const int& v, const location_type& l)
+  {
+    return symbol_type (token::LP, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_RP (const int& v, const location_type& l)
+  {
+    return symbol_type (token::RP, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LC (const int& v, const location_type& l)
+  {
+    return symbol_type (token::LC, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_RC (const int& v, const location_type& l)
+  {
+    return symbol_type (token::RC, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LB (const int& v, const location_type& l)
+  {
+    return symbol_type (token::LB, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_RB (const int& v, const location_type& l)
+  {
+    return symbol_type (token::RB, v, l);
+  }
+
+  SPL_Parser::symbol_type
+  SPL_Parser::make_LINE_COMMENT (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::LINE_COMMENT, v, l);
   }
 
 
@@ -431,7 +725,41 @@ namespace SPL {
   {
       switch (that.type_get ())
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.move< float > (that.value);
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.move< int > (that.value);
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.move< std::string > (that.value);
         break;
 
@@ -450,7 +778,41 @@ namespace SPL {
     state = that.state;
       switch (that.type_get ())
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        value.copy< float > (that.value);
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        value.copy< int > (that.value);
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         value.copy< std::string > (that.value);
         break;
 
@@ -681,7 +1043,41 @@ namespace SPL {
          when using variants.  */
         switch (yyr1_[yyn])
     {
-      case 5: // WORD
+      case 4: // FLOAT
+        yylhs.value.build< float > ();
+        break;
+
+      case 3: // INT
+      case 8: // DOT
+      case 9: // SEMI
+      case 10: // COMMA
+      case 11: // ASSIGN
+      case 12: // EQ
+      case 13: // LE
+      case 14: // LT
+      case 15: // GE
+      case 16: // GT
+      case 17: // NE
+      case 18: // ADD
+      case 19: // MINUS
+      case 20: // MUL
+      case 21: // DIV
+      case 22: // AND
+      case 23: // OR
+      case 24: // NOT
+      case 25: // LP
+      case 26: // RP
+      case 27: // LC
+      case 28: // RC
+      case 29: // LB
+      case 30: // RB
+        yylhs.value.build< int > ();
+        break;
+
+      case 5: // TYPE
+      case 6: // KEYWORD
+      case 7: // ID
+      case 31: // LINE_COMMENT
         yylhs.value.build< std::string > ();
         break;
 
@@ -703,37 +1099,181 @@ namespace SPL {
           switch (yyn)
             {
   case 6:
-#line 66 "parser.y" // lalr1.cc:859
-    { driver.add_upper(); }
-#line 709 "parser.tab.cpp" // lalr1.cc:859
+#line 70 "parser.y" // lalr1.cc:859
+    { driver.scan_int(yystack_[0].value.as< int > ()); }
+#line 1105 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
-#line 67 "parser.y" // lalr1.cc:859
-    { driver.add_lower(); }
-#line 715 "parser.tab.cpp" // lalr1.cc:859
+#line 71 "parser.y" // lalr1.cc:859
+    { driver.scan_float(yystack_[0].value.as< float > ()); }
+#line 1111 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
-#line 68 "parser.y" // lalr1.cc:859
-    { driver.add_word( yystack_[0].value.as< std::string > () ); }
-#line 721 "parser.tab.cpp" // lalr1.cc:859
+#line 72 "parser.y" // lalr1.cc:859
+    { driver.scan_type(yystack_[0].value.as< std::string > ()); }
+#line 1117 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
-#line 69 "parser.y" // lalr1.cc:859
-    { driver.add_newline(); }
-#line 727 "parser.tab.cpp" // lalr1.cc:859
+#line 73 "parser.y" // lalr1.cc:859
+    { driver.scan_keyword(yystack_[0].value.as< std::string > ()); }
+#line 1123 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 10:
-#line 70 "parser.y" // lalr1.cc:859
-    { driver.add_char(); }
-#line 733 "parser.tab.cpp" // lalr1.cc:859
+#line 74 "parser.y" // lalr1.cc:859
+    { driver.scan_id(yystack_[0].value.as< std::string > ()); }
+#line 1129 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 11:
+#line 75 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1135 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 12:
+#line 76 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1141 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 13:
+#line 77 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1147 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 14:
+#line 78 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1153 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 15:
+#line 79 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1159 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 16:
+#line 80 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1165 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 17:
+#line 81 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1171 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 18:
+#line 82 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1177 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 19:
+#line 83 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1183 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 20:
+#line 84 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1189 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 21:
+#line 85 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1195 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 22:
+#line 86 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1201 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 23:
+#line 87 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1207 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 24:
+#line 88 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1213 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 25:
+#line 89 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1219 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 26:
+#line 90 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1225 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 27:
+#line 91 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1231 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 28:
+#line 92 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1237 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 29:
+#line 93 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1243 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 30:
+#line 94 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1249 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 31:
+#line 95 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1255 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 32:
+#line 96 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1261 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 33:
+#line 97 "parser.y" // lalr1.cc:859
+    { driver.scan_symbol(yystack_[0].value.as< int > ()); }
+#line 1267 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 34:
+#line 98 "parser.y" // lalr1.cc:859
+    { driver.scan_line_comment(yystack_[0].value.as< std::string > ()); }
+#line 1273 "parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 737 "parser.tab.cpp" // lalr1.cc:859
+#line 1277 "parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -899,69 +1439,89 @@ namespace SPL {
   }
 
 
-  const signed char SPL_Parser::yypact_ninf_ = -7;
+  const signed char SPL_Parser::yypact_ninf_ = -31;
 
   const signed char SPL_Parser::yytable_ninf_ = -1;
 
   const signed char
   SPL_Parser::yypact_[] =
   {
-       0,    -7,    -7,    -7,    -7,    -7,    -7,     1,     8,    -7,
-      -7,    -7,    -7
+       0,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,
+     -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,
+     -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,   -31,
+     -31,     1,    32,   -31,   -31,   -31,   -31
   };
 
   const unsigned char
   SPL_Parser::yydefact_[] =
   {
-       0,     2,     6,     7,     8,     9,    10,     0,     0,     4,
-       1,     3,     5
+       0,     2,     6,     7,     8,     9,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,    21,    22,    23,
+      24,    25,    26,    27,    28,    29,    30,    31,    32,    33,
+      34,     0,     0,     4,     1,     3,     5
   };
 
   const signed char
   SPL_Parser::yypgoto_[] =
   {
-      -7,    -7,    -7,    -6
+     -31,   -31,   -31,   -30
   };
 
   const signed char
   SPL_Parser::yydefgoto_[] =
   {
-      -1,     7,     8,     9
+      -1,    31,    32,    33
   };
 
   const unsigned char
   SPL_Parser::yytable_[] =
   {
-       1,    10,    12,     2,     3,     4,     5,     6,    11,     0,
-       0,     2,     3,     4,     5,     6
+       1,    34,    36,     2,     3,     4,     5,     6,     7,     8,
+       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
+      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
+      29,    30,    35,     0,     0,     2,     3,     4,     5,     6,
+       7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
+      27,    28,    29,    30
   };
 
   const signed char
   SPL_Parser::yycheck_[] =
   {
-       0,     0,     8,     3,     4,     5,     6,     7,     0,    -1,
-      -1,     3,     4,     5,     6,     7
+       0,     0,    32,     3,     4,     5,     6,     7,     8,     9,
+      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+      20,    21,    22,    23,    24,    25,    26,    27,    28,    29,
+      30,    31,     0,    -1,    -1,     3,     4,     5,     6,     7,
+       8,     9,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,    23,    24,    25,    26,    27,
+      28,    29,    30,    31
   };
 
   const unsigned char
   SPL_Parser::yystos_[] =
   {
-       0,     0,     3,     4,     5,     6,     7,     9,    10,    11,
-       0,     0,    11
+       0,     0,     3,     4,     5,     6,     7,     8,     9,    10,
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    20,
+      21,    22,    23,    24,    25,    26,    27,    28,    29,    30,
+      31,    33,    34,    35,     0,     0,    35
   };
 
   const unsigned char
   SPL_Parser::yyr1_[] =
   {
-       0,     8,     9,     9,    10,    10,    11,    11,    11,    11,
-      11
+       0,    32,    33,    33,    34,    34,    35,    35,    35,    35,
+      35,    35,    35,    35,    35,    35,    35,    35,    35,    35,
+      35,    35,    35,    35,    35,    35,    35,    35,    35,    35,
+      35,    35,    35,    35,    35
   };
 
   const unsigned char
   SPL_Parser::yyr2_[] =
   {
        0,     2,     1,     2,     1,     2,     1,     1,     1,     1,
-       1
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1
   };
 
 
@@ -971,16 +1531,21 @@ namespace SPL {
   const char*
   const SPL_Parser::yytname_[] =
   {
-  "\"end of file\"", "error", "$undefined", "UPPER", "LOWER", "WORD",
-  "NEWLINE", "CHAR", "$accept", "list_option", "list", "item", YY_NULLPTR
+  "\"end of file\"", "error", "$undefined", "INT", "FLOAT", "TYPE",
+  "KEYWORD", "ID", "DOT", "SEMI", "COMMA", "ASSIGN", "EQ", "LE", "LT",
+  "GE", "GT", "NE", "ADD", "MINUS", "MUL", "DIV", "AND", "OR", "NOT", "LP",
+  "RP", "LC", "RC", "LB", "RB", "LINE_COMMENT", "$accept", "list_option",
+  "list", "item", YY_NULLPTR
   };
 
 
   const unsigned char
   SPL_Parser::yyrline_[] =
   {
-       0,    58,    58,    58,    61,    62,    66,    67,    68,    69,
-      70
+       0,    62,    62,    62,    65,    66,    70,    71,    72,    73,
+      74,    75,    76,    77,    78,    79,    80,    81,    82,    83,
+      84,    85,    86,    87,    88,    89,    90,    91,    92,    93,
+      94,    95,    96,    97,    98
   };
 
   // Print the state stack on the debug stream.
@@ -1047,9 +1612,11 @@ namespace SPL {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31
     };
-    const unsigned int user_token_number_max_ = 262;
+    const unsigned int user_token_number_max_ = 286;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int>(t) <= yyeof_)
@@ -1062,8 +1629,8 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:1167
 } // SPL
-#line 1066 "parser.tab.cpp" // lalr1.cc:1167
-#line 73 "parser.y" // lalr1.cc:1168
+#line 1633 "parser.tab.cpp" // lalr1.cc:1167
+#line 101 "parser.y" // lalr1.cc:1168
 
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){

@@ -26,38 +26,175 @@
 %option noyywrap
 %option c++
 
+DIGIT                   [0-9]
+
+ID                      [a-zA-Z_][0-9a-zA-Z_]*
+
+DECIMAL_INT             ([1-9]{DIGIT}{0,9}|0)
+HEX_INT                 0[xX]([1-9A-Fa-f][0-9A-Fa-f]*|0)
+
+DECIMAL_INT_OVERFLOW    {DIGIT}{10}{DIGIT}*
+
+FLOAT                   {DIGIT}+"."{DIGIT}*
+
+KEYWORD                 (struct|if|else|while|return)
+
+LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
+
 %%
 %{          /** Code executed at the beginning of yylex **/
             yylval = lval;
 %}
 
-[a-z]       {
-               return( token::LOWER );
-            }
+{DECIMAL_INT} {
+    yylval->build<int>(atoi(yytext));
+    return token::INT;
+}
 
-[A-Z]       {
-               return( token::UPPER );
-            }
+{HEX_INT} {
+    yylval->build<int>((int)strtol(yytext, NULL, 16));
+    return token::INT;
+}
 
-[a-zA-Z]+   {
-               /**
-                * Section 10.1.5.1 of the 3.0.2 Bison Manual says the
-                * following should work:
-                * yylval.build( yytext );
-                * but it doesn't.
-                * ref: http://goo.gl/KLn0w2
-                */
-               yylval->build< std::string >( yytext );
-               return( token::WORD );
-            }
+{DECIMAL_INT_OVERFLOW} {
+    printf("Error type INT at Line %d: int range overflow(%s is more than 2^32 - 1)\n",
+           yylineno, yytext);
+}
 
-\n          {
-               /** Update line number **/
-               loc->lines();
-               return( token::NEWLINE );
-            }
+{FLOAT} {
+    yylval->build<float>(atof(yytext));
+    return token::FLOAT;
+}
 
-.           {
-               return( token::CHAR );
-            }
+int|float|char {        // reserved type
+    yylval->build<std::string>(yytext);
+    return token::TYPE;
+}
+
+{KEYWORD} {             // reserved key word
+    yylval->build<std::string>(yytext);
+    return token::KEYWORD;
+}
+
+{ID} {
+    yylval->build<std::string>(yytext);
+    return token::ID;
+}
+
+"." {
+	yylval->build<int>(token::DOT);
+    return token::DOT;
+}
+
+";" {
+	yylval->build<int>(token::SEMI);
+	return token::SEMI;
+}
+
+"," {
+	yylval->build<int>(token::COMMA);
+	return token::COMMA;
+}
+
+"==" {
+	yylval->build<int>(token::EQ);
+	return token::EQ;
+}
+
+"=" {
+	yylval->build<int>(token::ASSIGN);
+	return token::ASSIGN;
+}
+
+"<=" {
+	yylval->build<int>(token::LE);
+    return token::LE;
+}
+
+"<" {
+	yylval->build<int>(token::LT);
+    return token::LT;
+}
+
+">=" {
+	yylval->build<int>(token::GE);
+    return token::GE;
+}
+
+">" {
+	yylval->build<int>(token::GT);
+    return token::GT;
+}
+
+"!=" {
+	yylval->build<int>(token::NE);
+    return token::NE;
+}
+
+"!" {
+	yylval->build<int>(token::NOT);
+    return token::NOT;
+}
+
+"+" {
+	yylval->build<int>(token::ADD);
+	return token::ADD;
+}
+
+"-" {
+	yylval->build<int>(token::MINUS);
+	return token::MINUS;
+}
+
+"*" {
+	yylval->build<int>(token::MUL);
+	return token::MUL;
+}
+
+"/" {
+	yylval->build<int>(token::DIV);
+	return token::DIV;
+}
+
+"&&" {
+	yylval->build<int>(token::AND);
+	return token::AND;
+}
+
+"||" {
+	yylval->build<int>(token::OR);
+	return token::OR;
+}
+
+"("|")" {
+	int _token = yytext[0] == '(' ? token::LP : token::RP;
+	yylval->build<int>(_token);
+	return _token;
+}
+
+"{"|"}" {
+	int _token = yytext[0] == '{' ? token::LC : token::RC;
+    yylval->build<int>(_token);
+    return _token;
+}
+
+"["|"]" {
+	int _token = yytext[0] == '[' ? token::LB : token::RB;
+    yylval->build<int>(_token);
+    return _token;
+}
+
+{LINE_COMMENT} {
+	yylval->build<std::string>(&yytext[2]);
+    return token::LINE_COMMENT;
+}
+
+[ \r\t\n]+ {
+    /* Eat up one-line comments */
+}
+
+. {
+	std::cerr << "Unrecognized character: " << yytext << std::endl;
+}
+
 %%

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cassert>
 #include <iostream>
+#include <algorithm>
 
 #include "spl_driver.hpp"
 
@@ -60,45 +61,32 @@ void SPL::SPL_Driver::parse_helper(std::istream &is) {
     }
 }
 
-void SPL::SPL_Driver::add_upper() {
-    uppercase++;
-    chars++;
-    words++;
+void SPL::SPL_Driver::scan_int(const int &number) {
+    std::cout << "INT " << number << std::endl;
 }
 
-void SPL::SPL_Driver::add_lower() {
-    lowercase++;
-    chars++;
-    words++;
+void SPL::SPL_Driver::scan_float(const float &number) {
+    std::cout << "FLOAT " << number << std::endl;
 }
 
-void SPL::SPL_Driver::add_word(const std::string &word) {
-    words++;
-    chars += word.length();
-    for (auto &c: word) {
-        if (islower(c)) {
-            lowercase++;
-        } else if (isupper(c)) {
-            uppercase++;
-        }
-    }
+void SPL::SPL_Driver::scan_type(const std::string &type_word) {
+    std::cout << "TYPE " << type_word << std::endl;
 }
 
-void SPL::SPL_Driver::add_newline() {
-    lines++;
-    chars++;
+void SPL::SPL_Driver::scan_keyword(const std::string &keyword) {
+    std::string upper_str = keyword;
+    std::transform(upper_str.begin(), upper_str.end(), upper_str.begin(), ::toupper);
+    std::cout << upper_str << std::endl;
 }
 
-void SPL::SPL_Driver::add_char() {
-    chars++;
+void SPL::SPL_Driver::scan_id(const std::string &id) {
+    std::cout << "ID " << id << std::endl;
 }
 
-std::ostream &SPL::SPL_Driver::print(std::ostream &os) {
-    os << red << "Results: " << norm << std::endl;
-    os << blue << "Uppercase: " << norm << uppercase << std::endl;
-    os << blue << "Lowercase: " << norm << lowercase << std::endl;
-    os << blue << "Lines: " << norm << lines << std::endl;
-    os << blue << "Words: " << norm << words << std::endl;
-    os << blue << "Characters: " << norm << chars;
-    return os;
+void SPL::SPL_Driver::scan_symbol(const int &symbol) {
+    std::cout << symbol_map[symbol] << std::endl;
+}
+
+void SPL::SPL_Driver::scan_line_comment(const std::string &line_comment) {
+    std::cout << "Line comment: " << line_comment;
 }

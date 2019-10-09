@@ -22,7 +22,7 @@ int main(const int argc, const char **argv) {
         } else {
             driver.parse(argv[1]);
         }
-        driver.print(std::cout) << std::endl;
+//        driver.print(std::cout) << std::endl;
     } else {
         std::cout << "Only one parameter permitted! Use -h to see usage." << std::endl;
         return EXIT_FAILURE;

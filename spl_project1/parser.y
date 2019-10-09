@@ -43,13 +43,17 @@
 %define parse.assert
 %language "C++"
 
-
 %token               END    0     "end of file"
-%token               UPPER
-%token               LOWER
-%token <std::string> WORD
-%token               NEWLINE
-%token               CHAR
+%token <int>         INT
+%token <float>       FLOAT
+%token <std::string> TYPE KEYWORD ID
+%token <int>         DOT SEMI COMMA
+%token <int>         ASSIGN
+%token <int>         EQ LE LT GE GT NE
+%token <int>         ADD MINUS MUL DIV
+%token <int>         AND OR NOT
+%token <int>         LP RP LC RC LB RB
+%token <std::string> LINE_COMMENT
 
 %locations
 
@@ -63,11 +67,35 @@ list
   ;
 
 item
-  : UPPER   { driver.add_upper(); }
-  | LOWER   { driver.add_lower(); }
-  | WORD    { driver.add_word( $1 ); }
-  | NEWLINE { driver.add_newline(); }
-  | CHAR    { driver.add_char(); }
+  : INT     { driver.scan_int($1); }
+  | FLOAT   { driver.scan_float($1); }
+  | TYPE    { driver.scan_type($1); }
+  | KEYWORD { driver.scan_keyword($1); }
+  | ID      { driver.scan_id($1); }
+  | DOT     { driver.scan_symbol($1); }
+  | SEMI    { driver.scan_symbol($1); }
+  | COMMA   { driver.scan_symbol($1); }
+  | ASSIGN  { driver.scan_symbol($1); }
+  | EQ  { driver.scan_symbol($1); }
+  | LE  { driver.scan_symbol($1); }
+  | LT  { driver.scan_symbol($1); }
+  | GE  { driver.scan_symbol($1); }
+  | GT  { driver.scan_symbol($1); }
+  | NE  { driver.scan_symbol($1); }
+  | ADD    { driver.scan_symbol($1); }
+  | MINUS  { driver.scan_symbol($1); }
+  | MUL    { driver.scan_symbol($1); }
+  | DIV    { driver.scan_symbol($1); }
+  | AND    { driver.scan_symbol($1); }
+  | OR     { driver.scan_symbol($1); }
+  | NOT    { driver.scan_symbol($1); }
+  | LP  { driver.scan_symbol($1); }
+  | RP  { driver.scan_symbol($1); }
+  | LC  { driver.scan_symbol($1); }
+  | RC  { driver.scan_symbol($1); }
+  | LB  { driver.scan_symbol($1); }
+  | RB  { driver.scan_symbol($1); }
+  | LINE_COMMENT  { driver.scan_line_comment($1); }
   ;
 
 %%

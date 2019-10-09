@@ -301,8 +301,40 @@ namespace SPL {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // WORD
-      char dummy1[sizeof(std::string)];
+      // FLOAT
+      char dummy1[sizeof(float)];
+
+      // INT
+      // DOT
+      // SEMI
+      // COMMA
+      // ASSIGN
+      // EQ
+      // LE
+      // LT
+      // GE
+      // GT
+      // NE
+      // ADD
+      // MINUS
+      // MUL
+      // DIV
+      // AND
+      // OR
+      // NOT
+      // LP
+      // RP
+      // LC
+      // RC
+      // LB
+      // RB
+      char dummy2[sizeof(int)];
+
+      // TYPE
+      // KEYWORD
+      // ID
+      // LINE_COMMENT
+      char dummy3[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -326,11 +358,35 @@ namespace SPL {
       enum yytokentype
       {
         END = 0,
-        UPPER = 258,
-        LOWER = 259,
-        WORD = 260,
-        NEWLINE = 261,
-        CHAR = 262
+        INT = 258,
+        FLOAT = 259,
+        TYPE = 260,
+        KEYWORD = 261,
+        ID = 262,
+        DOT = 263,
+        SEMI = 264,
+        COMMA = 265,
+        ASSIGN = 266,
+        EQ = 267,
+        LE = 268,
+        LT = 269,
+        GE = 270,
+        GT = 271,
+        NE = 272,
+        ADD = 273,
+        MINUS = 274,
+        MUL = 275,
+        DIV = 276,
+        AND = 277,
+        OR = 278,
+        NOT = 279,
+        LP = 280,
+        RP = 281,
+        LC = 282,
+        RC = 283,
+        LB = 284,
+        RB = 285,
+        LINE_COMMENT = 286
       };
     };
 
@@ -367,6 +423,10 @@ namespace SPL {
       /// Constructor for valueless symbols, and symbols from each type.
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const float v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
 
@@ -443,23 +503,119 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_UPPER (const location_type& l);
+    make_INT (const int& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LOWER (const location_type& l);
+    make_FLOAT (const float& v, const location_type& l);
 
     static inline
     symbol_type
-    make_WORD (const std::string& v, const location_type& l);
+    make_TYPE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_NEWLINE (const location_type& l);
+    make_KEYWORD (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_CHAR (const location_type& l);
+    make_ID (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOT (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_SEMI (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_COMMA (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ASSIGN (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_EQ (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LE (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LT (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_GE (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_GT (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_NE (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ADD (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_MINUS (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_MUL (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DIV (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_AND (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_OR (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_NOT (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LP (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RP (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LC (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RC (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LB (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RB (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LINE_COMMENT (const std::string& v, const location_type& l);
 
 
     /// Build a parser object.
@@ -663,12 +819,12 @@ namespace SPL {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 15,     ///< Last index in yytable_.
+      yylast_ = 63,     ///< Last index in yytable_.
       yynnts_ = 4,  ///< Number of nonterminal symbols.
-      yyfinal_ = 10, ///< Termination state number.
+      yyfinal_ = 34, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 8  ///< Number of tokens.
+      yyntokens_ = 32  ///< Number of tokens.
     };
 
 
@@ -680,7 +836,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 684 "parser.tab.hpp" // lalr1.cc:377
+#line 840 "parser.tab.hpp" // lalr1.cc:377
 
 
 
