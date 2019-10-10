@@ -25,10 +25,11 @@ int main(const int argc, const char **argv) {
             driver.parse(argv[1]);
         }
 
-        cout << "list len: " << driver.get_root()->list.size() << endl;
-        for (auto &x:driver.get_root()->list) {
+        cout << "arg_list len: " << driver.get_root()->arg_list.size() << endl;
+        for (auto &x:driver.get_root()->arg_list) {
             cout << x << " : ";
         }
+        cout << endl;
     } else {
         cout << "Only one parameter permitted! Use -h to see usage." << endl;
         return EXIT_FAILURE;

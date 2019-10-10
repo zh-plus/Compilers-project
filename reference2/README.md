@@ -2,7 +2,7 @@
 
 ## What? ##
 
-This is a not-so-crude example showing how to deploy *Flex* and *GNU Bison* in modern C++ programs. Example program provides simple commandline that parses function calls with list of arguments (unsigned ints only) and builds AST. AST is printed when parsing completes. See code comments for more details.
+This is a not-so-crude example showing how to deploy *Flex* and *GNU Bison* in modern C++ programs. Example program provides simple commandline that parses function calls with arg_list of arguments (unsigned ints only) and builds AST. AST is printed when parsing completes. See code comments for more details.
 
 Features:
 

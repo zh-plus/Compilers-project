@@ -150,10 +150,10 @@ VarDec
 
 FunDec
   : ID LP VarList RP {
-  	std::cout << "FunDec - > (ID LP VarList RP)" << std::endl;
+  	std::cout << "FunDec - > (ID LP VarList RP) " << $1 << std::endl;
   }
   | ID LP RP {
-  	std::cout << "FunDec - > (ID LP RP)" << std::endl;
+  	std::cout << "FunDec - > (ID LP RP) " << $1 << std::endl;
   }
   ;
 
@@ -262,8 +262,12 @@ Exp
   | LP Exp RP
   | MINUS Exp
   | NOT Exp
-  | ID LP Args RP
-  | ID LP RP
+  | ID LP Args RP {
+  	std::cout << "Exp - > (ID LP Args RP) " << $1 << std::endl;
+  }
+  | ID LP RP {
+  	std::cout << "Exp - > (ID LP RP) " << $1 << std::endl;
+  }
   | Exp LB Exp LB
   | Exp DOT ID
   | ID {
@@ -282,8 +286,8 @@ Exp
 
 Args
   : Exp COMMA Args {
-  	std::cout << "set root done!" << std::endl;
-  	driver.set_root(new ARGS_Node("test", 1));
+//  	std::cout << "set root done!" << std::endl;
+//  	driver.set_root(new ARGS_Node("test", 1));
   	std::cout << "Args - > (ID) " << std::endl;
   }
   | Exp {

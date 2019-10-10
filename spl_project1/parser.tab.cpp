@@ -1314,7 +1314,7 @@ namespace SPL {
   case 16:
 #line 152 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "FunDec - > (ID LP VarList RP)" << std::endl;
+  	std::cout << "FunDec - > (ID LP VarList RP) " << yystack_[3].value.as< std::string > () << std::endl;
   }
 #line 1320 "parser.tab.cpp" // lalr1.cc:859
     break;
@@ -1322,7 +1322,7 @@ namespace SPL {
   case 17:
 #line 155 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "FunDec - > (ID LP RP)" << std::endl;
+  	std::cout << "FunDec - > (ID LP RP) " << yystack_[2].value.as< std::string > () << std::endl;
   }
 #line 1328 "parser.tab.cpp" // lalr1.cc:859
     break;
@@ -1471,60 +1471,76 @@ namespace SPL {
 #line 1472 "parser.tab.cpp" // lalr1.cc:859
     break;
 
-  case 57:
-#line 269 "parser.y" // lalr1.cc:859
+  case 53:
+#line 265 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
+  	std::cout << "Exp - > (ID LP Args RP) " << yystack_[3].value.as< std::string > () << std::endl;
   }
 #line 1480 "parser.tab.cpp" // lalr1.cc:859
     break;
 
-  case 58:
-#line 272 "parser.y" // lalr1.cc:859
+  case 54:
+#line 268 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (INT) " << yystack_[0].value.as< int > () << std::endl;
+  	std::cout << "Exp - > (ID LP RP) " << yystack_[2].value.as< std::string > () << std::endl;
   }
 #line 1488 "parser.tab.cpp" // lalr1.cc:859
     break;
 
-  case 59:
-#line 275 "parser.y" // lalr1.cc:859
+  case 57:
+#line 273 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (FLOAT) " << yystack_[0].value.as< float > () << std::endl;
+  	std::cout << "Exp - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
   }
 #line 1496 "parser.tab.cpp" // lalr1.cc:859
     break;
 
-  case 60:
-#line 278 "parser.y" // lalr1.cc:859
+  case 58:
+#line 276 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< char > () << std::endl;
+  	std::cout << "Exp - > (INT) " << yystack_[0].value.as< int > () << std::endl;
   }
 #line 1504 "parser.tab.cpp" // lalr1.cc:859
     break;
 
-  case 61:
-#line 284 "parser.y" // lalr1.cc:859
+  case 59:
+#line 279 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "set root done!" << std::endl;
-  	driver.set_root(new ARGS_Node("test", 1));
+  	std::cout << "Exp - > (FLOAT) " << yystack_[0].value.as< float > () << std::endl;
+  }
+#line 1512 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 60:
+#line 282 "parser.y" // lalr1.cc:859
+    {
+  	std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< char > () << std::endl;
+  }
+#line 1520 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 61:
+#line 288 "parser.y" // lalr1.cc:859
+    {
+//  	std::cout << "set root done!" << std::endl;
+//  	driver.set_root(new ARGS_Node("test", 1));
   	std::cout << "Args - > (ID) " << std::endl;
   }
-#line 1514 "parser.tab.cpp" // lalr1.cc:859
+#line 1530 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
-#line 289 "parser.y" // lalr1.cc:859
+#line 293 "parser.y" // lalr1.cc:859
     {
   	std::cout << "push root!" << std::endl;
   	driver.get_root()->push_back("2");
         std::cout << "Args - > (ID) " << std::endl;
   }
-#line 1524 "parser.tab.cpp" // lalr1.cc:859
+#line 1540 "parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 1528 "parser.tab.cpp" // lalr1.cc:859
+#line 1544 "parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -1879,8 +1895,8 @@ namespace SPL {
      170,   178,   184,   187,   191,   194,   197,   200,   203,   206,
      214,   217,   221,   227,   230,   236,   239,   247,   250,   251,
      252,   253,   254,   255,   256,   257,   258,   259,   260,   261,
-     262,   263,   264,   265,   266,   267,   268,   269,   272,   275,
-     278,   284,   289
+     262,   263,   264,   265,   268,   271,   272,   273,   276,   279,
+     282,   288,   293
   };
 
   // Print the state stack on the debug stream.
@@ -1965,8 +1981,8 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:1167
 } // SPL
-#line 1969 "parser.tab.cpp" // lalr1.cc:1167
-#line 296 "parser.y" // lalr1.cc:1168
+#line 1985 "parser.tab.cpp" // lalr1.cc:1167
+#line 300 "parser.y" // lalr1.cc:1168
 
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){

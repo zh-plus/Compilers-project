@@ -4,12 +4,12 @@
 
 #include "ast.hpp"
 
-SPL::ASSIGN_Node::~ASSIGN_Node() = default;
+void SPL::ARGS_Node::push_back(const std::string& str) {
+    std::cout << "In push back succeed!" << std::endl;
+    arg_list.push_back(str);
+}
 
-SPL::AST_Node::~AST_Node() = default;
+SPL::Leaf_Node::Leaf_Node(SPL::token_type leaf_type, SPL::leaf_union value) {
+    leaf_type = leaf_type;
 
-SPL::ARGS_Node::~ARGS_Node() = default;
-
-void SPL::ARGS_Node::push_back(std::string id) {
-    list.push_back(id);
 }
