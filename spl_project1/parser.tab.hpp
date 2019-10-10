@@ -45,7 +45,14 @@
    namespace SPL {
       class SPL_Driver;
       class SPL_Scanner;
+      class AST_Node;
+      class ASSIGN_Node;
       class ARGS_Node;
+      class Leaf_Node;
+      class EXP_Node;
+      class Binary_EXP_Node;
+      class Unary_EXP_Node;
+      class Leaf_EXP_Node;
    }
 
    ///* include for all AST functions */
@@ -62,7 +69,7 @@
 # endif
 
 
-#line 66 "parser.tab.hpp" // lalr1.cc:377
+#line 73 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -139,7 +146,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 143 "parser.tab.hpp" // lalr1.cc:377
+#line 150 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -306,13 +313,14 @@ namespace SPL {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // CHAR
-      char dummy1[sizeof(char)];
-
-      // FLOAT
-      char dummy2[sizeof(float)];
+      // Exp
+      char dummy1[sizeof(EXP_Node *)];
 
       // INT
+      // FLOAT
+      // CHAR
+      // TYPE
+      // ID
       // STRUCT
       // IF
       // ELSE
@@ -341,12 +349,8 @@ namespace SPL {
       // RC
       // LB
       // RB
-      char dummy3[sizeof(int)];
-
-      // TYPE
-      // ID
       // LINE_COMMENT
-      char dummy4[sizeof(std::string)];
+      char dummy2[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -443,11 +447,7 @@ namespace SPL {
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const char v, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const float v, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const EXP_Node * v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
 
@@ -524,15 +524,15 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_INT (const int& v, const location_type& l);
+    make_INT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_FLOAT (const float& v, const location_type& l);
+    make_FLOAT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_CHAR (const char& v, const location_type& l);
+    make_CHAR (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
@@ -544,115 +544,115 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_STRUCT (const int& v, const location_type& l);
+    make_STRUCT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_IF (const int& v, const location_type& l);
+    make_IF (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ELSE (const int& v, const location_type& l);
+    make_ELSE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_WHILE (const int& v, const location_type& l);
+    make_WHILE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RETURN (const int& v, const location_type& l);
+    make_RETURN (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ASSIGN (const int& v, const location_type& l);
+    make_ASSIGN (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_DOT (const int& v, const location_type& l);
+    make_DOT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_SEMI (const int& v, const location_type& l);
+    make_SEMI (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_COMMA (const int& v, const location_type& l);
+    make_COMMA (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_EQ (const int& v, const location_type& l);
+    make_EQ (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LE (const int& v, const location_type& l);
+    make_LE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LT (const int& v, const location_type& l);
+    make_LT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_GE (const int& v, const location_type& l);
+    make_GE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_GT (const int& v, const location_type& l);
+    make_GT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_NE (const int& v, const location_type& l);
+    make_NE (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_PLUS (const int& v, const location_type& l);
+    make_PLUS (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_MINUS (const int& v, const location_type& l);
+    make_MINUS (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_MUL (const int& v, const location_type& l);
+    make_MUL (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_DIV (const int& v, const location_type& l);
+    make_DIV (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_AND (const int& v, const location_type& l);
+    make_AND (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_OR (const int& v, const location_type& l);
+    make_OR (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_NOT (const int& v, const location_type& l);
+    make_NOT (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LP (const int& v, const location_type& l);
+    make_LP (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RP (const int& v, const location_type& l);
+    make_RP (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LC (const int& v, const location_type& l);
+    make_LC (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RC (const int& v, const location_type& l);
+    make_RC (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LB (const int& v, const location_type& l);
+    make_LB (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RB (const int& v, const location_type& l);
+    make_RB (const std::string& v, const location_type& l);
 
     static inline
     symbol_type

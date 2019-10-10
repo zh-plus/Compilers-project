@@ -9,7 +9,14 @@
    namespace SPL {
       class SPL_Driver;
       class SPL_Scanner;
+      class AST_Node;
+      class ASSIGN_Node;
       class ARGS_Node;
+      class Leaf_Node;
+      class EXP_Node;
+      class Binary_EXP_Node;
+      class Unary_EXP_Node;
+      class Leaf_EXP_Node;
    }
 
    ///* include for all AST functions */
@@ -54,18 +61,20 @@
 %locations
 
 %token               END    0     "end of file"
-%token <int>         INT
-%token <float>       FLOAT
-%token <char>        CHAR
+%token <std::string> INT
+%token <std::string> FLOAT
+%token <std::string> CHAR
 %token <std::string> TYPE ID
-%token <int>         STRUCT IF ELSE WHILE RETURN
-%token <int>         ASSIGN
-%token <int>         DOT SEMI COMMA
-%token <int>         EQ LE LT GE GT NE
-%token <int>         PLUS MINUS MUL DIV
-%token <int>         AND OR NOT
-%token <int>         LP RP LC RC LB RB
+%token <std::string> STRUCT IF ELSE WHILE RETURN
+%token <std::string> ASSIGN
+%token <std::string> DOT SEMI COMMA
+%token <std::string> EQ LE LT GE GT NE
+%token <std::string> PLUS MINUS MUL DIV
+%token <std::string> AND OR NOT
+%token <std::string> LP RP LC RC LB RB
 %token <std::string> LINE_COMMENT
+
+%type <EXP_Node *> Exp
 
 %right ASSIGN
 %left OR
@@ -246,54 +255,91 @@ Dec
 Exp
   : Exp ASSIGN Exp {
   	std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
+  	$$ = new Binary_EXP_Node(token::ASSIGN, $1, $3);
+  	driver.set_root($$);
   }
-  | Exp AND Exp
-  | Exp OR Exp
-  | Exp LT Exp
-  | Exp LE Exp
-  | Exp GT Exp
-  | Exp GE Exp
-  | Exp NE Exp
-  | Exp EQ Exp
-  | Exp PLUS Exp
-  | Exp MINUS Exp
-  | Exp MUL Exp
-  | Exp DIV Exp
-  | LP Exp RP
-  | MINUS Exp
-  | NOT Exp
+  | Exp AND Exp {
+  	$$ = new Binary_EXP_Node(token::AND, $1, $3);
+  }
+  | Exp OR Exp {
+  	$$ = new Binary_EXP_Node(token::OR, $1, $3);
+  }
+  | Exp LT Exp {
+  	$$ = new Binary_EXP_Node(token::LT, $1, $3);
+  }
+  | Exp LE Exp {
+  	$$ = new Binary_EXP_Node(token::LE, $1, $3);
+  }
+  | Exp GT Exp {
+  	$$ = new Binary_EXP_Node(token::GT, $1, $3);
+   }
+  | Exp GE Exp {
+  	$$ = new Binary_EXP_Node(token::GE, $1, $3);
+  }
+  | Exp NE Exp {
+  	$$ = new Binary_EXP_Node(token::NE, $1, $3);
+  }
+  | Exp EQ Exp {
+  	$$ = new Binary_EXP_Node(token::EQ, $1, $3);
+  }
+  | Exp PLUS Exp {
+  	$$ = new Binary_EXP_Node(token::PLUS, $1, $3);
+  }
+  | Exp MINUS Exp {
+  	$$ = new Binary_EXP_Node(token::MINUS, $1, $3);
+  }
+  | Exp MUL Exp {
+  	$$ = new Binary_EXP_Node(token::MUL, $1, $3);
+  }
+  | Exp DIV Exp {
+  	$$ = new Binary_EXP_Node(token::DIV, $1, $3);
+  }
+  | LP Exp RP {
+  	$$ = $2;
+  }
+  | MINUS Exp {
+  	$$ = new Unary_EXP_Node(token::MINUS, $1);
+  }
+  | NOT Exp {
+  	$$ = new Unary_EXP_Node(token::NOT, $1);
+  }
   | ID LP Args RP {
-  	std::cout << "Exp - > (ID LP Args RP) " << $1 << std::endl;
+  	$$ = new Unary_EXP_Node(token::ID, "testing ID LP Args RP");
   }
   | ID LP RP {
   	std::cout << "Exp - > (ID LP RP) " << $1 << std::endl;
+  	$$ = new Unary_EXP_Node(token::ID, "testing ID LP Args RP");
   }
-  | Exp LB Exp LB
-  | Exp DOT ID
+  | Exp LB Exp LB {
+  	$$ = new Unary_EXP_Node(token::ID, "testing Exp LB Exp LB");
+  }
+  | Exp DOT ID {
+  	$$ = new Unary_EXP_Node(token::ID, "testing Exp DOT ID");
+  }
   | ID {
   	std::cout << "Exp - > (ID) " << $1 << std::endl;
+  	$$ = new Leaf_EXP_Node(token::ID, $1);
   }
   | INT {
   	std::cout << "Exp - > (INT) " << $1 << std::endl;
+  	$$ = new Leaf_EXP_Node(token::INT, $1);
   }
   | FLOAT {
   	std::cout << "Exp - > (FLOAT) " << $1 << std::endl;
+  	$$ = new Leaf_EXP_Node(token::FLOAT, $1);
   }
   | CHAR {
   	std::cout << "Exp - > (CHAR) " << $1 << std::endl;
+  	$$ = new Leaf_EXP_Node(token::CHAR, $1);
   }
   ;
 
 Args
   : Exp COMMA Args {
-//  	std::cout << "set root done!" << std::endl;
-//  	driver.set_root(new ARGS_Node("test", 1));
-  	std::cout << "Args - > (ID) " << std::endl;
+  	std::cout << "Args - > (Exp COMMA Args) " << std::endl;
   }
   | Exp {
-  	std::cout << "push root!" << std::endl;
-  	driver.get_root()->push_back("2");
-        std::cout << "Args - > (ID) " << std::endl;
+        std::cout << "Args - > (Exp) " << std::endl;
   }
   ;
 

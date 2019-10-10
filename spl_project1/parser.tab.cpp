@@ -49,7 +49,7 @@
 
 #line 51 "parser.tab.cpp" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 33 "parser.y" // lalr1.cc:413
+#line 40 "parser.y" // lalr1.cc:413
 
     #include <iostream>
     #include <cstdlib>
@@ -196,15 +196,15 @@ namespace SPL {
   {
       switch (other.type_get ())
     {
-      case 5: // CHAR
-        value.copy< char > (other.value);
-        break;
-
-      case 4: // FLOAT
-        value.copy< float > (other.value);
+      case 57: // Exp
+        value.copy< EXP_Node * > (other.value);
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -233,11 +233,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.copy< int > (other.value);
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.copy< std::string > (other.value);
         break;
@@ -259,15 +254,15 @@ namespace SPL {
     (void) v;
       switch (this->type_get ())
     {
-      case 5: // CHAR
-        value.copy< char > (v);
-        break;
-
-      case 4: // FLOAT
-        value.copy< float > (v);
+      case 57: // Exp
+        value.copy< EXP_Node * > (v);
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -296,11 +291,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.copy< int > (v);
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.copy< std::string > (v);
         break;
@@ -321,21 +311,7 @@ namespace SPL {
   {}
 
   template <typename Base>
-  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const char v, const location_type& l)
-    : Base (t)
-    , value (v)
-    , location (l)
-  {}
-
-  template <typename Base>
-  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const float v, const location_type& l)
-    : Base (t)
-    , value (v)
-    , location (l)
-  {}
-
-  template <typename Base>
-  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
+  SPL_Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const EXP_Node * v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -374,15 +350,15 @@ namespace SPL {
     // Type destructor.
     switch (yytype)
     {
-      case 5: // CHAR
-        value.template destroy< char > ();
-        break;
-
-      case 4: // FLOAT
-        value.template destroy< float > ();
+      case 57: // Exp
+        value.template destroy< EXP_Node * > ();
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -411,11 +387,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.template destroy< int > ();
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.template destroy< std::string > ();
         break;
@@ -443,15 +414,15 @@ namespace SPL {
     super_type::move(s);
       switch (this->type_get ())
     {
-      case 5: // CHAR
-        value.move< char > (s.value);
-        break;
-
-      case 4: // FLOAT
-        value.move< float > (s.value);
+      case 57: // Exp
+        value.move< EXP_Node * > (s.value);
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -480,11 +451,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.move< int > (s.value);
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.move< std::string > (s.value);
         break;
@@ -541,19 +507,19 @@ namespace SPL {
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_INT (const int& v, const location_type& l)
+  SPL_Parser::make_INT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::INT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_FLOAT (const float& v, const location_type& l)
+  SPL_Parser::make_FLOAT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::FLOAT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_CHAR (const char& v, const location_type& l)
+  SPL_Parser::make_CHAR (const std::string& v, const location_type& l)
   {
     return symbol_type (token::CHAR, v, l);
   }
@@ -571,169 +537,169 @@ namespace SPL {
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_STRUCT (const int& v, const location_type& l)
+  SPL_Parser::make_STRUCT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::STRUCT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_IF (const int& v, const location_type& l)
+  SPL_Parser::make_IF (const std::string& v, const location_type& l)
   {
     return symbol_type (token::IF, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_ELSE (const int& v, const location_type& l)
+  SPL_Parser::make_ELSE (const std::string& v, const location_type& l)
   {
     return symbol_type (token::ELSE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_WHILE (const int& v, const location_type& l)
+  SPL_Parser::make_WHILE (const std::string& v, const location_type& l)
   {
     return symbol_type (token::WHILE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_RETURN (const int& v, const location_type& l)
+  SPL_Parser::make_RETURN (const std::string& v, const location_type& l)
   {
     return symbol_type (token::RETURN, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_ASSIGN (const int& v, const location_type& l)
+  SPL_Parser::make_ASSIGN (const std::string& v, const location_type& l)
   {
     return symbol_type (token::ASSIGN, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_DOT (const int& v, const location_type& l)
+  SPL_Parser::make_DOT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::DOT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_SEMI (const int& v, const location_type& l)
+  SPL_Parser::make_SEMI (const std::string& v, const location_type& l)
   {
     return symbol_type (token::SEMI, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_COMMA (const int& v, const location_type& l)
+  SPL_Parser::make_COMMA (const std::string& v, const location_type& l)
   {
     return symbol_type (token::COMMA, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_EQ (const int& v, const location_type& l)
+  SPL_Parser::make_EQ (const std::string& v, const location_type& l)
   {
     return symbol_type (token::EQ, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LE (const int& v, const location_type& l)
+  SPL_Parser::make_LE (const std::string& v, const location_type& l)
   {
     return symbol_type (token::LE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LT (const int& v, const location_type& l)
+  SPL_Parser::make_LT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::LT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_GE (const int& v, const location_type& l)
+  SPL_Parser::make_GE (const std::string& v, const location_type& l)
   {
     return symbol_type (token::GE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_GT (const int& v, const location_type& l)
+  SPL_Parser::make_GT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::GT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_NE (const int& v, const location_type& l)
+  SPL_Parser::make_NE (const std::string& v, const location_type& l)
   {
     return symbol_type (token::NE, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_PLUS (const int& v, const location_type& l)
+  SPL_Parser::make_PLUS (const std::string& v, const location_type& l)
   {
     return symbol_type (token::PLUS, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_MINUS (const int& v, const location_type& l)
+  SPL_Parser::make_MINUS (const std::string& v, const location_type& l)
   {
     return symbol_type (token::MINUS, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_MUL (const int& v, const location_type& l)
+  SPL_Parser::make_MUL (const std::string& v, const location_type& l)
   {
     return symbol_type (token::MUL, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_DIV (const int& v, const location_type& l)
+  SPL_Parser::make_DIV (const std::string& v, const location_type& l)
   {
     return symbol_type (token::DIV, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_AND (const int& v, const location_type& l)
+  SPL_Parser::make_AND (const std::string& v, const location_type& l)
   {
     return symbol_type (token::AND, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_OR (const int& v, const location_type& l)
+  SPL_Parser::make_OR (const std::string& v, const location_type& l)
   {
     return symbol_type (token::OR, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_NOT (const int& v, const location_type& l)
+  SPL_Parser::make_NOT (const std::string& v, const location_type& l)
   {
     return symbol_type (token::NOT, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LP (const int& v, const location_type& l)
+  SPL_Parser::make_LP (const std::string& v, const location_type& l)
   {
     return symbol_type (token::LP, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_RP (const int& v, const location_type& l)
+  SPL_Parser::make_RP (const std::string& v, const location_type& l)
   {
     return symbol_type (token::RP, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LC (const int& v, const location_type& l)
+  SPL_Parser::make_LC (const std::string& v, const location_type& l)
   {
     return symbol_type (token::LC, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_RC (const int& v, const location_type& l)
+  SPL_Parser::make_RC (const std::string& v, const location_type& l)
   {
     return symbol_type (token::RC, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_LB (const int& v, const location_type& l)
+  SPL_Parser::make_LB (const std::string& v, const location_type& l)
   {
     return symbol_type (token::LB, v, l);
   }
 
   SPL_Parser::symbol_type
-  SPL_Parser::make_RB (const int& v, const location_type& l)
+  SPL_Parser::make_RB (const std::string& v, const location_type& l)
   {
     return symbol_type (token::RB, v, l);
   }
@@ -810,15 +776,15 @@ namespace SPL {
   {
       switch (that.type_get ())
     {
-      case 5: // CHAR
-        value.move< char > (that.value);
-        break;
-
-      case 4: // FLOAT
-        value.move< float > (that.value);
+      case 57: // Exp
+        value.move< EXP_Node * > (that.value);
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -847,11 +813,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.move< int > (that.value);
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.move< std::string > (that.value);
         break;
@@ -871,15 +832,15 @@ namespace SPL {
     state = that.state;
       switch (that.type_get ())
     {
-      case 5: // CHAR
-        value.copy< char > (that.value);
-        break;
-
-      case 4: // FLOAT
-        value.copy< float > (that.value);
+      case 57: // Exp
+        value.copy< EXP_Node * > (that.value);
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -908,11 +869,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        value.copy< int > (that.value);
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         value.copy< std::string > (that.value);
         break;
@@ -1144,15 +1100,15 @@ namespace SPL {
          when using variants.  */
         switch (yyr1_[yyn])
     {
-      case 5: // CHAR
-        yylhs.value.build< char > ();
-        break;
-
-      case 4: // FLOAT
-        yylhs.value.build< float > ();
+      case 57: // Exp
+        yylhs.value.build< EXP_Node * > ();
         break;
 
       case 3: // INT
+      case 4: // FLOAT
+      case 5: // CHAR
+      case 6: // TYPE
+      case 7: // ID
       case 8: // STRUCT
       case 9: // IF
       case 10: // ELSE
@@ -1181,11 +1137,6 @@ namespace SPL {
       case 33: // RC
       case 34: // LB
       case 35: // RB
-        yylhs.value.build< int > ();
-        break;
-
-      case 6: // TYPE
-      case 7: // ID
       case 36: // LINE_COMMENT
         yylhs.value.build< std::string > ();
         break;
@@ -1208,339 +1159,478 @@ namespace SPL {
           switch (yyn)
             {
   case 2:
-#line 87 "parser.y" // lalr1.cc:859
+#line 96 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Program -> (ExtDefList)" << std::endl;
   }
-#line 1216 "parser.tab.cpp" // lalr1.cc:859
+#line 1167 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 3:
-#line 93 "parser.y" // lalr1.cc:859
+#line 102 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
   }
-#line 1224 "parser.tab.cpp" // lalr1.cc:859
+#line 1175 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 5:
-#line 100 "parser.y" // lalr1.cc:859
+#line 109 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
   }
-#line 1232 "parser.tab.cpp" // lalr1.cc:859
+#line 1183 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 6:
-#line 103 "parser.y" // lalr1.cc:859
+#line 112 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
   }
-#line 1240 "parser.tab.cpp" // lalr1.cc:859
+#line 1191 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
-#line 106 "parser.y" // lalr1.cc:859
+#line 115 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
   }
-#line 1248 "parser.tab.cpp" // lalr1.cc:859
+#line 1199 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
-#line 112 "parser.y" // lalr1.cc:859
+#line 121 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDecList - > (VarDec)" << std::endl;
   }
-#line 1256 "parser.tab.cpp" // lalr1.cc:859
+#line 1207 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
-#line 115 "parser.y" // lalr1.cc:859
+#line 124 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
   }
-#line 1264 "parser.tab.cpp" // lalr1.cc:859
+#line 1215 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 10:
-#line 123 "parser.y" // lalr1.cc:859
+#line 132 "parser.y" // lalr1.cc:859
     {
 	std::cout << "Specifier - > (TYPE) " << yystack_[0].value.as< std::string > () << std::endl;
   }
-#line 1272 "parser.tab.cpp" // lalr1.cc:859
+#line 1223 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 11:
-#line 126 "parser.y" // lalr1.cc:859
+#line 135 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Specifier - > (StructSpecifier)" << std::endl;
   }
-#line 1280 "parser.tab.cpp" // lalr1.cc:859
+#line 1231 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 12:
-#line 132 "parser.y" // lalr1.cc:859
+#line 141 "parser.y" // lalr1.cc:859
     {
   	std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
   }
-#line 1288 "parser.tab.cpp" // lalr1.cc:859
+#line 1239 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 13:
-#line 135 "parser.y" // lalr1.cc:859
+#line 144 "parser.y" // lalr1.cc:859
     {
   	std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
   }
-#line 1296 "parser.tab.cpp" // lalr1.cc:859
+#line 1247 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 14:
-#line 143 "parser.y" // lalr1.cc:859
+#line 152 "parser.y" // lalr1.cc:859
     {
   	std::cout << "VarDec - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
   }
-#line 1304 "parser.tab.cpp" // lalr1.cc:859
+#line 1255 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 15:
-#line 146 "parser.y" // lalr1.cc:859
+#line 155 "parser.y" // lalr1.cc:859
     {
   	std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
   }
-#line 1312 "parser.tab.cpp" // lalr1.cc:859
+#line 1263 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 16:
-#line 152 "parser.y" // lalr1.cc:859
+#line 161 "parser.y" // lalr1.cc:859
     {
   	std::cout << "FunDec - > (ID LP VarList RP) " << yystack_[3].value.as< std::string > () << std::endl;
   }
-#line 1320 "parser.tab.cpp" // lalr1.cc:859
+#line 1271 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 17:
-#line 155 "parser.y" // lalr1.cc:859
+#line 164 "parser.y" // lalr1.cc:859
     {
   	std::cout << "FunDec - > (ID LP RP) " << yystack_[2].value.as< std::string > () << std::endl;
   }
-#line 1328 "parser.tab.cpp" // lalr1.cc:859
+#line 1279 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 18:
-#line 161 "parser.y" // lalr1.cc:859
+#line 170 "parser.y" // lalr1.cc:859
     {
   	std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
   }
-#line 1336 "parser.tab.cpp" // lalr1.cc:859
+#line 1287 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 19:
-#line 164 "parser.y" // lalr1.cc:859
+#line 173 "parser.y" // lalr1.cc:859
     {
   	std::cout << "VarList - > (ParamDec)" << std::endl;
   }
-#line 1344 "parser.tab.cpp" // lalr1.cc:859
+#line 1295 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 20:
-#line 170 "parser.y" // lalr1.cc:859
+#line 179 "parser.y" // lalr1.cc:859
     {
   	std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
   }
-#line 1352 "parser.tab.cpp" // lalr1.cc:859
+#line 1303 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 21:
-#line 178 "parser.y" // lalr1.cc:859
+#line 187 "parser.y" // lalr1.cc:859
     {
   	std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
   }
-#line 1360 "parser.tab.cpp" // lalr1.cc:859
+#line 1311 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 22:
-#line 184 "parser.y" // lalr1.cc:859
+#line 193 "parser.y" // lalr1.cc:859
     {
   	std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
   }
-#line 1368 "parser.tab.cpp" // lalr1.cc:859
+#line 1319 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 24:
-#line 191 "parser.y" // lalr1.cc:859
+#line 200 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (Exp SEMI)" << std::endl;
   }
-#line 1376 "parser.tab.cpp" // lalr1.cc:859
+#line 1327 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 25:
-#line 194 "parser.y" // lalr1.cc:859
+#line 203 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (CompSt)" << std::endl;
   }
-#line 1384 "parser.tab.cpp" // lalr1.cc:859
+#line 1335 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 26:
-#line 197 "parser.y" // lalr1.cc:859
+#line 206 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
   }
-#line 1392 "parser.tab.cpp" // lalr1.cc:859
+#line 1343 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 27:
-#line 200 "parser.y" // lalr1.cc:859
+#line 209 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
   }
-#line 1400 "parser.tab.cpp" // lalr1.cc:859
+#line 1351 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 28:
-#line 203 "parser.y" // lalr1.cc:859
+#line 212 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
   }
-#line 1408 "parser.tab.cpp" // lalr1.cc:859
+#line 1359 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 29:
-#line 206 "parser.y" // lalr1.cc:859
+#line 215 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
   }
-#line 1416 "parser.tab.cpp" // lalr1.cc:859
+#line 1367 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 30:
-#line 214 "parser.y" // lalr1.cc:859
+#line 223 "parser.y" // lalr1.cc:859
     {
   	std::cout << "DefList - > (Def DefList)" << std::endl;
   }
-#line 1424 "parser.tab.cpp" // lalr1.cc:859
+#line 1375 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 32:
-#line 221 "parser.y" // lalr1.cc:859
+#line 230 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
   }
-#line 1432 "parser.tab.cpp" // lalr1.cc:859
+#line 1383 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 33:
-#line 227 "parser.y" // lalr1.cc:859
+#line 236 "parser.y" // lalr1.cc:859
     {
   	std::cout << "DecList - > (Dec)" << std::endl;
   }
-#line 1440 "parser.tab.cpp" // lalr1.cc:859
+#line 1391 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 34:
-#line 230 "parser.y" // lalr1.cc:859
+#line 239 "parser.y" // lalr1.cc:859
     {
   	std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
   }
-#line 1448 "parser.tab.cpp" // lalr1.cc:859
+#line 1399 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 35:
-#line 236 "parser.y" // lalr1.cc:859
+#line 245 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Dec - > (VarDec)" << std::endl;
   }
-#line 1456 "parser.tab.cpp" // lalr1.cc:859
+#line 1407 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 36:
-#line 239 "parser.y" // lalr1.cc:859
+#line 248 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
   }
-#line 1464 "parser.tab.cpp" // lalr1.cc:859
+#line 1415 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 37:
-#line 247 "parser.y" // lalr1.cc:859
+#line 256 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::ASSIGN, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  	driver.set_root(yylhs.value.as< EXP_Node * > ());
   }
-#line 1472 "parser.tab.cpp" // lalr1.cc:859
+#line 1425 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 38:
+#line 261 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::AND, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1433 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 39:
+#line 264 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::OR, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1441 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 40:
+#line 267 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::LT, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1449 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 41:
+#line 270 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::LE, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1457 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 42:
+#line 273 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::GT, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+   }
+#line 1465 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 43:
+#line 276 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::GE, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1473 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 44:
+#line 279 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::NE, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1481 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 45:
+#line 282 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::EQ, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1489 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 46:
+#line 285 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::PLUS, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1497 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 47:
+#line 288 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::MINUS, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1505 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 48:
+#line 291 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::MUL, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1513 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 49:
+#line 294 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Binary_EXP_Node(token::DIV, yystack_[2].value.as< EXP_Node * > (), yystack_[0].value.as< EXP_Node * > ());
+  }
+#line 1521 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 50:
+#line 297 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = yystack_[1].value.as< EXP_Node * > ();
+  }
+#line 1529 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 51:
+#line 300 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::MINUS, yystack_[1].value.as< std::string > ());
+  }
+#line 1537 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 52:
+#line 303 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::NOT, yystack_[1].value.as< std::string > ());
+  }
+#line 1545 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 53:
-#line 265 "parser.y" // lalr1.cc:859
+#line 306 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (ID LP Args RP) " << yystack_[3].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::ID, "testing ID LP Args RP");
   }
-#line 1480 "parser.tab.cpp" // lalr1.cc:859
+#line 1553 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 54:
-#line 268 "parser.y" // lalr1.cc:859
+#line 309 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Exp - > (ID LP RP) " << yystack_[2].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::ID, "testing ID LP Args RP");
   }
-#line 1488 "parser.tab.cpp" // lalr1.cc:859
+#line 1562 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 55:
+#line 313 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::ID, "testing Exp LB Exp LB");
+  }
+#line 1570 "parser.tab.cpp" // lalr1.cc:859
+    break;
+
+  case 56:
+#line 316 "parser.y" // lalr1.cc:859
+    {
+  	yylhs.value.as< EXP_Node * > () = new Unary_EXP_Node(token::ID, "testing Exp DOT ID");
+  }
+#line 1578 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 57:
-#line 273 "parser.y" // lalr1.cc:859
+#line 319 "parser.y" // lalr1.cc:859
     {
   	std::cout << "Exp - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Leaf_EXP_Node(token::ID, yystack_[0].value.as< std::string > ());
   }
-#line 1496 "parser.tab.cpp" // lalr1.cc:859
+#line 1587 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 58:
-#line 276 "parser.y" // lalr1.cc:859
+#line 323 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (INT) " << yystack_[0].value.as< int > () << std::endl;
+  	std::cout << "Exp - > (INT) " << yystack_[0].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Leaf_EXP_Node(token::INT, yystack_[0].value.as< std::string > ());
   }
-#line 1504 "parser.tab.cpp" // lalr1.cc:859
+#line 1596 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 59:
-#line 279 "parser.y" // lalr1.cc:859
+#line 327 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (FLOAT) " << yystack_[0].value.as< float > () << std::endl;
+  	std::cout << "Exp - > (FLOAT) " << yystack_[0].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Leaf_EXP_Node(token::FLOAT, yystack_[0].value.as< std::string > ());
   }
-#line 1512 "parser.tab.cpp" // lalr1.cc:859
+#line 1605 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 60:
-#line 282 "parser.y" // lalr1.cc:859
+#line 331 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< char > () << std::endl;
+  	std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< std::string > () << std::endl;
+  	yylhs.value.as< EXP_Node * > () = new Leaf_EXP_Node(token::CHAR, yystack_[0].value.as< std::string > ());
   }
-#line 1520 "parser.tab.cpp" // lalr1.cc:859
+#line 1614 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 61:
-#line 288 "parser.y" // lalr1.cc:859
+#line 338 "parser.y" // lalr1.cc:859
     {
-//  	std::cout << "set root done!" << std::endl;
-//  	driver.set_root(new ARGS_Node("test", 1));
-  	std::cout << "Args - > (ID) " << std::endl;
+  	std::cout << "Args - > (Exp COMMA Args) " << std::endl;
   }
-#line 1530 "parser.tab.cpp" // lalr1.cc:859
+#line 1622 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
-#line 293 "parser.y" // lalr1.cc:859
+#line 341 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "push root!" << std::endl;
-  	driver.get_root()->push_back("2");
-        std::cout << "Args - > (ID) " << std::endl;
+        std::cout << "Args - > (Exp) " << std::endl;
   }
-#line 1540 "parser.tab.cpp" // lalr1.cc:859
+#line 1630 "parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 1544 "parser.tab.cpp" // lalr1.cc:859
+#line 1634 "parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -1890,13 +1980,13 @@ namespace SPL {
   const unsigned short int
   SPL_Parser::yyrline_[] =
   {
-       0,    87,    87,    93,    96,   100,   103,   106,   112,   115,
-     123,   126,   132,   135,   143,   146,   152,   155,   161,   164,
-     170,   178,   184,   187,   191,   194,   197,   200,   203,   206,
-     214,   217,   221,   227,   230,   236,   239,   247,   250,   251,
-     252,   253,   254,   255,   256,   257,   258,   259,   260,   261,
-     262,   263,   264,   265,   268,   271,   272,   273,   276,   279,
-     282,   288,   293
+       0,    96,    96,   102,   105,   109,   112,   115,   121,   124,
+     132,   135,   141,   144,   152,   155,   161,   164,   170,   173,
+     179,   187,   193,   196,   200,   203,   206,   209,   212,   215,
+     223,   226,   230,   236,   239,   245,   248,   256,   261,   264,
+     267,   270,   273,   276,   279,   282,   285,   288,   291,   294,
+     297,   300,   303,   306,   309,   313,   316,   319,   323,   327,
+     331,   338,   341
   };
 
   // Print the state stack on the debug stream.
@@ -1981,8 +2071,8 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:1167
 } // SPL
-#line 1985 "parser.tab.cpp" // lalr1.cc:1167
-#line 300 "parser.y" // lalr1.cc:1168
+#line 2075 "parser.tab.cpp" // lalr1.cc:1167
+#line 346 "parser.y" // lalr1.cc:1168
 
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){

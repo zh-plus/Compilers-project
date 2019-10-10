@@ -8,9 +8,6 @@
 	#undef YY_DECL
 	#define YY_DECL int SPL::SPL_Scanner::yylex(SPL::SPL_Parser::semantic_type * const lval, SPL::SPL_Parser::location_type *location)
 
-	/* Helping function */
-    #include "utils.hpp"
-
 	/* using "token" to make the returns for the tokens shorter to type */
 	using token = SPL::SPL_Parser::token;
 
@@ -50,12 +47,14 @@ LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 %}
 
 {DECIMAL_INT} {
-    yylval->build<int>(atoi(yytext));
+    //yylval->build<int>(atoi(yytext));
+    yylval->build<std::string>(yytext);
     return token::INT;
 }
 
 {HEX_INT} {
-    yylval->build<int>((int)strtol(yytext, NULL, 16));
+    //yylval->build<int>((int)strtol(yytext, NULL, 16));
+    yylval->build<std::string>(yytext);
     return token::INT;
 }
 
@@ -65,12 +64,14 @@ LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 }
 
 {CHAR}|{HEX_CHAR} {
-	yylval->build<char>(trim(yytext, "'").c_str()[0]);
+	//yylval->build<char>(trim(yytext, "'").c_str()[0]);
+	yylval->build<std::string>(yytext);
     return token::CHAR;
 }
 
 {FLOAT} {
-    yylval->build<float>(atof(yytext));
+    //yylval->build<float>(atof(yytext));
+    yylval->build<std::string>(yytext);
     return token::FLOAT;
 }
 
@@ -80,27 +81,27 @@ int|float|char {        // reserved type
 }
 
 "struct" {             // reserved key word
-    yylval->build<int>(token::STRUCT);
+    yylval->build<std::string>(yytext);
     return token::STRUCT;
 }
 
 "if" {             // reserved key word
-    yylval->build<int>(token::IF);
+    yylval->build<std::string>(yytext);
     return token::IF;
 }
 
 "else" {             // reserved key word
-    yylval->build<int>(token::ELSE);
+    yylval->build<std::string>(yytext);
     return token::ELSE;
 }
 
 "while" {             // reserved key word
-    yylval->build<int>(token::WHILE);
+    yylval->build<std::string>(yytext);
     return token::WHILE;
 }
 
 "return" {             // reserved key word
-    yylval->build<int>(token::RETURN);
+    yylval->build<std::string>(yytext);
     return token::RETURN;
 }
 
@@ -110,110 +111,107 @@ int|float|char {        // reserved type
 }
 
 "." {
-	yylval->build<int>(token::DOT);
+	yylval->build<std::string>(yytext);
     return token::DOT;
 }
 
 ";" {
-	yylval->build<int>(token::SEMI);
+	yylval->build<std::string>(yytext);
 	return token::SEMI;
 }
 
 "," {
-	yylval->build<int>(token::COMMA);
+	yylval->build<std::string>(yytext);
 	return token::COMMA;
 }
 
 "==" {
-	yylval->build<int>(token::EQ);
+	yylval->build<std::string>(yytext);
 	return token::EQ;
 }
 
 "=" {
-	yylval->build<int>(token::ASSIGN);
+	yylval->build<std::string>(yytext);
 	return token::ASSIGN;
 }
 
 "<=" {
-	yylval->build<int>(token::LE);
+	yylval->build<std::string>(yytext);
     return token::LE;
 }
 
 "<" {
-	yylval->build<int>(token::LT);
+	yylval->build<std::string>(yytext);
     return token::LT;
 }
 
 ">=" {
-	yylval->build<int>(token::GE);
+	yylval->build<std::string>(yytext);
     return token::GE;
 }
 
 ">" {
-	yylval->build<int>(token::GT);
+	yylval->build<std::string>(yytext);
     return token::GT;
 }
 
 "!=" {
-	yylval->build<int>(token::NE);
+	yylval->build<std::string>(yytext);
     return token::NE;
 }
 
 "!" {
-	yylval->build<int>(token::NOT);
+	yylval->build<std::string>(yytext);
     return token::NOT;
 }
 
 "+" {
-	yylval->build<int>(token::PLUS);
+	yylval->build<std::string>(yytext);
 	return token::PLUS;
 }
 
 "-" {
-	yylval->build<int>(token::MINUS);
+	yylval->build<std::string>(yytext);
 	return token::MINUS;
 }
 
 "*" {
-	yylval->build<int>(token::MUL);
+	yylval->build<std::string>(yytext);
 	return token::MUL;
 }
 
 "/" {
-	yylval->build<int>(token::DIV);
+	yylval->build<std::string>(yytext);
 	return token::DIV;
 }
 
 "&&" {
-	yylval->build<int>(token::AND);
+	yylval->build<std::string>(yytext);
 	return token::AND;
 }
 
 "||" {
-	yylval->build<int>(token::OR);
+	yylval->build<std::string>(yytext);
 	return token::OR;
 }
 
 "("|")" {
-	int _token = yytext[0] == '(' ? token::LP : token::RP;
-	yylval->build<int>(_token);
-	return _token;
+	yylval->build<std::string>(yytext);
+	return yytext[0] == '(' ? token::LP : token::RP;
 }
 
 "{"|"}" {
-	int _token = yytext[0] == '{' ? token::LC : token::RC;
-    yylval->build<int>(_token);
-    return _token;
+    yylval->build<std::string>(yytext);
+    return yytext[0] == '{' ? token::LC : token::RC;
 }
 
 "["|"]" {
-	int _token = yytext[0] == '[' ? token::LB : token::RB;
-    yylval->build<int>(_token);
-    return _token;
+    yylval->build<std::string>(yytext);
+    return yytext[0] == '[' ? token::LB : token::RB;
 }
 
 {LINE_COMMENT} {
-	yylval->build<std::string>(&yytext[2]);
+	yylval->build<std::string>(yytext);
     return token::LINE_COMMENT;
 }
 

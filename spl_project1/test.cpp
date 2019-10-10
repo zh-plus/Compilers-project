@@ -4,8 +4,15 @@
 #include <iostream>
 #include "utils.hpp"
 
+using namespace std;
+
+
+vector<int> get_v(){
+    return vector<int>{1, 4};
+}
+
 int main() {
-    using namespace std;
+
 
     const char *s = "-10";
     int a = atoi(s);
@@ -16,6 +23,12 @@ int main() {
     char ch = (char) c[1];
     char trimmed = trim(c, "'").c_str()[0];
     cout << ch << endl;
+
+    vector<int> v = get_v();
+    for (auto &x: v) {
+        cout << x << " ";
+    }
+    cout << endl;
 
     return 0;
 }

@@ -83,18 +83,14 @@ void SPL::SPL_Driver::scan_id(const std::string &id) {
     std::cout << "ID " << id << std::endl;
 }
 
-void SPL::SPL_Driver::scan_symbol(const int &symbol) {
-    std::cout << symbol_map[symbol] << std::endl;
-}
-
 void SPL::SPL_Driver::scan_line_comment(const std::string &line_comment) {
     std::cout << "Line comment: " << line_comment;
 }
 
-void SPL::SPL_Driver::set_root(SPL::ARGS_Node *node) {
+void SPL::SPL_Driver::set_root(SPL::EXP_Node *node) {
     root = node;
 }
 
-SPL::ARGS_Node * SPL::SPL_Driver::get_root() {
+SPL::EXP_Node * SPL::SPL_Driver::get_root() {
     return root;
 }

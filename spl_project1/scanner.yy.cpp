@@ -521,9 +521,6 @@ static const flex_int32_t yy_rule_can_match_eol[37] =
 	#undef YY_DECL
 	#define YY_DECL int SPL::SPL_Scanner::yylex(SPL::SPL_Parser::semantic_type * const lval, SPL::SPL_Parser::location_type *location)
 
-	/* Helping function */
-    #include "utils.hpp"
-
 	/* using "token" to make the returns for the tokens shorter to type */
 	using token = SPL::SPL_Parser::token;
 
@@ -534,8 +531,8 @@ static const flex_int32_t yy_rule_can_match_eol[37] =
     #define YY_USER_ACTION loc->step(); loc->columns(yyleng);
 
 	using namespace std;
-#line 538 "scanner.yy.cpp"
-#line 539 "scanner.yy.cpp"
+#line 535 "scanner.yy.cpp"
+#line 536 "scanner.yy.cpp"
 
 #define INITIAL 0
 
@@ -667,14 +664,14 @@ YY_DECL
 		}
 
 	{
-#line 47 "scanner.l"
+#line 44 "scanner.l"
 
           /** Code executed at the beginning of yylex **/
-#line 50 "scanner.l"
+#line 47 "scanner.l"
             yylval = lval;
 
 
-#line 678 "scanner.yy.cpp"
+#line 675 "scanner.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -743,23 +740,25 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 53 "scanner.l"
+#line 50 "scanner.l"
 {
-    yylval->build<int>(atoi(yytext));
+    //yylval->build<int>(atoi(yytext));
+    yylval->build<std::string>(yytext);
     return token::INT;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 58 "scanner.l"
+#line 56 "scanner.l"
 {
-    yylval->build<int>((int)strtol(yytext, NULL, 16));
+    //yylval->build<int>((int)strtol(yytext, NULL, 16));
+    yylval->build<std::string>(yytext);
     return token::INT;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 63 "scanner.l"
+#line 62 "scanner.l"
 {
     printf("Error type INT at Line %d: int range overflow(%s is more than 2^32 - 1)\n",
            yylineno, yytext);
@@ -767,9 +766,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 68 "scanner.l"
+#line 67 "scanner.l"
 {
-	yylval->build<char>(trim(yytext, "'").c_str()[0]);
+	//yylval->build<char>(trim(yytext, "'").c_str()[0]);
+	yylval->build<std::string>(yytext);
     return token::CHAR;
 }
 	YY_BREAK
@@ -777,13 +777,14 @@ case 5:
 YY_RULE_SETUP
 #line 73 "scanner.l"
 {
-    yylval->build<float>(atof(yytext));
+    //yylval->build<float>(atof(yytext));
+    yylval->build<std::string>(yytext);
     return token::FLOAT;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 78 "scanner.l"
+#line 79 "scanner.l"
 {        // reserved type
     yylval->build<std::string>(yytext);
     return token::TYPE;
@@ -791,47 +792,47 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 83 "scanner.l"
+#line 84 "scanner.l"
 {             // reserved key word
-    yylval->build<int>(token::STRUCT);
+    yylval->build<std::string>(yytext);
     return token::STRUCT;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 88 "scanner.l"
+#line 89 "scanner.l"
 {             // reserved key word
-    yylval->build<int>(token::IF);
+    yylval->build<std::string>(yytext);
     return token::IF;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 93 "scanner.l"
+#line 94 "scanner.l"
 {             // reserved key word
-    yylval->build<int>(token::ELSE);
+    yylval->build<std::string>(yytext);
     return token::ELSE;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 98 "scanner.l"
+#line 99 "scanner.l"
 {             // reserved key word
-    yylval->build<int>(token::WHILE);
+    yylval->build<std::string>(yytext);
     return token::WHILE;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 103 "scanner.l"
+#line 104 "scanner.l"
 {             // reserved key word
-    yylval->build<int>(token::RETURN);
+    yylval->build<std::string>(yytext);
     return token::RETURN;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 108 "scanner.l"
+#line 109 "scanner.l"
 {
     yylval->build<std::string>(yytext);
     return token::ID;
@@ -839,197 +840,194 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 113 "scanner.l"
+#line 114 "scanner.l"
 {
-	yylval->build<int>(token::DOT);
+	yylval->build<std::string>(yytext);
     return token::DOT;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 118 "scanner.l"
+#line 119 "scanner.l"
 {
-	yylval->build<int>(token::SEMI);
+	yylval->build<std::string>(yytext);
 	return token::SEMI;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 123 "scanner.l"
+#line 124 "scanner.l"
 {
-	yylval->build<int>(token::COMMA);
+	yylval->build<std::string>(yytext);
 	return token::COMMA;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 128 "scanner.l"
+#line 129 "scanner.l"
 {
-	yylval->build<int>(token::EQ);
+	yylval->build<std::string>(yytext);
 	return token::EQ;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 133 "scanner.l"
+#line 134 "scanner.l"
 {
-	yylval->build<int>(token::ASSIGN);
+	yylval->build<std::string>(yytext);
 	return token::ASSIGN;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 138 "scanner.l"
+#line 139 "scanner.l"
 {
-	yylval->build<int>(token::LE);
+	yylval->build<std::string>(yytext);
     return token::LE;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 143 "scanner.l"
+#line 144 "scanner.l"
 {
-	yylval->build<int>(token::LT);
+	yylval->build<std::string>(yytext);
     return token::LT;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 148 "scanner.l"
+#line 149 "scanner.l"
 {
-	yylval->build<int>(token::GE);
+	yylval->build<std::string>(yytext);
     return token::GE;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 153 "scanner.l"
+#line 154 "scanner.l"
 {
-	yylval->build<int>(token::GT);
+	yylval->build<std::string>(yytext);
     return token::GT;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 158 "scanner.l"
+#line 159 "scanner.l"
 {
-	yylval->build<int>(token::NE);
+	yylval->build<std::string>(yytext);
     return token::NE;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 163 "scanner.l"
+#line 164 "scanner.l"
 {
-	yylval->build<int>(token::NOT);
+	yylval->build<std::string>(yytext);
     return token::NOT;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 168 "scanner.l"
+#line 169 "scanner.l"
 {
-	yylval->build<int>(token::PLUS);
+	yylval->build<std::string>(yytext);
 	return token::PLUS;
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 173 "scanner.l"
+#line 174 "scanner.l"
 {
-	yylval->build<int>(token::MINUS);
+	yylval->build<std::string>(yytext);
 	return token::MINUS;
 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 178 "scanner.l"
+#line 179 "scanner.l"
 {
-	yylval->build<int>(token::MUL);
+	yylval->build<std::string>(yytext);
 	return token::MUL;
 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 183 "scanner.l"
+#line 184 "scanner.l"
 {
-	yylval->build<int>(token::DIV);
+	yylval->build<std::string>(yytext);
 	return token::DIV;
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 188 "scanner.l"
+#line 189 "scanner.l"
 {
-	yylval->build<int>(token::AND);
+	yylval->build<std::string>(yytext);
 	return token::AND;
 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 193 "scanner.l"
+#line 194 "scanner.l"
 {
-	yylval->build<int>(token::OR);
+	yylval->build<std::string>(yytext);
 	return token::OR;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 198 "scanner.l"
+#line 199 "scanner.l"
 {
-	int _token = yytext[0] == '(' ? token::LP : token::RP;
-	yylval->build<int>(_token);
-	return _token;
+	yylval->build<std::string>(yytext);
+	return yytext[0] == '(' ? token::LP : token::RP;
 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 204 "scanner.l"
 {
-	int _token = yytext[0] == '{' ? token::LC : token::RC;
-    yylval->build<int>(_token);
-    return _token;
+    yylval->build<std::string>(yytext);
+    return yytext[0] == '{' ? token::LC : token::RC;
 }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 210 "scanner.l"
+#line 209 "scanner.l"
 {
-	int _token = yytext[0] == '[' ? token::LB : token::RB;
-    yylval->build<int>(_token);
-    return _token;
+    yylval->build<std::string>(yytext);
+    return yytext[0] == '[' ? token::LB : token::RB;
 }
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 216 "scanner.l"
+#line 214 "scanner.l"
 {
-	yylval->build<std::string>(&yytext[2]);
+	yylval->build<std::string>(yytext);
     return token::LINE_COMMENT;
 }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 221 "scanner.l"
+#line 219 "scanner.l"
 {
     /* Eat up one-line comments */
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 225 "scanner.l"
+#line 223 "scanner.l"
 {
 	std::cerr << "Unrecognized character: " << yytext << std::endl;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 229 "scanner.l"
+#line 227 "scanner.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1033 "scanner.yy.cpp"
+#line 1031 "scanner.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2001,5 +1999,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 229 "scanner.l"
+#line 227 "scanner.l"
 
