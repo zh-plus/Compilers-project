@@ -1,4 +1,12 @@
-int test_1_r01(int a)
+int global;
+struct my_struct
 {
-    m = 1;
+    int code;
+    char data;
+};
+int test_1_r02()
+{
+    struct my_struct obj;
+    obj.code = global;
+    global = global + 1;
 }

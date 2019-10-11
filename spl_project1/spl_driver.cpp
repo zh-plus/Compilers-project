@@ -87,10 +87,10 @@ void SPL::SPL_Driver::scan_line_comment(const std::string &line_comment) {
     std::cout << "Line comment: " << line_comment;
 }
 
-void SPL::SPL_Driver::set_root(SPL::EXP_Node *node) {
+void SPL::SPL_Driver::set_root(SPL::Program_Node *node) {
     root = node;
 }
 
-SPL::EXP_Node * SPL::SPL_Driver::get_root() {
+SPL::Program_Node * SPL::SPL_Driver::get_root() {
     return root;
 }

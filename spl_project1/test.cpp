@@ -11,6 +11,8 @@ vector<int> get_v(){
     return vector<int>{1, 4};
 }
 
+
+
 int main() {
 
 
@@ -21,7 +23,7 @@ int main() {
 
     const char *c = "'\x7E'";
     char ch = (char) c[1];
-    char trimmed = trim(c, "'").c_str()[0];
+    char trimmed = SPL::trim(c, "'").c_str()[0];
     cout << ch << endl;
 
     vector<int> v = get_v();
@@ -29,6 +31,14 @@ int main() {
         cout << x << " ";
     }
     cout << endl;
+
+    vector<int> *ve = nullptr;
+    if (ve) {
+        cout << "True!";
+    }
+
+    Def_Node node;
+    cout << typeid(node).name() << endl;
 
     return 0;
 }

@@ -46,13 +46,26 @@
       class SPL_Driver;
       class SPL_Scanner;
       class AST_Node;
-      class ASSIGN_Node;
-      class ARGS_Node;
       class Leaf_Node;
-      class EXP_Node;
-      class Binary_EXP_Node;
-      class Unary_EXP_Node;
-      class Leaf_EXP_Node;
+      class Program_Node;
+      class ExtDefList_Node;
+      class ExtDef_Node;
+      class ExtDecList_Node;
+      class Specifier_Node;
+      class StructSpecifier_Node;
+      class VarDec_Node;
+      class FunDec_Node;
+      class VarList_Node;
+      class ParamDec_Node;
+      class CompSt_Node;
+      class StmtList_Node;
+      class Stmt_Node;
+      class DefList_Node;
+      class Def_Node;
+      class DecList_Node;
+      class Dec_Node;
+      class Exp_Node;
+      class Args_Node;
    }
 
    ///* include for all AST functions */
@@ -69,7 +82,7 @@
 # endif
 
 
-#line 73 "parser.tab.hpp" // lalr1.cc:377
+#line 86 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -146,7 +159,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 150 "parser.tab.hpp" // lalr1.cc:377
+#line 163 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -313,8 +326,62 @@ namespace SPL {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // Args
+      char dummy1[sizeof(Args_Node *)];
+
+      // CompSt
+      char dummy2[sizeof(CompSt_Node *)];
+
+      // DecList
+      char dummy3[sizeof(DecList_Node *)];
+
+      // Dec
+      char dummy4[sizeof(Dec_Node *)];
+
+      // DefList
+      char dummy5[sizeof(DefList_Node *)];
+
+      // Def
+      char dummy6[sizeof(Def_Node *)];
+
       // Exp
-      char dummy1[sizeof(EXP_Node *)];
+      char dummy7[sizeof(Exp_Node *)];
+
+      // ExtDecList
+      char dummy8[sizeof(ExtDecList_Node *)];
+
+      // ExtDefList
+      char dummy9[sizeof(ExtDefList_Node *)];
+
+      // ExtDef
+      char dummy10[sizeof(ExtDef_Node *)];
+
+      // FunDec
+      char dummy11[sizeof(FunDec_Node *)];
+
+      // ParamDec
+      char dummy12[sizeof(ParamDec_Node *)];
+
+      // Program
+      char dummy13[sizeof(Program_Node *)];
+
+      // Specifier
+      char dummy14[sizeof(Specifier_Node *)];
+
+      // StmtList
+      char dummy15[sizeof(StmtList_Node *)];
+
+      // Stmt
+      char dummy16[sizeof(Stmt_Node *)];
+
+      // StructSpecifier
+      char dummy17[sizeof(StructSpecifier_Node *)];
+
+      // VarDec
+      char dummy18[sizeof(VarDec_Node *)];
+
+      // VarList
+      char dummy19[sizeof(VarList_Node *)];
 
       // INT
       // FLOAT
@@ -350,7 +417,7 @@ namespace SPL {
       // LB
       // RB
       // LINE_COMMENT
-      char dummy2[sizeof(std::string)];
+      char dummy20[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -447,7 +514,43 @@ namespace SPL {
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const EXP_Node * v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const Args_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const CompSt_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const DecList_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Dec_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const DefList_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Def_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Exp_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const ExtDecList_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const ExtDefList_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const ExtDef_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const FunDec_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const ParamDec_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Program_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Specifier_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const StmtList_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const Stmt_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const StructSpecifier_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const VarDec_Node * v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const VarList_Node * v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
 
@@ -741,7 +844,7 @@ namespace SPL {
   static const unsigned char yydefact_[];
 
   // YYPGOTO[NTERM-NUM].
-  static const signed char yypgoto_[];
+  static const short int yypgoto_[];
 
   // YYDEFGOTO[NTERM-NUM].
   static const signed char yydefgoto_[];
@@ -868,7 +971,7 @@ namespace SPL {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 296,     ///< Last index in yytable_.
+      yylast_ = 287,     ///< Last index in yytable_.
       yynnts_ = 20,  ///< Number of nonterminal symbols.
       yyfinal_ = 9, ///< Termination state number.
       yyterror_ = 1,
@@ -885,7 +988,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 889 "parser.tab.hpp" // lalr1.cc:377
+#line 992 "parser.tab.hpp" // lalr1.cc:377
 
 
 
