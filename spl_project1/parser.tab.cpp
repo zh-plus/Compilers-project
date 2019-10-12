@@ -49,7 +49,7 @@
 
 #line 51 "parser.tab.cpp" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 53 "parser.y" // lalr1.cc:413
+#line 43 "parser.y" // lalr1.cc:413
 
     #include <iostream>
     #include <cstdlib>
@@ -1789,265 +1789,266 @@ namespace SPL {
           switch (yyn)
             {
   case 2:
-#line 127 "parser.y" // lalr1.cc:859
+#line 117 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Program_Node * > () = new Program_Node(yystack_[0].value.as< ExtDefList_Node * > ());
   	driver.set_root(yylhs.value.as< Program_Node * > ());
-  	std::cout << "Program -> (ExtDefList)" << std::endl;
+  	std::cout << "yylineno: " << yylineno << std::endl;
+  	//std::cout << "Program -> (ExtDefList)" << std::endl;
   }
-#line 1799 "parser.tab.cpp" // lalr1.cc:859
+#line 1800 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 3:
-#line 135 "parser.y" // lalr1.cc:859
+#line 126 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDefList_Node * > () = new ExtDefList_Node(yystack_[1].value.as< ExtDef_Node * > (), yystack_[0].value.as< ExtDefList_Node * > ());
-  	std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
+  	//std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
   }
-#line 1808 "parser.tab.cpp" // lalr1.cc:859
+#line 1809 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 4:
-#line 139 "parser.y" // lalr1.cc:859
+#line 130 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDefList_Node * > () = new Empty_ExtDefList_Node();
   }
-#line 1816 "parser.tab.cpp" // lalr1.cc:859
+#line 1817 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 5:
-#line 145 "parser.y" // lalr1.cc:859
+#line 136 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[2].value.as< Specifier_Node * > (), yystack_[1].value.as< ExtDecList_Node * > (), make_leaf(token::SEMI, yystack_[0].value.as< std::string > ()));
-  	std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
   }
-#line 1825 "parser.tab.cpp" // lalr1.cc:859
+#line 1826 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 6:
-#line 149 "parser.y" // lalr1.cc:859
+#line 140 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[1].value.as< Specifier_Node * > (), make_leaf(token::SEMI, yystack_[0].value.as< std::string > ()));
-  	std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
   }
-#line 1834 "parser.tab.cpp" // lalr1.cc:859
+#line 1835 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
-#line 153 "parser.y" // lalr1.cc:859
+#line 144 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[2].value.as< Specifier_Node * > (), yystack_[1].value.as< FunDec_Node * > (), yystack_[0].value.as< CompSt_Node * > ());
-  	std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
   }
-#line 1843 "parser.tab.cpp" // lalr1.cc:859
+#line 1844 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
-#line 160 "parser.y" // lalr1.cc:859
+#line 151 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[0].value.as< VarDec_Node * > ());
-  	std::cout << "ExtDecList - > (VarDec)" << std::endl;
+  	//std::cout << "ExtDecList - > (VarDec)" << std::endl;
   }
-#line 1852 "parser.tab.cpp" // lalr1.cc:859
+#line 1853 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
-#line 164 "parser.y" // lalr1.cc:859
+#line 155 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[2].value.as< VarDec_Node * > (), make_leaf(token::COMMA, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< ExtDecList_Node * > ());
-  	std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
+  	//std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
   }
-#line 1861 "parser.tab.cpp" // lalr1.cc:859
+#line 1862 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 10:
-#line 173 "parser.y" // lalr1.cc:859
+#line 164 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Specifier_Node * > () = new Specifier_Node(make_leaf(token::TYPE, yystack_[0].value.as< std::string > ()));
-	std::cout << "Specifier - > (TYPE) " << yystack_[0].value.as< std::string > () << std::endl;
+	//std::cout << "Specifier - > (TYPE) " << $1 << std::endl;
   }
-#line 1870 "parser.tab.cpp" // lalr1.cc:859
+#line 1871 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 11:
-#line 177 "parser.y" // lalr1.cc:859
+#line 168 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Specifier_Node * > () = new Specifier_Node(yystack_[0].value.as< StructSpecifier_Node * > ());
-  	std::cout << "Specifier - > (StructSpecifier)" << std::endl;
+  	//std::cout << "Specifier - > (StructSpecifier)" << std::endl;
   }
-#line 1879 "parser.tab.cpp" // lalr1.cc:859
+#line 1880 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 12:
-#line 184 "parser.y" // lalr1.cc:859
+#line 175 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< StructSpecifier_Node * > () = new StructSpecifier_Node(make_leaf(token::STRUCT, yystack_[4].value.as< std::string > ()),
   				      make_leaf(token::ID, yystack_[3].value.as< std::string > ()),
   				      make_leaf(token::LC, yystack_[2].value.as< std::string > ()),
   				      yystack_[1].value.as< DefList_Node * > (),
   				      make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
-  	std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
+  	//std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
   }
-#line 1892 "parser.tab.cpp" // lalr1.cc:859
+#line 1893 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 13:
-#line 192 "parser.y" // lalr1.cc:859
+#line 183 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< StructSpecifier_Node * > () = new StructSpecifier_Node(make_leaf(token::STRUCT, yystack_[1].value.as< std::string > ()),
           			      make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
-  	std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
+  	//std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
   }
-#line 1902 "parser.tab.cpp" // lalr1.cc:859
+#line 1903 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 14:
-#line 202 "parser.y" // lalr1.cc:859
+#line 193 "parser.y" // lalr1.cc:859
     {
 	yylhs.value.as< VarDec_Node * > () = new ID_VarDec_Node(make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
-  	std::cout << "VarDec - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
+  	//std::cout << "VarDec - > (ID) " << $1 << std::endl;
   }
-#line 1911 "parser.tab.cpp" // lalr1.cc:859
+#line 1912 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 15:
-#line 206 "parser.y" // lalr1.cc:859
+#line 197 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< VarDec_Node * > () = new Array_VarDec_Node(yystack_[3].value.as< VarDec_Node * > (),
 			     	   make_leaf(token::LB, yystack_[2].value.as< std::string > ()),
 			     	   make_leaf(token::INT, yystack_[1].value.as< std::string > ()),
 			     	   make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
-  	std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
+  	//std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
   }
-#line 1923 "parser.tab.cpp" // lalr1.cc:859
+#line 1924 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 16:
-#line 216 "parser.y" // lalr1.cc:859
+#line 207 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< FunDec_Node * > () = new FunDec_Node(make_leaf(token::ID, yystack_[3].value.as< std::string > ()),
 			     make_leaf(token::LP, yystack_[2].value.as< std::string > ()),
 			     yystack_[1].value.as< VarList_Node * > (),
 			     make_leaf(token::RP, yystack_[0].value.as< std::string > ()));
-  	std::cout << "FunDec - > (ID LP VarList RP) " << yystack_[3].value.as< std::string > () << std::endl;
+  	//std::cout << "FunDec - > (ID LP VarList RP) " << $1 << std::endl;
   }
-#line 1935 "parser.tab.cpp" // lalr1.cc:859
+#line 1936 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 17:
-#line 223 "parser.y" // lalr1.cc:859
+#line 214 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< FunDec_Node * > () = new FunDec_Node(make_leaf(token::ID, yystack_[2].value.as< std::string > ()),
 			     make_leaf(token::LP, yystack_[1].value.as< std::string > ()),
 			     make_leaf(token::RP, yystack_[0].value.as< std::string > ()));
-  	std::cout << "FunDec - > (ID LP RP) " << yystack_[2].value.as< std::string > () << std::endl;
+  	//std::cout << "FunDec - > (ID LP RP) " << $1 << std::endl;
   }
-#line 1946 "parser.tab.cpp" // lalr1.cc:859
+#line 1947 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 18:
-#line 232 "parser.y" // lalr1.cc:859
+#line 223 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< VarList_Node * > () = new VarList_Node(yystack_[2].value.as< ParamDec_Node * > (),
 			      make_leaf(token::COMMA, yystack_[1].value.as< std::string > ()),
 			      yystack_[0].value.as< VarList_Node * > ());
-  	std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
+  	//std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
   }
-#line 1957 "parser.tab.cpp" // lalr1.cc:859
+#line 1958 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 19:
-#line 238 "parser.y" // lalr1.cc:859
+#line 229 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< VarList_Node * > () = new VarList_Node(yystack_[0].value.as< ParamDec_Node * > ());
-  	std::cout << "VarList - > (ParamDec)" << std::endl;
+  	//std::cout << "VarList - > (ParamDec)" << std::endl;
   }
-#line 1966 "parser.tab.cpp" // lalr1.cc:859
+#line 1967 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 20:
-#line 245 "parser.y" // lalr1.cc:859
+#line 236 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< ParamDec_Node * > () = new ParamDec_Node(yystack_[1].value.as< Specifier_Node * > (), yystack_[0].value.as< VarDec_Node * > ());
-  	std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
+  	//std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
   }
-#line 1975 "parser.tab.cpp" // lalr1.cc:859
+#line 1976 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 21:
-#line 254 "parser.y" // lalr1.cc:859
+#line 245 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< CompSt_Node * > () = new CompSt_Node(make_leaf(token::LC, yystack_[3].value.as< std::string > ()),
 		             yystack_[2].value.as< DefList_Node * > (),
 		             yystack_[1].value.as< StmtList_Node * > (),
 		             make_leaf(token::RC, yystack_[0].value.as< std::string > ()));
-  	std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
+  	//std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
   }
-#line 1987 "parser.tab.cpp" // lalr1.cc:859
+#line 1988 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 22:
-#line 264 "parser.y" // lalr1.cc:859
+#line 255 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< StmtList_Node * > () = new StmtList_Node(yystack_[1].value.as< Stmt_Node * > (), yystack_[0].value.as< StmtList_Node * > ());
-  	std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
+  	//std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
   }
-#line 1996 "parser.tab.cpp" // lalr1.cc:859
+#line 1997 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 23:
-#line 268 "parser.y" // lalr1.cc:859
+#line 259 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< StmtList_Node * > () = new Empty_StmtList_Node();
   }
-#line 2004 "parser.tab.cpp" // lalr1.cc:859
+#line 2005 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 24:
-#line 274 "parser.y" // lalr1.cc:859
+#line 265 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new Exp_Stmt_Node(yystack_[1].value.as< Exp_Node * > (),
   			       make_leaf(token::SEMI, yystack_[0].value.as< std::string > ()));
-  	std::cout << "Stmt - > (Exp SEMI)" << std::endl;
+  	//std::cout << "Stmt - > (Exp SEMI)" << std::endl;
   }
-#line 2014 "parser.tab.cpp" // lalr1.cc:859
+#line 2015 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 25:
-#line 279 "parser.y" // lalr1.cc:859
+#line 270 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new CompSt_Stmt_Node(yystack_[0].value.as< CompSt_Node * > ());
-  	std::cout << "Stmt - > (CompSt)" << std::endl;
+  	//std::cout << "Stmt - > (CompSt)" << std::endl;
   }
-#line 2023 "parser.tab.cpp" // lalr1.cc:859
+#line 2024 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 26:
-#line 283 "parser.y" // lalr1.cc:859
+#line 274 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new Return_Stmt_Node(make_leaf(token::RETURN, yystack_[2].value.as< std::string > ()),
   			   	  yystack_[1].value.as< Exp_Node * > (),
           		   	  make_leaf(token::SEMI, yystack_[0].value.as< std::string > ()));
-  	std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
+  	//std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
   }
-#line 2034 "parser.tab.cpp" // lalr1.cc:859
+#line 2035 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 27:
-#line 289 "parser.y" // lalr1.cc:859
+#line 280 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new If_Stmt_Node(make_leaf(token::IF, yystack_[4].value.as< std::string > ()),
   			      make_leaf(token::LP, yystack_[3].value.as< std::string > ()),
   			      yystack_[2].value.as< Exp_Node * > (),
   			      make_leaf(token::RP, yystack_[1].value.as< std::string > ()),
           		      yystack_[0].value.as< Stmt_Node * > ());
-  	std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
   }
-#line 2047 "parser.tab.cpp" // lalr1.cc:859
+#line 2048 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 28:
-#line 297 "parser.y" // lalr1.cc:859
+#line 288 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new If_Stmt_Node(make_leaf(token::IF, yystack_[6].value.as< std::string > ()),
   			      make_leaf(token::LP, yystack_[5].value.as< std::string > ()),
@@ -2056,321 +2057,321 @@ namespace SPL {
           		      yystack_[2].value.as< Stmt_Node * > (),
           		      make_leaf(token::ELSE, yystack_[1].value.as< std::string > ()),
           		      yystack_[0].value.as< Stmt_Node * > ());
-  	std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
   }
-#line 2062 "parser.tab.cpp" // lalr1.cc:859
+#line 2063 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 29:
-#line 307 "parser.y" // lalr1.cc:859
+#line 298 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Stmt_Node * > () = new While_Stmt_Node(make_leaf(token::WHILE, yystack_[4].value.as< std::string > ()),
 			         make_leaf(token::LP, yystack_[3].value.as< std::string > ()),
 			         yystack_[2].value.as< Exp_Node * > (),
 			         make_leaf(token::RP, yystack_[1].value.as< std::string > ()),
 			         yystack_[0].value.as< Stmt_Node * > ());
-  	std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
   }
-#line 2075 "parser.tab.cpp" // lalr1.cc:859
+#line 2076 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 30:
-#line 320 "parser.y" // lalr1.cc:859
+#line 311 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< DefList_Node * > () = new DefList_Node(yystack_[1].value.as< Def_Node * > (), yystack_[0].value.as< DefList_Node * > ());
-  	std::cout << "DefList - > (Def DefList)" << std::endl;
+  	//std::cout << "DefList - > (Def DefList)" << std::endl;
   }
-#line 2084 "parser.tab.cpp" // lalr1.cc:859
+#line 2085 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 31:
-#line 324 "parser.y" // lalr1.cc:859
+#line 315 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< DefList_Node * > () = new Empty_DefList_Node();
   }
-#line 2092 "parser.tab.cpp" // lalr1.cc:859
+#line 2093 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 32:
-#line 330 "parser.y" // lalr1.cc:859
+#line 321 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Def_Node * > () = new Def_Node(yystack_[2].value.as< Specifier_Node * > (),
   	 		  yystack_[1].value.as< DecList_Node * > (),
   	 		  make_leaf(token::SEMI, yystack_[0].value.as< std::string > ()));
-  	std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
+  	//std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
   }
-#line 2103 "parser.tab.cpp" // lalr1.cc:859
+#line 2104 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 33:
-#line 339 "parser.y" // lalr1.cc:859
+#line 330 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< DecList_Node * > () = new DecList_Node(yystack_[0].value.as< Dec_Node * > ());
-  	std::cout << "DecList - > (Dec)" << std::endl;
+  	//std::cout << "DecList - > (Dec)" << std::endl;
   }
-#line 2112 "parser.tab.cpp" // lalr1.cc:859
+#line 2113 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 34:
-#line 343 "parser.y" // lalr1.cc:859
+#line 334 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< DecList_Node * > () = new DecList_Node(yystack_[2].value.as< Dec_Node * > (),
   			      make_leaf(token::COMMA, yystack_[1].value.as< std::string > ()),
   			      yystack_[0].value.as< DecList_Node * > ());
-  	std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
+  	//std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
   }
-#line 2123 "parser.tab.cpp" // lalr1.cc:859
+#line 2124 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 35:
-#line 352 "parser.y" // lalr1.cc:859
+#line 343 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Dec_Node * > () = new Dec_Node(yystack_[0].value.as< VarDec_Node * > ());
-  	std::cout << "Dec - > (VarDec)" << std::endl;
+  	//std::cout << "Dec - > (VarDec)" << std::endl;
   }
-#line 2132 "parser.tab.cpp" // lalr1.cc:859
+#line 2133 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 36:
-#line 356 "parser.y" // lalr1.cc:859
+#line 347 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Dec_Node * > () = new Dec_Node(yystack_[2].value.as< VarDec_Node * > (),
   			  make_leaf(token::ASSIGN, yystack_[1].value.as< std::string > ()),
   			  yystack_[0].value.as< Exp_Node * > ());
-  	std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
+  	//std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
   }
-#line 2143 "parser.tab.cpp" // lalr1.cc:859
+#line 2144 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 37:
-#line 367 "parser.y" // lalr1.cc:859
+#line 358 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
+  	//std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::ASSIGN, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2152 "parser.tab.cpp" // lalr1.cc:859
+#line 2153 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 38:
-#line 371 "parser.y" // lalr1.cc:859
+#line 362 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::AND, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2160 "parser.tab.cpp" // lalr1.cc:859
+#line 2161 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 39:
-#line 374 "parser.y" // lalr1.cc:859
+#line 365 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::OR, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2168 "parser.tab.cpp" // lalr1.cc:859
+#line 2169 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 40:
-#line 377 "parser.y" // lalr1.cc:859
+#line 368 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::LT, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2176 "parser.tab.cpp" // lalr1.cc:859
+#line 2177 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 41:
-#line 380 "parser.y" // lalr1.cc:859
+#line 371 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::LE, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2184 "parser.tab.cpp" // lalr1.cc:859
+#line 2185 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 42:
-#line 383 "parser.y" // lalr1.cc:859
+#line 374 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::GT, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
    }
-#line 2192 "parser.tab.cpp" // lalr1.cc:859
+#line 2193 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 43:
-#line 386 "parser.y" // lalr1.cc:859
+#line 377 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::GE, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2200 "parser.tab.cpp" // lalr1.cc:859
+#line 2201 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 44:
-#line 389 "parser.y" // lalr1.cc:859
+#line 380 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::NE, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2208 "parser.tab.cpp" // lalr1.cc:859
+#line 2209 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 45:
-#line 392 "parser.y" // lalr1.cc:859
+#line 383 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::EQ, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2216 "parser.tab.cpp" // lalr1.cc:859
+#line 2217 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 46:
-#line 395 "parser.y" // lalr1.cc:859
+#line 386 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::PLUS, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2224 "parser.tab.cpp" // lalr1.cc:859
+#line 2225 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 47:
-#line 398 "parser.y" // lalr1.cc:859
+#line 389 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::MINUS, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2232 "parser.tab.cpp" // lalr1.cc:859
+#line 2233 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 48:
-#line 401 "parser.y" // lalr1.cc:859
+#line 392 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::MUL, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2240 "parser.tab.cpp" // lalr1.cc:859
+#line 2241 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 49:
-#line 404 "parser.y" // lalr1.cc:859
+#line 395 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::DIV, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2248 "parser.tab.cpp" // lalr1.cc:859
+#line 2249 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 50:
-#line 407 "parser.y" // lalr1.cc:859
+#line 398 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Parentheses_Exp_Node(make_leaf(token::LP, yystack_[2].value.as< std::string > ()),
   				      yystack_[1].value.as< Exp_Node * > (),
   				      make_leaf(token::RP, yystack_[0].value.as< std::string > ()));
   }
-#line 2258 "parser.tab.cpp" // lalr1.cc:859
+#line 2259 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 51:
-#line 412 "parser.y" // lalr1.cc:859
+#line 403 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Unary_Exp_Node(make_leaf(token::MINUS, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2266 "parser.tab.cpp" // lalr1.cc:859
+#line 2267 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 52:
-#line 415 "parser.y" // lalr1.cc:859
+#line 406 "parser.y" // lalr1.cc:859
     {
   	yylhs.value.as< Exp_Node * > () = new Unary_Exp_Node(make_leaf(token::NOT, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2274 "parser.tab.cpp" // lalr1.cc:859
+#line 2275 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 53:
-#line 418 "parser.y" // lalr1.cc:859
+#line 409 "parser.y" // lalr1.cc:859
     {
 	yylhs.value.as< Exp_Node * > () = new ID_Parentheses_Exp_Node(make_leaf(token::ID, yystack_[3].value.as< std::string > ()),
 				         make_leaf(token::LP, yystack_[2].value.as< std::string > ()),
 				         yystack_[1].value.as< Args_Node * > (),
 				         make_leaf(token::RP, yystack_[0].value.as< std::string > ()));
   }
-#line 2285 "parser.tab.cpp" // lalr1.cc:859
+#line 2286 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 54:
-#line 424 "parser.y" // lalr1.cc:859
+#line 415 "parser.y" // lalr1.cc:859
     {
 	yylhs.value.as< Exp_Node * > () = new ID_Parentheses_Exp_Node(make_leaf(token::ID, yystack_[2].value.as< std::string > ()),
 					 make_leaf(token::LP, yystack_[1].value.as< std::string > ()),
 					 make_leaf(token::RP, yystack_[0].value.as< std::string > ()));
   }
-#line 2295 "parser.tab.cpp" // lalr1.cc:859
+#line 2296 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 55:
-#line 429 "parser.y" // lalr1.cc:859
+#line 420 "parser.y" // lalr1.cc:859
     {
 	yylhs.value.as< Exp_Node * > () = new Bracket_Exp_Node(yystack_[3].value.as< Exp_Node * > (),
 				  make_leaf(token::LB, yystack_[2].value.as< std::string > ()),
 				  yystack_[1].value.as< Exp_Node * > (),
 				  make_leaf(token::RB, yystack_[0].value.as< std::string > ()));
   }
-#line 2306 "parser.tab.cpp" // lalr1.cc:859
+#line 2307 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 56:
-#line 435 "parser.y" // lalr1.cc:859
+#line 426 "parser.y" // lalr1.cc:859
     {
 	yylhs.value.as< Exp_Node * > () = new Dot_Exp_Node(yystack_[2].value.as< Exp_Node * > (),
 			      make_leaf(token::DOT, yystack_[1].value.as< std::string > ()),
 			      make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
   }
-#line 2316 "parser.tab.cpp" // lalr1.cc:859
+#line 2317 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 57:
-#line 440 "parser.y" // lalr1.cc:859
+#line 431 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (ID) " << yystack_[0].value.as< std::string > () << std::endl;
+  	//std::cout << "Exp - > (ID) " << $1 << std::endl;
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::ID, yystack_[0].value.as< std::string > ()));
   }
-#line 2325 "parser.tab.cpp" // lalr1.cc:859
+#line 2326 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 58:
-#line 444 "parser.y" // lalr1.cc:859
+#line 435 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (INT) " << yystack_[0].value.as< std::string > () << std::endl;
+  	//std::cout << "Exp - > (INT) " << $1 << std::endl;
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::INT, yystack_[0].value.as< std::string > ()));
   }
-#line 2334 "parser.tab.cpp" // lalr1.cc:859
+#line 2335 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 59:
-#line 448 "parser.y" // lalr1.cc:859
+#line 439 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (FLOAT) " << yystack_[0].value.as< std::string > () << std::endl;
+  	//std::cout << "Exp - > (FLOAT) " << $1 << std::endl;
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::FLOAT, yystack_[0].value.as< std::string > ()));
   }
-#line 2343 "parser.tab.cpp" // lalr1.cc:859
+#line 2344 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 60:
-#line 452 "parser.y" // lalr1.cc:859
+#line 443 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< std::string > () << std::endl;
+  	//std::cout << "Exp - > (CHAR) " << $1 << std::endl;
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::CHAR, yystack_[0].value.as< std::string > ()));
   }
-#line 2352 "parser.tab.cpp" // lalr1.cc:859
+#line 2353 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 61:
-#line 459 "parser.y" // lalr1.cc:859
+#line 450 "parser.y" // lalr1.cc:859
     {
-  	std::cout << "Args - > (Exp COMMA Args) " << std::endl;
+  	//std::cout << "Args - > (Exp COMMA Args) " << std::endl;
   	yylhs.value.as< Args_Node * > () = new Args_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::COMMA, yystack_[1].value.as< std::string > ()), yystack_[0].value.as< Args_Node * > ());
   }
-#line 2361 "parser.tab.cpp" // lalr1.cc:859
+#line 2362 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
-#line 463 "parser.y" // lalr1.cc:859
+#line 454 "parser.y" // lalr1.cc:859
     {
-        std::cout << "Args - > (Exp) " << std::endl;
+        //std::cout << "Args - > (Exp) " << std::endl;
         yylhs.value.as< Args_Node * > () = new Args_Node(yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2370 "parser.tab.cpp" // lalr1.cc:859
+#line 2371 "parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 2374 "parser.tab.cpp" // lalr1.cc:859
+#line 2375 "parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -2718,13 +2719,13 @@ namespace SPL {
   const unsigned short int
   SPL_Parser::yyrline_[] =
   {
-       0,   127,   127,   135,   139,   145,   149,   153,   160,   164,
-     173,   177,   184,   192,   202,   206,   216,   223,   232,   238,
-     245,   254,   264,   268,   274,   279,   283,   289,   297,   307,
-     320,   324,   330,   339,   343,   352,   356,   367,   371,   374,
-     377,   380,   383,   386,   389,   392,   395,   398,   401,   404,
-     407,   412,   415,   418,   424,   429,   435,   440,   444,   448,
-     452,   459,   463
+       0,   117,   117,   126,   130,   136,   140,   144,   151,   155,
+     164,   168,   175,   183,   193,   197,   207,   214,   223,   229,
+     236,   245,   255,   259,   265,   270,   274,   280,   288,   298,
+     311,   315,   321,   330,   334,   343,   347,   358,   362,   365,
+     368,   371,   374,   377,   380,   383,   386,   389,   392,   395,
+     398,   403,   406,   409,   415,   420,   426,   431,   435,   439,
+     443,   450,   454
   };
 
   // Print the state stack on the debug stream.
@@ -2809,8 +2810,8 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:1167
 } // SPL
-#line 2813 "parser.tab.cpp" // lalr1.cc:1167
-#line 469 "parser.y" // lalr1.cc:1168
+#line 2814 "parser.tab.cpp" // lalr1.cc:1167
+#line 460 "parser.y" // lalr1.cc:1168
 
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){

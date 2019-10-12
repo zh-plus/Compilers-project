@@ -35,7 +35,7 @@ HEX_INT                 0[xX]([1-9A-Fa-f][0-9A-Fa-f]*|0)
 DECIMAL_INT_OVERFLOW    {DIGIT}{10}{DIGIT}*
 
 CHAR                    '.'
-HEX_CHAR                '\\x[0-0A-Fa-f][0-0A-Fa-f]'
+HEX_CHAR                '\\x[0-9A-Fa-f][0-9A-Fa-f]'
 
 FLOAT                   {DIGIT}+"."{DIGIT}*
 

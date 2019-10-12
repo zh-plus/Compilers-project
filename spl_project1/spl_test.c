@@ -1,12 +1,12 @@
-int global;
-struct my_struct
+int test_1_r01(int a, int b)
 {
-    int code;
-    char data;
-};
-int test_1_r02()
-{
-    struct my_struct obj;
-    obj.code = global;
-    global = global + 1;
+    c = 'c';
+    if (a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
 }

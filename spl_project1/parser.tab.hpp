@@ -72,17 +72,7 @@
    //#include "ast.hpp"
 
 
-// The following definitions is missing when %locations isn't used
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
-
-
-#line 86 "parser.tab.hpp" // lalr1.cc:377
+#line 76 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -159,7 +149,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 163 "parser.tab.hpp" // lalr1.cc:377
+#line 153 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -988,7 +978,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 992 "parser.tab.hpp" // lalr1.cc:377
+#line 982 "parser.tab.hpp" // lalr1.cc:377
 
 
 

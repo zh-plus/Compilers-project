@@ -34,19 +34,7 @@ namespace SPL {
 
         SPL::Program_Node * get_root();
 
-        void scan_int(const int &number);
-
-        void scan_float(const float &number);
-
-        void scan_type(const std::string &type_word);
-
-        void scan_keyword(const std::string &keyword);
-
-        void scan_id(const std::string &id);
-
-        void scan_symbol(const int &id);
-
-        void scan_line_comment(const std::string &line_comment);
+        SPL_Scanner *get_scanner();
 
     private:
         void parse_helper(std::istream &is);

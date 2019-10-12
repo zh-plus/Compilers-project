@@ -26,6 +26,7 @@ int main(const int argc, const char **argv) {
         }
 
         SPL::print_ast(driver.get_root());
+        cout << "yylineno: " << driver.get_scanner()->lineno() << endl;
     } else {
         cout << "Only one parameter permitted! Use -h to see usage." << endl;
         return EXIT_FAILURE;

@@ -61,36 +61,14 @@ void SPL::SPL_Driver::parse_helper(std::istream &is) {
     }
 }
 
-void SPL::SPL_Driver::scan_int(const int &number) {
-    std::cout << "INT " << number << std::endl;
-}
-
-void SPL::SPL_Driver::scan_float(const float &number) {
-    std::cout << "FLOAT " << number << std::endl;
-}
-
-void SPL::SPL_Driver::scan_type(const std::string &type_word) {
-    std::cout << "TYPE " << type_word << std::endl;
-}
-
-void SPL::SPL_Driver::scan_keyword(const std::string &keyword) {
-    std::string upper_str = keyword;
-    std::transform(upper_str.begin(), upper_str.end(), upper_str.begin(), ::toupper);
-    std::cout << upper_str << std::endl;
-}
-
-void SPL::SPL_Driver::scan_id(const std::string &id) {
-    std::cout << "ID " << id << std::endl;
-}
-
-void SPL::SPL_Driver::scan_line_comment(const std::string &line_comment) {
-    std::cout << "Line comment: " << line_comment;
-}
-
 void SPL::SPL_Driver::set_root(SPL::Program_Node *node) {
     root = node;
 }
 
 SPL::Program_Node * SPL::SPL_Driver::get_root() {
     return root;
+}
+
+SPL::SPL_Scanner *SPL::SPL_Driver::get_scanner() {
+    return scanner;
 }

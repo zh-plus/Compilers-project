@@ -24,13 +24,13 @@ namespace SPL {
 
         switch (this->leaf_type) {
             case token::INT:
-                this->value = std::stoi(this->lexeme, nullptr, 0);
+                value = std::stoi(this->lexeme, nullptr, 0);
                 break;
             case token::FLOAT:
-                this->value = std::stoi(this->lexeme, nullptr, 0);
+                value = std::stoi(this->lexeme, nullptr, 0);
                 break;
             case token::CHAR:
-                this->value = trim(this->lexeme, "'").c_str()[0];
+                value = trim(this->lexeme, "'").c_str()[0];
                 break;
             default:
                 break;
@@ -38,7 +38,18 @@ namespace SPL {
     }
 
     std::string Leaf_Node::to_string() {
-        return lexeme;
+        switch (leaf_type) {
+            case token::INT:
+                return symbol_map[leaf_type] + ": " + std::to_string(std::get<int>(value));
+            case token::FLOAT:
+                return symbol_map[leaf_type] + ": " + std::to_string(std::get<float>(value));
+            case token::CHAR:
+            case token::TYPE:
+            case token::ID:
+                return symbol_map[leaf_type] + ": " + lexeme;
+            default:
+                return symbol_map[leaf_type];
+        }
     }
 
     std::vector<AST_Node *> Leaf_Node::get_child() {
@@ -58,11 +69,13 @@ namespace SPL {
     }
 
     void print_ast(AST_Node *node, int indent_level) {
-
+        if (std::string content = node->to_string(); !content.empty()) {
+            std::cout << std::string(2 * indent_level, ' ') // Indent format
+                      << content << std::endl;
+        }
 
         for (auto &child: node->get_child()) {
-            std::cout << child->to_string() << std::endl;
-            print_ast(child);
+            print_ast(child, indent_level + 1);
         }
     }
 
@@ -124,9 +137,9 @@ namespace SPL {
 
     std::vector<AST_Node *> DecList_Node::get_child() {
         if (comma && dec_list) {
-            return std::vector<AST_Node *>{this->dec};
-        } else {
             return std::vector<AST_Node *>{this->dec, comma, dec_list};
+        } else {
+            return std::vector<AST_Node *>{this->dec};
         }
     }
 

@@ -87,7 +87,7 @@ namespace SPL {
     public:
         token_type leaf_type;
         std::string lexeme;
-        std::variant<int, float, char, std::string> value;
+        std::variant<int, float, char> value;
 
         Leaf_Node(token_type leaf_type, std::string lexeme);
 
@@ -430,8 +430,8 @@ namespace SPL {
         Leaf_Node *comma;
         DecList_Node *dec_list;
 
-        explicit DecList_Node(Dec_Node *dec, Leaf_Node *comma = nullptr,
-                              DecList_Node *dec_list = nullptr) : dec{dec}, comma{comma}, dec_list{dec_list} {};
+        explicit DecList_Node(Dec_Node *dec, Leaf_Node *comma = nullptr, DecList_Node *dec_list = nullptr)
+                : dec{dec}, comma{comma}, dec_list{dec_list} {};
 
         std::string to_string() override;
 

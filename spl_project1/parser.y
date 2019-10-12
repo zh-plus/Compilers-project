@@ -35,16 +35,6 @@
    ///* include for all AST functions */
    //#include "ast.hpp"
 
-
-// The following definitions is missing when %locations isn't used
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
-
 }
 
 %parse-param { SPL_Scanner  &scanner  }
@@ -127,14 +117,15 @@ Program
   : ExtDefList {
   	$$ = new Program_Node($1);
   	driver.set_root($$);
-  	std::cout << "Program -> (ExtDefList)" << std::endl;
+  	std::cout << "yylineno: " << yylineno << std::endl;
+  	//std::cout << "Program -> (ExtDefList)" << std::endl;
   }
   ;
 
 ExtDefList
   : ExtDef ExtDefList {
   	$$ = new ExtDefList_Node($1, $2);
-  	std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
+  	//std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
   }
   | %empty {
   	$$ = new Empty_ExtDefList_Node();
@@ -144,26 +135,26 @@ ExtDefList
 ExtDef
   : Specifier ExtDecList SEMI {
   	$$ = new ExtDef_Node($1, $2, make_leaf(token::SEMI, $3));
-  	std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
   }
   | Specifier SEMI {
   	$$ = new ExtDef_Node($1, make_leaf(token::SEMI, $2));
-  	std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
   }
   | Specifier FunDec CompSt {
   	$$ = new ExtDef_Node($1, $2, $3);
-  	std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
+  	//std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
   }
   ;
 
 ExtDecList
   : VarDec {
   	$$ = new ExtDecList_Node($1);
-  	std::cout << "ExtDecList - > (VarDec)" << std::endl;
+  	//std::cout << "ExtDecList - > (VarDec)" << std::endl;
   }
   | VarDec COMMA ExtDecList {
   	$$ = new ExtDecList_Node($1, make_leaf(token::COMMA, $2), $3);
-  	std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
+  	//std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
   }
   ;
 
@@ -172,11 +163,11 @@ ExtDecList
 Specifier
   : TYPE {
   	$$ = new Specifier_Node(make_leaf(token::TYPE, $1));
-	std::cout << "Specifier - > (TYPE) " << $1 << std::endl;
+	//std::cout << "Specifier - > (TYPE) " << $1 << std::endl;
   }
   | StructSpecifier {
   	$$ = new Specifier_Node($1);
-  	std::cout << "Specifier - > (StructSpecifier)" << std::endl;
+  	//std::cout << "Specifier - > (StructSpecifier)" << std::endl;
   }
   ;
 
@@ -187,12 +178,12 @@ StructSpecifier
   				      make_leaf(token::LC, $3),
   				      $4,
   				      make_leaf(token::ID, $5));
-  	std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
+  	//std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
   }
   | STRUCT ID {
   	$$ = new StructSpecifier_Node(make_leaf(token::STRUCT, $1),
           			      make_leaf(token::ID, $2));
-  	std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
+  	//std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
   }
   ;
 
@@ -201,14 +192,14 @@ StructSpecifier
 VarDec
   : ID {
 	$$ = new ID_VarDec_Node(make_leaf(token::ID, $1));
-  	std::cout << "VarDec - > (ID) " << $1 << std::endl;
+  	//std::cout << "VarDec - > (ID) " << $1 << std::endl;
   }
   | VarDec LB INT RB {
   	$$ = new Array_VarDec_Node($1,
 			     	   make_leaf(token::LB, $2),
 			     	   make_leaf(token::INT, $3),
 			     	   make_leaf(token::ID, $4));
-  	std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
+  	//std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
   }
   ;
 
@@ -218,13 +209,13 @@ FunDec
 			     make_leaf(token::LP, $2),
 			     $3,
 			     make_leaf(token::RP, $4));
-  	std::cout << "FunDec - > (ID LP VarList RP) " << $1 << std::endl;
+  	//std::cout << "FunDec - > (ID LP VarList RP) " << $1 << std::endl;
   }
   | ID LP RP {
   	$$ = new FunDec_Node(make_leaf(token::ID, $1),
 			     make_leaf(token::LP, $2),
 			     make_leaf(token::RP, $3));
-  	std::cout << "FunDec - > (ID LP RP) " << $1 << std::endl;
+  	//std::cout << "FunDec - > (ID LP RP) " << $1 << std::endl;
   }
   ;
 
@@ -233,18 +224,18 @@ VarList
   	$$ = new VarList_Node($1,
 			      make_leaf(token::COMMA, $2),
 			      $3);
-  	std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
+  	//std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
   }
   | ParamDec {
   	$$ = new VarList_Node($1);
-  	std::cout << "VarList - > (ParamDec)" << std::endl;
+  	//std::cout << "VarList - > (ParamDec)" << std::endl;
   }
   ;
 
 ParamDec
   : Specifier VarDec {
   	$$ = new ParamDec_Node($1, $2);
-  	std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
+  	//std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
   }
   ;
 
@@ -256,14 +247,14 @@ CompSt
 		             $2,
 		             $3,
 		             make_leaf(token::RC, $4));
-  	std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
+  	//std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
   }
   ;
 
 StmtList
   : Stmt StmtList {
   	$$ = new StmtList_Node($1, $2);
-  	std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
+  	//std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
   }
   | %empty {
   	$$ = new Empty_StmtList_Node();
@@ -274,17 +265,17 @@ Stmt
   : Exp SEMI {
   	$$ = new Exp_Stmt_Node($1,
   			       make_leaf(token::SEMI, $2));
-  	std::cout << "Stmt - > (Exp SEMI)" << std::endl;
+  	//std::cout << "Stmt - > (Exp SEMI)" << std::endl;
   }
   | CompSt {
   	$$ = new CompSt_Stmt_Node($1);
-  	std::cout << "Stmt - > (CompSt)" << std::endl;
+  	//std::cout << "Stmt - > (CompSt)" << std::endl;
   }
   | RETURN Exp SEMI {
   	$$ = new Return_Stmt_Node(make_leaf(token::RETURN, $1),
   			   	  $2,
           		   	  make_leaf(token::SEMI, $3));
-  	std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
+  	//std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
   }
   | IF LP Exp RP Stmt {
   	$$ = new If_Stmt_Node(make_leaf(token::IF, $1),
@@ -292,7 +283,7 @@ Stmt
   			      $3,
   			      make_leaf(token::RP, $4),
           		      $5);
-  	std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
   }
   | IF LP Exp RP Stmt ELSE Stmt {
   	$$ = new If_Stmt_Node(make_leaf(token::IF, $1),
@@ -302,7 +293,7 @@ Stmt
           		      $5,
           		      make_leaf(token::ELSE, $6),
           		      $7);
-  	std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
   }
   | WHILE LP Exp RP Stmt {
   	$$ = new While_Stmt_Node(make_leaf(token::WHILE, $1),
@@ -310,7 +301,7 @@ Stmt
 			         $3,
 			         make_leaf(token::RP, $4),
 			         $5);
-  	std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
+  	//std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
   }
   ;
 
@@ -319,7 +310,7 @@ Stmt
 DefList
   : Def DefList {
   	$$ = new DefList_Node($1, $2);
-  	std::cout << "DefList - > (Def DefList)" << std::endl;
+  	//std::cout << "DefList - > (Def DefList)" << std::endl;
   }
   | %empty {
   	$$ = new Empty_DefList_Node();
@@ -331,33 +322,33 @@ Def
   	$$ = new Def_Node($1,
   	 		  $2,
   	 		  make_leaf(token::SEMI, $3));
-  	std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
+  	//std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
   }
   ;
 
 DecList
   : Dec {
   	$$ = new DecList_Node($1);
-  	std::cout << "DecList - > (Dec)" << std::endl;
+  	//std::cout << "DecList - > (Dec)" << std::endl;
   }
   | Dec COMMA DecList {
   	$$ = new DecList_Node($1,
   			      make_leaf(token::COMMA, $2),
   			      $3);
-  	std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
+  	//std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
   }
   ;
 
 Dec
   : VarDec {
   	$$ = new Dec_Node($1);
-  	std::cout << "Dec - > (VarDec)" << std::endl;
+  	//std::cout << "Dec - > (VarDec)" << std::endl;
   }
   | VarDec ASSIGN Exp {
   	$$ = new Dec_Node($1,
   			  make_leaf(token::ASSIGN, $2),
   			  $3);
-  	std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
+  	//std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
   }
   ;
 
@@ -365,7 +356,7 @@ Dec
 /* Expression */
 Exp
   : Exp ASSIGN Exp {
-  	std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
+  	//std::cout << "Exp - > (Exp ASSIGN Exp)" << std::endl;
   	$$ = new Binary_Exp_Node($1, make_leaf(token::ASSIGN, $2), $3);
   }
   | Exp AND Exp {
@@ -438,30 +429,30 @@ Exp
 			      make_leaf(token::ID, $3));
   }
   | ID {
-  	std::cout << "Exp - > (ID) " << $1 << std::endl;
+  	//std::cout << "Exp - > (ID) " << $1 << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::ID, $1));
   }
   | INT {
-  	std::cout << "Exp - > (INT) " << $1 << std::endl;
+  	//std::cout << "Exp - > (INT) " << $1 << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::INT, $1));
   }
   | FLOAT {
-  	std::cout << "Exp - > (FLOAT) " << $1 << std::endl;
+  	//std::cout << "Exp - > (FLOAT) " << $1 << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::FLOAT, $1));
   }
   | CHAR {
-  	std::cout << "Exp - > (CHAR) " << $1 << std::endl;
+  	//std::cout << "Exp - > (CHAR) " << $1 << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::CHAR, $1));
   }
   ;
 
 Args
   : Exp COMMA Args {
-  	std::cout << "Args - > (Exp COMMA Args) " << std::endl;
+  	//std::cout << "Args - > (Exp COMMA Args) " << std::endl;
   	$$ = new Args_Node($1, make_leaf(token::COMMA, $2), $3);
   }
   | Exp {
-        std::cout << "Args - > (Exp) " << std::endl;
+        //std::cout << "Args - > (Exp) " << std::endl;
         $$ = new Args_Node($1);
   }
   ;
