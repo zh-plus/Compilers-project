@@ -7,6 +7,8 @@
 
 %code requires{
    namespace SPL {
+      class Scan_Info;
+
       class SPL_Driver;
       class SPL_Scanner;
       class AST_Node;
@@ -32,9 +34,6 @@
       class Args_Node;
    }
 
-   ///* include for all AST functions */
-   //#include "ast.hpp"
-
 }
 
 %parse-param { SPL_Scanner  &scanner  }
@@ -52,7 +51,6 @@
     /* include for all AST functions */
     #include "ast.hpp"
 
-
 #undef yylex
 #define yylex scanner.yylex
 
@@ -64,18 +62,18 @@
 %locations
 
 %token               END    0     "end of file"
-%token <std::string> INT
-%token <std::string> FLOAT
-%token <std::string> CHAR
-%token <std::string> TYPE ID
-%token <std::string> STRUCT IF ELSE WHILE RETURN
-%token <std::string> ASSIGN
-%token <std::string> DOT SEMI COMMA
-%token <std::string> EQ LE LT GE GT NE
-%token <std::string> PLUS MINUS MUL DIV
-%token <std::string> AND OR NOT
-%token <std::string> LP RP LC RC LB RB
-%token <std::string> LINE_COMMENT
+%token <Scan_Info *> INT
+%token <Scan_Info *> FLOAT
+%token <Scan_Info *> CHAR
+%token <Scan_Info *> TYPE ID
+%token <Scan_Info *> STRUCT IF ELSE WHILE RETURN
+%token <Scan_Info *> ASSIGN
+%token <Scan_Info *> DOT SEMI COMMA
+%token <Scan_Info *> EQ LE LT GE GT NE
+%token <Scan_Info *> PLUS MINUS MUL DIV
+%token <Scan_Info *> AND OR NOT
+%token <Scan_Info *> LP RP LC RC LB RB
+%token <Scan_Info *> LINE_COMMENT
 
 %type <Program_Node *> Program
 %type <ExtDefList_Node *> ExtDefList
@@ -117,7 +115,6 @@ Program
   : ExtDefList {
   	$$ = new Program_Node($1);
   	driver.set_root($$);
-  	std::cout << "yylineno: " << yylineno << std::endl;
   	//std::cout << "Program -> (ExtDefList)" << std::endl;
   }
   ;
@@ -177,8 +174,11 @@ StructSpecifier
   				      make_leaf(token::ID, $2),
   				      make_leaf(token::LC, $3),
   				      $4,
-  				      make_leaf(token::ID, $5));
+  				      make_leaf(token::RC, $5));
   	//std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
+  }
+  | STRUCT ID LC DefList {
+  	std::cout << "Error type B" << std::endl;
   }
   | STRUCT ID {
   	$$ = new StructSpecifier_Node(make_leaf(token::STRUCT, $1),
@@ -198,7 +198,7 @@ VarDec
   	$$ = new Array_VarDec_Node($1,
 			     	   make_leaf(token::LB, $2),
 			     	   make_leaf(token::INT, $3),
-			     	   make_leaf(token::ID, $4));
+			     	   make_leaf(token::RB, $4));
   	//std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
   }
   ;
@@ -460,5 +460,6 @@ Args
 %%
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){
-    std::cerr << "Error: " << err_message << " at " << l << std::endl;
+    std::cerr << "Auto parser error! " << l.begin << ": unknown lexeme " << err_message << std::endl;
+    throw SPL_Parser::syntax_error(l, err_message);
 }

@@ -67,7 +67,7 @@ Cowards and Neutrals. Acheron
     And I, who gazed intently, saw a flag,
     which, whirling, moved so swiftly that to me
     contemptuous it appeared of all repose;
-    and after it there came so long a line
+    and after it there came so long a line_no
     of people, that I never would have thought
     that death so great a number had undone.
 

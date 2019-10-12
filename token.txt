@@ -2,7 +2,7 @@
  * Optional implementation:
  * 1. hexadecimal representation of INT (eg. 0x12)
  * 2. hex-form CHAR, no int, no escape (eg. '\x90')
- * 3. comment (single line or multi-line)
+ * 3. comment (single line_no or multi-line_no)
  *
  * Error type:
  * 1. undefined tokens, eg., '@', '#' as non-literal token

@@ -32,7 +32,7 @@ if|then|begin|end|procedure|function|while {
 }
 
 "{"[^{}\n]*"}" {
-    /* Eat up one-line comments */
+    /* Eat up one-line_no comments */
 }
 
 "//" {
@@ -41,7 +41,7 @@ if|then|begin|end|procedure|function|while {
 }
 
 [ \t\n]+ {
-    /* Eat up one-line comments */
+    /* Eat up one-line_no comments */
 }
 
 . {

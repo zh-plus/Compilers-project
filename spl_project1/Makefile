@@ -1,6 +1,8 @@
 
 SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp
 
+TESTS = test/test_1_r01.spl test/test_1_r02.spl
+
 splc: $(SRCS)
 	g++ -g -std=c++17 $(SRCS) -o $@
 
@@ -15,4 +17,18 @@ clean:
 	rm -rf parser.tab.cpp parser.tab.hpp stack.hh location.hh
 	rm -rf splc
 
-.PHONY: clean
+test: splc $(TESTS)
+	./splc test/test_1_r01.spl > test/test_1_r01.txt
+	./splc test/test_1_r02.spl > test/test_1_r02.txt
+	diff test/test_1_r01.out test/test_1_r01.txt
+	diff test/test_1_r02.out test/test_1_r02.txt
+
+gen: splc
+	./splc test/test_1_r05.spl > test/test_1_r05.txt
+	./splc test/test_1_r06.spl > test/test_1_r06.txt
+	./splc test/test_1_r07.spl > test/test_1_r07.txt
+	./splc test/test_1_r08.spl > test/test_1_r08.txt
+	./splc test/test_1_r09.spl > test/test_1_r09.txt
+	./splc test/test_1_r10.spl > test/test_1_r10.txt
+
+.PHONY: clean test

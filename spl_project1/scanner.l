@@ -18,6 +18,7 @@
     #define YY_USER_ACTION loc->step(); loc->columns(yyleng);
 
 	using namespace std;
+
 %}
 
 %option nodefault
@@ -47,14 +48,12 @@ LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 %}
 
 {DECIMAL_INT} {
-    //yylval->build<int>(atoi(yytext));
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::INT;
 }
 
 {HEX_INT} {
-    //yylval->build<int>((int)strtol(yytext, NULL, 16));
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::INT;
 }
 
@@ -64,163 +63,171 @@ LINE_COMMENT            \/\/[^\n\r]*(\n|\r\n|\r)?
 }
 
 {CHAR}|{HEX_CHAR} {
-	//yylval->build<char>(trim(yytext, "'").c_str()[0]);
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::CHAR;
 }
 
 {FLOAT} {
-    //yylval->build<float>(atof(yytext));
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::FLOAT;
 }
 
 int|float|char {        // reserved type
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::TYPE;
 }
 
 "struct" {             // reserved key word
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::STRUCT;
 }
 
 "if" {             // reserved key word
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::IF;
 }
 
 "else" {             // reserved key word
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::ELSE;
 }
 
 "while" {             // reserved key word
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::WHILE;
 }
 
 "return" {             // reserved key word
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::RETURN;
 }
 
 {ID} {
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::ID;
 }
 
 "." {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::DOT;
 }
 
 ";" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::SEMI;
 }
 
 "," {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::COMMA;
 }
 
 "==" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::EQ;
 }
 
 "=" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::ASSIGN;
 }
 
 "<=" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::LE;
 }
 
 "<" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::LT;
 }
 
 ">=" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::GE;
 }
 
 ">" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::GT;
 }
 
 "!=" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::NE;
 }
 
 "!" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::NOT;
 }
 
 "+" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::PLUS;
 }
 
 "-" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::MINUS;
 }
 
 "*" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::MUL;
 }
 
 "/" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::DIV;
 }
 
 "&&" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::AND;
 }
 
 "||" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::OR;
 }
 
 "("|")" {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return yytext[0] == '(' ? token::LP : token::RP;
 }
 
 "{"|"}" {
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return yytext[0] == '{' ? token::LC : token::RC;
 }
 
 "["|"]" {
-    yylval->build<std::string>(yytext);
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return yytext[0] == '[' ? token::LB : token::RB;
 }
 
 {LINE_COMMENT} {
-	yylval->build<std::string>(yytext);
+	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::LINE_COMMENT;
 }
 
-[ \r\t\n]+ {
-    /* Eat up one-line comments */
+[ \r\t]+ {
+    /* Eat up one-line_no comments */
+}
+
+\n {
+	loc->lines(); // Update line number
 }
 
 . {
-	std::cerr << "Unrecognized character: " << yytext << std::endl;
+	yyerror(yytext);
 }
 
 %%
+
+void SPL::SPL_Scanner::yyerror (const char *s)
+{
+	std::cerr << "Error type A at Line " << yylineno << ": unknown lexeme " << s << std::endl;
+	exit(EXIT_FAILURE);
+}

@@ -7,7 +7,7 @@
 namespace SPL {
 
     std::string Args_Node::to_string() {
-        return "Args";
+        return "Args (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Args_Node::get_child() {
@@ -18,35 +18,16 @@ namespace SPL {
         }
     }
 
-    Leaf_Node::Leaf_Node(token_type leaf_type, std::string lexeme) {
-        this->leaf_type = leaf_type;
-        this->lexeme = lexeme;
-
-        switch (this->leaf_type) {
-            case token::INT:
-                value = std::stoi(this->lexeme, nullptr, 0);
-                break;
-            case token::FLOAT:
-                value = std::stoi(this->lexeme, nullptr, 0);
-                break;
-            case token::CHAR:
-                value = trim(this->lexeme, "'").c_str()[0];
-                break;
-            default:
-                break;
-        }
-    }
-
     std::string Leaf_Node::to_string() {
         switch (leaf_type) {
             case token::INT:
-                return symbol_map[leaf_type] + ": " + std::to_string(std::get<int>(value));
+                return symbol_map[leaf_type] + ": " + std::to_string(std::get<unsigned int>(value));
             case token::FLOAT:
                 return symbol_map[leaf_type] + ": " + std::to_string(std::get<float>(value));
             case token::CHAR:
             case token::TYPE:
             case token::ID:
-                return symbol_map[leaf_type] + ": " + lexeme;
+                return symbol_map[leaf_type] + ": " + info->lexeme;
             default:
                 return symbol_map[leaf_type];
         }
@@ -54,6 +35,29 @@ namespace SPL {
 
     std::vector<AST_Node *> Leaf_Node::get_child() {
         return std::vector<AST_Node *>();
+    }
+
+    Leaf_Node::Leaf_Node(token_type leaf_type, Scan_Info *info) : leaf_type{leaf_type}, info{info} {
+        std::string lexeme = this->info->lexeme;
+        line_no = this->info->line_no;
+
+        switch (this->leaf_type) {
+            case token::INT:
+                value = (unsigned int)std::stoul(lexeme, nullptr, 0);
+                break;
+            case token::FLOAT:
+                value = std::stof(lexeme, nullptr);
+                break;
+            case token::CHAR:
+                value = trim(lexeme, "'").c_str()[0];
+                break;
+            default:
+                break;
+        }
+    }
+
+    bool Leaf_Node::is_leaf() {
+        return true;
     }
 
     std::vector<AST_Node *> Unary_Exp_Node::get_child() {
@@ -64,15 +68,17 @@ namespace SPL {
         return std::vector<AST_Node *>{this->left, this->op_node, this->right};
     }
 
-    Leaf_Node *make_leaf(token_type leaf_type, std::string lexeme) {
-        return new Leaf_Node(leaf_type, lexeme);
+    Leaf_Node *make_leaf(token_type leaf_type, Scan_Info *info) {
+        return new Leaf_Node(leaf_type, info);
     }
 
     void print_ast(AST_Node *node, int indent_level) {
-        if (std::string content = node->to_string(); !content.empty()) {
-            std::cout << std::string(2 * indent_level, ' ') // Indent format
-                      << content << std::endl;
+        if (node->is_empty()) {
+            return;
         }
+
+        std::cout << std::string(2 * indent_level, ' ') // Indent format
+                  << node->to_string() << std::endl;
 
         for (auto &child: node->get_child()) {
             print_ast(child, indent_level + 1);
@@ -80,7 +86,7 @@ namespace SPL {
     }
 
     std::string Exp_Node::to_string() {
-        return "Exp";
+        return "Exp (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Parentheses_Exp_Node::get_child() {
@@ -108,7 +114,7 @@ namespace SPL {
     }
 
     std::string DefList_Node::to_string() {
-        return "DefList";
+        return "DefList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> DefList_Node::get_child() {
@@ -128,11 +134,11 @@ namespace SPL {
     }
 
     std::string Def_Node::to_string() {
-        return "Def";
+        return "Def (" + std::to_string(line_no) + ")";
     }
 
     std::string DecList_Node::to_string() {
-        return "DecList";
+        return "DecList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> DecList_Node::get_child() {
@@ -152,7 +158,7 @@ namespace SPL {
     }
 
     std::string Dec_Node::to_string() {
-        return "Dec";
+        return "Dec (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Dec_Node::get_child() {
@@ -164,7 +170,7 @@ namespace SPL {
     }
 
     std::string CompSt_Node::to_string() {
-        return "CompSt";
+        return "CompSt (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> CompSt_Node::get_child() {
@@ -180,7 +186,7 @@ namespace SPL {
     }
 
     std::string StmtList_Node::to_string() {
-        return "StmtList";
+        return "StmtList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> StmtList_Node::get_child() {
@@ -188,7 +194,7 @@ namespace SPL {
     }
 
     std::string Stmt_Node::to_string() {
-        return "Stmt";
+        return "Stmt (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Exp_Stmt_Node::get_child() {
@@ -217,7 +223,7 @@ namespace SPL {
     }
 
     std::string VarDec_Node::to_string() {
-        return "VarDec";
+        return "VarDec (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> ID_VarDec_Node::get_child() {
@@ -229,7 +235,7 @@ namespace SPL {
     }
 
     std::string FunDec_Node::to_string() {
-        return "FunDec";
+        return "FunDec (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> FunDec_Node::get_child() {
@@ -242,7 +248,7 @@ namespace SPL {
     }
 
     std::string VarList_Node::to_string() {
-        return "VarList";
+        return "VarList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> VarList_Node::get_child() {
@@ -254,7 +260,7 @@ namespace SPL {
     }
 
     std::string ParamDec_Node::to_string() {
-        return "ParamDec";
+        return "ParamDec (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> ParamDec_Node::get_child() {
@@ -262,7 +268,7 @@ namespace SPL {
     }
 
     std::string Specifier_Node::to_string() {
-        return "Specifier";
+        return "Specifier (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Specifier_Node::get_child() {
@@ -282,11 +288,11 @@ namespace SPL {
     }
 
     std::string StructSpecifier_Node::to_string() {
-        return "StructSpecifier";
+        return "StructSpecifier (" + std::to_string(line_no) + ")";
     }
 
     std::string Program_Node::to_string() {
-        return "Program";
+        return "Program (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> Program_Node::get_child() {
@@ -294,7 +300,7 @@ namespace SPL {
     }
 
     std::string ExtDefList_Node::to_string() {
-        return "ExtDefList";
+        return "ExtDefList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> ExtDefList_Node::get_child() {
@@ -310,7 +316,7 @@ namespace SPL {
     }
 
     std::string ExtDef_Node::to_string() {
-        return "ExtDef";
+        return "ExtDef (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> ExtDef_Node::get_child() {
@@ -324,7 +330,7 @@ namespace SPL {
     }
 
     std::string ExtDecList_Node::to_string() {
-        return "ExtDecList";
+        return "ExtDecList (" + std::to_string(line_no) + ")";
     }
 
     std::vector<AST_Node *> ExtDecList_Node::get_child() {
@@ -333,5 +339,25 @@ namespace SPL {
         } else {
             return std::vector<AST_Node *>{var_dec};
         }
+    }
+
+    int AST_Node::propagate_line_no() {
+        if (is_leaf() && !is_empty()) {
+            return line_no;
+        }
+
+        for (const auto &child: get_child()) {
+            line_no = std::min(line_no, child->propagate_line_no());
+        }
+
+        return line_no;
+    }
+
+    bool AST_Node::is_leaf() {
+        return false;
+    }
+
+    bool AST_Node::is_empty() {
+        return to_string().empty();
     }
 }

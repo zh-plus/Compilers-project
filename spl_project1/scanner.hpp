@@ -32,12 +32,21 @@ namespace SPL {
         // YY_DECL defined in scanner.l
         // Method body created by flex in scanner.yy.cpp
 
+        void yyerror(const char *s);
 
     private:
         /* yyval ptr */
         SPL::SPL_Parser::semantic_type *yylval = nullptr;
         /* location ptr */
         SPL::SPL_Parser::location_type *loc = nullptr;
+    };
+
+    class Scan_Info {
+    public:
+        std::string lexeme;
+        int line_no;
+
+        Scan_Info(std::string lexeme, int line) : lexeme{lexeme}, line_no{line} {};
     };
 
 } /* end namespace SPL */

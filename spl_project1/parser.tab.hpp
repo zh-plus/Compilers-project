@@ -43,6 +43,8 @@
 #line 8 "parser.y" // lalr1.cc:377
 
    namespace SPL {
+      class Scan_Info;
+
       class SPL_Driver;
       class SPL_Scanner;
       class AST_Node;
@@ -68,11 +70,8 @@
       class Args_Node;
    }
 
-   ///* include for all AST functions */
-   //#include "ast.hpp"
 
-
-#line 76 "parser.tab.hpp" // lalr1.cc:377
+#line 75 "parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -149,7 +148,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 153 "parser.tab.hpp" // lalr1.cc:377
+#line 152 "parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -355,24 +354,6 @@ namespace SPL {
       // Program
       char dummy13[sizeof(Program_Node *)];
 
-      // Specifier
-      char dummy14[sizeof(Specifier_Node *)];
-
-      // StmtList
-      char dummy15[sizeof(StmtList_Node *)];
-
-      // Stmt
-      char dummy16[sizeof(Stmt_Node *)];
-
-      // StructSpecifier
-      char dummy17[sizeof(StructSpecifier_Node *)];
-
-      // VarDec
-      char dummy18[sizeof(VarDec_Node *)];
-
-      // VarList
-      char dummy19[sizeof(VarList_Node *)];
-
       // INT
       // FLOAT
       // CHAR
@@ -407,7 +388,25 @@ namespace SPL {
       // LB
       // RB
       // LINE_COMMENT
-      char dummy20[sizeof(std::string)];
+      char dummy14[sizeof(Scan_Info *)];
+
+      // Specifier
+      char dummy15[sizeof(Specifier_Node *)];
+
+      // StmtList
+      char dummy16[sizeof(StmtList_Node *)];
+
+      // Stmt
+      char dummy17[sizeof(Stmt_Node *)];
+
+      // StructSpecifier
+      char dummy18[sizeof(StructSpecifier_Node *)];
+
+      // VarDec
+      char dummy19[sizeof(VarDec_Node *)];
+
+      // VarList
+      char dummy20[sizeof(VarList_Node *)];
 };
 
     /// Symbol semantic values.
@@ -530,6 +529,8 @@ namespace SPL {
 
   basic_symbol (typename Base::kind_type t, const Program_Node * v, const location_type& l);
 
+  basic_symbol (typename Base::kind_type t, const Scan_Info * v, const location_type& l);
+
   basic_symbol (typename Base::kind_type t, const Specifier_Node * v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const StmtList_Node * v, const location_type& l);
@@ -541,8 +542,6 @@ namespace SPL {
   basic_symbol (typename Base::kind_type t, const VarDec_Node * v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const VarList_Node * v, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
 
 
       /// Constructor for symbols with semantic value.
@@ -617,139 +616,139 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_INT (const std::string& v, const location_type& l);
+    make_INT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_FLOAT (const std::string& v, const location_type& l);
+    make_FLOAT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_CHAR (const std::string& v, const location_type& l);
+    make_CHAR (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_TYPE (const std::string& v, const location_type& l);
+    make_TYPE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ID (const std::string& v, const location_type& l);
+    make_ID (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_STRUCT (const std::string& v, const location_type& l);
+    make_STRUCT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_IF (const std::string& v, const location_type& l);
+    make_IF (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ELSE (const std::string& v, const location_type& l);
+    make_ELSE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_WHILE (const std::string& v, const location_type& l);
+    make_WHILE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RETURN (const std::string& v, const location_type& l);
+    make_RETURN (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_ASSIGN (const std::string& v, const location_type& l);
+    make_ASSIGN (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_DOT (const std::string& v, const location_type& l);
+    make_DOT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_SEMI (const std::string& v, const location_type& l);
+    make_SEMI (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_COMMA (const std::string& v, const location_type& l);
+    make_COMMA (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_EQ (const std::string& v, const location_type& l);
+    make_EQ (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LE (const std::string& v, const location_type& l);
+    make_LE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LT (const std::string& v, const location_type& l);
+    make_LT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_GE (const std::string& v, const location_type& l);
+    make_GE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_GT (const std::string& v, const location_type& l);
+    make_GT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_NE (const std::string& v, const location_type& l);
+    make_NE (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_PLUS (const std::string& v, const location_type& l);
+    make_PLUS (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_MINUS (const std::string& v, const location_type& l);
+    make_MINUS (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_MUL (const std::string& v, const location_type& l);
+    make_MUL (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_DIV (const std::string& v, const location_type& l);
+    make_DIV (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_AND (const std::string& v, const location_type& l);
+    make_AND (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_OR (const std::string& v, const location_type& l);
+    make_OR (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_NOT (const std::string& v, const location_type& l);
+    make_NOT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LP (const std::string& v, const location_type& l);
+    make_LP (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RP (const std::string& v, const location_type& l);
+    make_RP (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LC (const std::string& v, const location_type& l);
+    make_LC (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RC (const std::string& v, const location_type& l);
+    make_RC (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LB (const std::string& v, const location_type& l);
+    make_LB (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_RB (const std::string& v, const location_type& l);
+    make_RB (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
-    make_LINE_COMMENT (const std::string& v, const location_type& l);
+    make_LINE_COMMENT (const Scan_Info *& v, const location_type& l);
 
     static inline
     symbol_type
@@ -978,7 +977,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 982 "parser.tab.hpp" // lalr1.cc:377
+#line 981 "parser.tab.hpp" // lalr1.cc:377
 
 
 

@@ -10,9 +10,11 @@
 #include <vector>
 #include <stack>
 #include <string>
+#include <algorithm>
 #include <variant>
 #include "parser.tab.hpp"
 #include "utils.hpp"
+#include "scanner.hpp"
 
 /**
  * Abstract syntax tree of SUSTech Programming Language.
@@ -73,6 +75,14 @@ namespace SPL {
      */
     class AST_Node {
     public:
+        int line_no = INT32_MAX;
+
+        int propagate_line_no();
+
+        virtual bool is_leaf();
+
+        virtual bool is_empty();
+
         virtual ~AST_Node() = default;
 
         virtual std::string to_string() = 0;
@@ -86,10 +96,12 @@ namespace SPL {
     class Leaf_Node : public AST_Node {
     public:
         token_type leaf_type;
-        std::string lexeme;
-        std::variant<int, float, char> value;
+        Scan_Info *info;
+        std::variant<unsigned int, float, char> value;
 
-        Leaf_Node(token_type leaf_type, std::string lexeme);
+        Leaf_Node(token_type leaf_type, Scan_Info *info);
+
+        bool is_leaf() override;
 
         std::string to_string() override;
 
@@ -102,7 +114,9 @@ namespace SPL {
     public:
         ExtDefList_Node *ext_def_list;
 
-        explicit Program_Node(ExtDefList_Node *ext_def_list) : ext_def_list{ext_def_list} {};
+        explicit Program_Node(ExtDefList_Node *ext_def_list) : ext_def_list{ext_def_list} {
+            propagate_line_no();
+        };
 
         std::string to_string() override;
 
@@ -569,7 +583,7 @@ namespace SPL {
 
     /* Useful Function */
 
-    Leaf_Node *make_leaf(token_type leaf_type, std::string lexeme);
+    Leaf_Node *make_leaf(token_type leaf_type, Scan_Info *info);
 
     void print_ast(AST_Node *node, int indent_level = 0);
 }

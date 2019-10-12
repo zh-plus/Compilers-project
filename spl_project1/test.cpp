@@ -7,9 +7,15 @@
 using namespace std;
 
 
-vector<int> get_v(){
-    return vector<int>{1, 4};
-}
+class A{
+public:
+    int i;
+};
+
+class B: public A {
+public:
+    void print_i() { cout << i; }
+};
 
 
 
@@ -26,19 +32,9 @@ int main() {
     char trimmed = SPL::trim(c, "'").c_str()[0];
     cout << ch << endl;
 
-    vector<int> v = get_v();
-    for (auto &x: v) {
-        cout << x << " ";
-    }
-    cout << endl;
-
-    vector<int> *ve = nullptr;
-    if (ve) {
-        cout << "True!";
-    }
-
-    Def_Node node;
-    cout << typeid(node).name() << endl;
+    A b = B();
+    b.i = 10;
+    cout << b.i << endl;
 
     return 0;
 }
