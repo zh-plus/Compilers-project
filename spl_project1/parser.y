@@ -74,6 +74,7 @@
 %token <Scan_Info *> AND OR NOT
 %token <Scan_Info *> LP RP LC RC LB RB
 %token <Scan_Info *> LINE_COMMENT
+%token 		     ERROR
 
 %type <Program_Node *> Program
 %type <ExtDefList_Node *> ExtDefList
@@ -95,6 +96,7 @@
 %type <Exp_Node *> Exp
 %type <Args_Node *> Args
 
+%nonassoc ERROR
 %right ASSIGN
 %left OR
 %left AND
@@ -113,16 +115,16 @@
 /* High-level definition */
 Program
   : ExtDefList {
+  	//std::cout << "Program -> (ExtDefList)" << std::endl;
   	$$ = new Program_Node($1);
   	driver.set_root($$);
-  	//std::cout << "Program -> (ExtDefList)" << std::endl;
   }
   ;
 
 ExtDefList
   : ExtDef ExtDefList {
-  	$$ = new ExtDefList_Node($1, $2);
   	//std::cout << "ExtDefList - > (ExtDef ExtDefList)" << std::endl;
+  	$$ = new ExtDefList_Node($1, $2);
   }
   | %empty {
   	$$ = new Empty_ExtDefList_Node();
@@ -131,27 +133,37 @@ ExtDefList
 
 ExtDef
   : Specifier ExtDecList SEMI {
+    	//std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
   	$$ = new ExtDef_Node($1, $2, make_leaf(token::SEMI, $3));
-  	//std::cout << "ExtDef - > (Specifier ExtDecList SEMI)" << std::endl;
+  }
+  | Specifier ExtDecList %prec ERROR {
+  	driver.add_syntax_error(";", $1);
   }
   | Specifier SEMI {
-  	$$ = new ExtDef_Node($1, make_leaf(token::SEMI, $2));
   	//std::cout << "ExtDef - > (Specifier SEMI)" << std::endl;
+  	$$ = new ExtDef_Node($1, make_leaf(token::SEMI, $2));
+
+  }
+  | Specifier %prec ERROR {
+  	driver.add_syntax_error(";", $1);
   }
   | Specifier FunDec CompSt {
-  	$$ = new ExtDef_Node($1, $2, $3);
   	//std::cout << "ExtDef - > (Specifier FunDec CompSt)" << std::endl;
+  	$$ = new ExtDef_Node($1, $2, $3);
   }
   ;
 
 ExtDecList
   : VarDec {
-  	$$ = new ExtDecList_Node($1);
   	//std::cout << "ExtDecList - > (VarDec)" << std::endl;
+  	$$ = new ExtDecList_Node($1);
   }
   | VarDec COMMA ExtDecList {
-  	$$ = new ExtDecList_Node($1, make_leaf(token::COMMA, $2), $3);
   	//std::cout << "ExtDecList - > (VarDec COMMA ExtDecList)" << std::endl;
+  	$$ = new ExtDecList_Node($1, make_leaf(token::COMMA, $2), $3);
+  }
+  | VarDec ExtDecList %prec ERROR {
+  	driver.add_syntax_error(";", $1);
   }
   ;
 
@@ -159,31 +171,31 @@ ExtDecList
 /* specifier */
 Specifier
   : TYPE {
+  	//std::cout << "Specifier - > (TYPE) " << $1->lexeme << std::endl;
   	$$ = new Specifier_Node(make_leaf(token::TYPE, $1));
-	//std::cout << "Specifier - > (TYPE) " << $1 << std::endl;
   }
   | StructSpecifier {
-  	$$ = new Specifier_Node($1);
   	//std::cout << "Specifier - > (StructSpecifier)" << std::endl;
+  	$$ = new Specifier_Node($1);
   }
   ;
 
 StructSpecifier
   : STRUCT ID LC DefList RC {
+  	//std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
   	$$ = new StructSpecifier_Node(make_leaf(token::STRUCT, $1),
   				      make_leaf(token::ID, $2),
   				      make_leaf(token::LC, $3),
   				      $4,
   				      make_leaf(token::RC, $5));
-  	//std::cout << "StructSpecifier - > (STRUCT ID LC DefList RC)" << std::endl;
   }
-  | STRUCT ID LC DefList {
-  	std::cout << "Error type B" << std::endl;
+  | STRUCT ID LC DefList %prec ERROR {
+  	driver.add_syntax_error("}", $1);
   }
   | STRUCT ID {
+  	//std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
   	$$ = new StructSpecifier_Node(make_leaf(token::STRUCT, $1),
           			      make_leaf(token::ID, $2));
-  	//std::cout << "StructSpecifier - > (STRUCT ID)" << std::endl;
   }
   ;
 
@@ -191,51 +203,60 @@ StructSpecifier
 /* declarator */
 VarDec
   : ID {
+  	//std::cout << "VarDec - > (ID) " << $1->lexeme << std::endl;
 	$$ = new ID_VarDec_Node(make_leaf(token::ID, $1));
-  	//std::cout << "VarDec - > (ID) " << $1 << std::endl;
   }
   | VarDec LB INT RB {
+  	//std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
   	$$ = new Array_VarDec_Node($1,
 			     	   make_leaf(token::LB, $2),
 			     	   make_leaf(token::INT, $3),
 			     	   make_leaf(token::RB, $4));
-  	//std::cout << "VarDec - > (VarDec LB INT RB)" << std::endl;
+  }
+  | VarDec LB INT %prec ERROR {
+  	driver.add_syntax_error("]", $1);
   }
   ;
 
 FunDec
   : ID LP VarList RP {
+  	//std::cout << "FunDec - > (ID LP VarList RP) " << $1->lexeme << std::endl;
   	$$ = new FunDec_Node(make_leaf(token::ID, $1),
 			     make_leaf(token::LP, $2),
 			     $3,
 			     make_leaf(token::RP, $4));
-  	//std::cout << "FunDec - > (ID LP VarList RP) " << $1 << std::endl;
+  }
+  | ID LP VarList %prec ERROR {
+    	driver.add_syntax_error(")", $1);
   }
   | ID LP RP {
+  	//std::cout << "FunDec - > (ID LP RP) " << $1->lexeme << std::endl;
   	$$ = new FunDec_Node(make_leaf(token::ID, $1),
 			     make_leaf(token::LP, $2),
 			     make_leaf(token::RP, $3));
-  	//std::cout << "FunDec - > (ID LP RP) " << $1 << std::endl;
+  }
+  | ID LP %prec ERROR {
+    	driver.add_syntax_error(")", $1);
   }
   ;
 
 VarList
   : ParamDec COMMA VarList {
+  	//std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
   	$$ = new VarList_Node($1,
 			      make_leaf(token::COMMA, $2),
 			      $3);
-  	//std::cout << "VarList - > (ParamDec COMMA VarList)" << std::endl;
   }
   | ParamDec {
-  	$$ = new VarList_Node($1);
   	//std::cout << "VarList - > (ParamDec)" << std::endl;
+  	$$ = new VarList_Node($1);
   }
   ;
 
 ParamDec
   : Specifier VarDec {
-  	$$ = new ParamDec_Node($1, $2);
   	//std::cout << "ParamDec - > (Specifier VarDec)" << std::endl;
+  	$$ = new ParamDec_Node($1, $2);
   }
   ;
 
@@ -243,18 +264,21 @@ ParamDec
 /* statement */
 CompSt
   : LC DefList StmtList RC {
+  	//std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
   	$$ = new CompSt_Node(make_leaf(token::LC, $1),
 		             $2,
 		             $3,
 		             make_leaf(token::RC, $4));
-  	//std::cout << "CompSt - > (LC DefList StmtList RC)" << std::endl;
+  }
+  | LC DefList StmtList %prec ERROR {
+  	driver.add_syntax_error("}", {$1});
   }
   ;
 
 StmtList
   : Stmt StmtList {
-  	$$ = new StmtList_Node($1, $2);
   	//std::cout << "StmtList - > (Stmt StmtList)" << std::endl;
+  	$$ = new StmtList_Node($1, $2);
   }
   | %empty {
   	$$ = new Empty_StmtList_Node();
@@ -263,29 +287,42 @@ StmtList
 
 Stmt
   : Exp SEMI {
+  	//std::cout << "Stmt - > (Exp SEMI)" << std::endl;
   	$$ = new Exp_Stmt_Node($1,
   			       make_leaf(token::SEMI, $2));
-  	//std::cout << "Stmt - > (Exp SEMI)" << std::endl;
+  }
+//  | Exp %prec ERROR {
+//  	driver.add_syntax_error(";", $1);
+//  }
+  | Exp {
+  	driver.add_syntax_error(";", $1);
   }
   | CompSt {
-  	$$ = new CompSt_Stmt_Node($1);
   	//std::cout << "Stmt - > (CompSt)" << std::endl;
+  	$$ = new CompSt_Stmt_Node($1);
   }
   | RETURN Exp SEMI {
+  	//std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
   	$$ = new Return_Stmt_Node(make_leaf(token::RETURN, $1),
   			   	  $2,
           		   	  make_leaf(token::SEMI, $3));
-  	//std::cout << "Stmt - > (RETURN Exp SEMI)" << std::endl;
+  }
+  | RETURN Exp %prec ERROR {
+  	driver.add_syntax_error(";", $1);
   }
   | IF LP Exp RP Stmt {
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
   	$$ = new If_Stmt_Node(make_leaf(token::IF, $1),
   			      make_leaf(token::LP, $2),
   			      $3,
   			      make_leaf(token::RP, $4),
           		      $5);
-  	//std::cout << "Stmt - > (IF LP Exp RP Stmt)" << std::endl;
+  }
+  | IF LP Exp Stmt %prec ERROR {
+	driver.add_syntax_error(")", $1);
   }
   | IF LP Exp RP Stmt ELSE Stmt {
+  	//std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
   	$$ = new If_Stmt_Node(make_leaf(token::IF, $1),
   			      make_leaf(token::LP, $2),
   			      $3,
@@ -293,15 +330,20 @@ Stmt
           		      $5,
           		      make_leaf(token::ELSE, $6),
           		      $7);
-  	//std::cout << "Stmt - > (IF LP Exp RP Stmt ELSE Stmt)" << std::endl;
+  }
+  | WHILE LP Exp Stmt ELSE Stmt %prec ERROR {
+	driver.add_syntax_error(")", $1);
   }
   | WHILE LP Exp RP Stmt {
+  	//std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
   	$$ = new While_Stmt_Node(make_leaf(token::WHILE, $1),
 			         make_leaf(token::LP, $2),
 			         $3,
 			         make_leaf(token::RP, $4),
 			         $5);
-  	//std::cout << "Stmt - > (WHILE LP Exp RP Stmt)" << std::endl;
+  }
+  | WHILE LP Exp Stmt %prec ERROR {
+	driver.add_syntax_error(")", $1);
   }
   ;
 
@@ -309,8 +351,8 @@ Stmt
 /* local definition */
 DefList
   : Def DefList {
-  	$$ = new DefList_Node($1, $2);
   	//std::cout << "DefList - > (Def DefList)" << std::endl;
+  	$$ = new DefList_Node($1, $2);
   }
   | %empty {
   	$$ = new Empty_DefList_Node();
@@ -319,36 +361,39 @@ DefList
 
 Def
   : Specifier DecList SEMI {
+  	//std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
   	$$ = new Def_Node($1,
   	 		  $2,
   	 		  make_leaf(token::SEMI, $3));
-  	//std::cout << "Def - > (Specifier DecList SEMI)" << std::endl;
+  }
+  | Specifier DecList %prec ERROR {
+  	driver.add_syntax_error(";", $1);
   }
   ;
 
 DecList
   : Dec {
-  	$$ = new DecList_Node($1);
   	//std::cout << "DecList - > (Dec)" << std::endl;
+  	$$ = new DecList_Node($1);
   }
   | Dec COMMA DecList {
+  	//std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
   	$$ = new DecList_Node($1,
   			      make_leaf(token::COMMA, $2),
   			      $3);
-  	//std::cout << "DecList - > (Dec COMMA DecList)" << std::endl;
   }
   ;
 
 Dec
   : VarDec {
-  	$$ = new Dec_Node($1);
   	//std::cout << "Dec - > (VarDec)" << std::endl;
+  	$$ = new Dec_Node($1);
   }
   | VarDec ASSIGN Exp {
+  	//std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
   	$$ = new Dec_Node($1,
   			  make_leaf(token::ASSIGN, $2),
   			  $3);
-  	//std::cout << "Dec - > (VarDec ASSIGN Exp)" << std::endl;
   }
   ;
 
@@ -400,6 +445,9 @@ Exp
   				      $2,
   				      make_leaf(token::RP, $3));
   }
+  | LP Exp %prec ERROR {
+	driver.add_syntax_error(")", $1);
+  }
   | MINUS Exp {
   	$$ = new Unary_Exp_Node(make_leaf(token::MINUS, $1), $2);
   }
@@ -412,10 +460,16 @@ Exp
 				         $3,
 				         make_leaf(token::RP, $4));
   }
+  | ID LP Args %prec ERROR {
+	driver.add_syntax_error(")", $1);
+  }
   | ID LP RP {
 	$$ = new ID_Parentheses_Exp_Node(make_leaf(token::ID, $1),
 					 make_leaf(token::LP, $2),
 					 make_leaf(token::RP, $3));
+  }
+  | ID LP %prec ERROR {
+	driver.add_syntax_error(")", $1);
   }
   | Exp LB Exp RB {
 	$$ = new Bracket_Exp_Node($1,
@@ -423,25 +477,28 @@ Exp
 				  $3,
 				  make_leaf(token::RB, $4));
   }
+  | Exp LB Exp %prec ERROR {
+	driver.add_syntax_error("]", $1);
+  }
   | Exp DOT ID {
 	$$ = new Dot_Exp_Node($1,
 			      make_leaf(token::DOT, $2),
 			      make_leaf(token::ID, $3));
   }
   | ID {
-  	//std::cout << "Exp - > (ID) " << $1 << std::endl;
+  	//std::cout << "Exp - > (ID) " << $1->lexeme << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::ID, $1));
   }
   | INT {
-  	//std::cout << "Exp - > (INT) " << $1 << std::endl;
+  	//std::cout << "Exp - > (INT) " << $1->lexeme << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::INT, $1));
   }
   | FLOAT {
-  	//std::cout << "Exp - > (FLOAT) " << $1 << std::endl;
+  	//std::cout << "Exp - > (FLOAT) " << $1->lexeme << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::FLOAT, $1));
   }
   | CHAR {
-  	//std::cout << "Exp - > (CHAR) " << $1 << std::endl;
+  	//std::cout << "Exp - > (CHAR) " << $1->lexeme << std::endl;
   	$$ = new Leaf_Exp_Node(make_leaf(token::CHAR, $1));
   }
   ;

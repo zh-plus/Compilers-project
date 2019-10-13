@@ -115,7 +115,7 @@ namespace SPL {
         ExtDefList_Node *ext_def_list;
 
         explicit Program_Node(ExtDefList_Node *ext_def_list) : ext_def_list{ext_def_list} {
-            propagate_line_no();
+            line_no = propagate_line_no();
         };
 
         std::string to_string() override;
@@ -155,13 +155,16 @@ namespace SPL {
         CompSt_Node *comp_st;
 
         ExtDef_Node(Specifier_Node *specifier, ExtDecList_Node *ext_dec_list, Leaf_Node *semi)
-                : specifier{specifier}, ext_dec_list{ext_dec_list}, semi{semi}, fun_dec{nullptr}, comp_st{nullptr} {};
+                : specifier{specifier}, ext_dec_list{ext_dec_list}, semi{semi}, fun_dec{nullptr},
+                  comp_st{nullptr} {};
 
         ExtDef_Node(Specifier_Node *specifier, Leaf_Node *semi)
-                : specifier{specifier}, ext_dec_list{nullptr}, semi{semi}, fun_dec{nullptr}, comp_st{nullptr} {};
+                : specifier{specifier}, ext_dec_list{nullptr}, semi{semi}, fun_dec{nullptr},
+                  comp_st{nullptr} {};
 
         ExtDef_Node(Specifier_Node *specifier, FunDec_Node *fun_dec, CompSt_Node *comp_st)
-                : specifier{specifier}, ext_dec_list{nullptr}, semi{nullptr}, fun_dec{fun_dec}, comp_st{comp_st} {};
+                : specifier{specifier}, ext_dec_list{nullptr}, semi{nullptr}, fun_dec{fun_dec},
+                  comp_st{comp_st} {};
 
         std::string to_string() override;
 
@@ -314,7 +317,8 @@ namespace SPL {
         Stmt_Node *stmt;
         StmtList_Node *stmt_list;
 
-        explicit StmtList_Node(Stmt_Node *stmt, StmtList_Node *stmt_list) : stmt{stmt}, stmt_list{stmt_list} {};
+        explicit StmtList_Node(Stmt_Node *stmt, StmtList_Node *stmt_list)
+                : stmt{stmt}, stmt_list{stmt_list} {};
 
         std::string to_string() override;
 
@@ -360,7 +364,8 @@ namespace SPL {
         Exp_Node *exp;
         Leaf_Node *semi;
 
-        explicit Return_Stmt_Node(Leaf_Node *ret, Exp_Node *exp, Leaf_Node *semi) : ret{ret}, exp{exp}, semi{semi} {};
+        explicit Return_Stmt_Node(Leaf_Node *ret, Exp_Node *exp, Leaf_Node *semi)
+                : ret{ret}, exp{exp}, semi{semi} {};
 
         std::vector<AST_Node *> get_child() override;
     };
@@ -377,10 +382,11 @@ namespace SPL {
         Stmt_Node *stmt_else;
 
         explicit If_Stmt_Node(Leaf_Node *if_, Leaf_Node *lp, Exp_Node *exp, Leaf_Node *rp, Stmt_Node *stmt_if,
-                              Leaf_Node *_else = nullptr, Stmt_Node *stmt_else = nullptr) : _if{if_}, lp{lp}, exp{exp},
-                                                                                            rp{rp}, stmt_if{stmt_if},
-                                                                                            _else{_else},
-                                                                                            stmt_else{stmt_else} {};
+                              Leaf_Node *_else = nullptr, Stmt_Node *stmt_else = nullptr)
+                : _if{if_}, lp{lp}, exp{exp},
+                  rp{rp}, stmt_if{stmt_if},
+                  _else{_else},
+                  stmt_else{stmt_else} {};
 
         std::vector<AST_Node *> get_child() override;
     };
@@ -467,10 +473,8 @@ namespace SPL {
         Leaf_Node *assign;
         Exp_Node *exp;
 
-        explicit Dec_Node(VarDec_Node *var_dec, Leaf_Node *assign = nullptr, Exp_Node *exp = nullptr) : var_dec{
-                var_dec},
-                                                                                                        assign{assign},
-                                                                                                        exp{exp} {};
+        explicit Dec_Node(VarDec_Node *var_dec, Leaf_Node *assign = nullptr, Exp_Node *exp = nullptr)
+                : var_dec{var_dec}, assign{assign}, exp{exp} {};
 
         std::string to_string() override;
 
@@ -505,7 +509,8 @@ namespace SPL {
         ID_Parentheses_Exp_Node(Leaf_Node *id, Leaf_Node *lp, Args_Node *args, Leaf_Node *rp)
                 : id{id}, lp{lp}, args{args}, rp{rp} {};
 
-        ID_Parentheses_Exp_Node(Leaf_Node *id, Leaf_Node *lp, Leaf_Node *rp) : id{id}, lp{lp}, args{nullptr}, rp{rp} {};
+        ID_Parentheses_Exp_Node(Leaf_Node *id, Leaf_Node *lp, Leaf_Node *rp)
+                : id{id}, lp{lp}, args{nullptr}, rp{rp} {};
 
         std::vector<AST_Node *> get_child() override;
     };
@@ -517,8 +522,8 @@ namespace SPL {
         Exp_Node *exp2;
         Leaf_Node *rb;
 
-        Bracket_Exp_Node(Exp_Node *exp1, Leaf_Node *lb, Exp_Node *exp2, Leaf_Node *rb) : exp1{exp1}, lb{lb},
-                                                                                         exp2{exp2}, rb{rb} {};
+        Bracket_Exp_Node(Exp_Node *exp1, Leaf_Node *lb, Exp_Node *exp2, Leaf_Node *rb)
+                : exp1{exp1}, lb{lb}, exp2{exp2}, rb{rb} {};
 
         std::vector<AST_Node *> get_child() override;
     };
@@ -540,9 +545,8 @@ namespace SPL {
         Leaf_Node *op_node;
         Exp_Node *right;
 
-        Binary_Exp_Node(Exp_Node *left, Leaf_Node *op_type, Exp_Node *right) : op_node{op_type},
-                                                                               left{left},
-                                                                               right{right} {};
+        Binary_Exp_Node(Exp_Node *left, Leaf_Node *op_type, Exp_Node *right)
+                : op_node{op_type}, left{left}, right{right} {};
 
         std::vector<AST_Node *> get_child() override;
     };
@@ -572,9 +576,8 @@ namespace SPL {
         Leaf_Node *comma;
         Args_Node *args;
 
-        explicit Args_Node(Exp_Node *exp, Leaf_Node *comma = nullptr, Args_Node *args = nullptr) : exp{exp},
-                                                                                                   comma{comma},
-                                                                                                   args{args} {};
+        explicit Args_Node(Exp_Node *exp, Leaf_Node *comma = nullptr, Args_Node *args = nullptr)
+                : exp{exp}, comma{comma}, args{args} {};
 
         std::string to_string() override;
 

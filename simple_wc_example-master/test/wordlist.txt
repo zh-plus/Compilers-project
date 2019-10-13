@@ -20058,7 +20058,7 @@ erroneous
 erroneousness
 error
 errorless
-errors
+parser_errors
 ersatz
 erskine
 eruca

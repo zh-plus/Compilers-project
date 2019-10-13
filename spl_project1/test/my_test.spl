@@ -1,5 +1,17 @@
-struct my_struct
+/* test
+
+**/
+int test_1_o03(int m,int n)
 {
-  int code;
-  char data;
-;
+  int max;
+  if (m > n)
+  {
+    max = m;
+    // max = 2*m + 1;
+  }
+  else
+  {
+    max = n;
+  }
+  return max;
+}

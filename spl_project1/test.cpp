@@ -20,8 +20,6 @@ public:
 
 
 int main() {
-
-
     const char *s = "-10";
     int a = atoi(s);
 
@@ -35,6 +33,10 @@ int main() {
     A b = B();
     b.i = 10;
     cout << b.i << endl;
+
+    string lexeme = "'\x9'";
+    char c1 = SPL::trim(lexeme, "'").c_str()[0];
+    cout << c1 << endl;
 
     return 0;
 }

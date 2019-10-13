@@ -25,7 +25,12 @@ int main(const int argc, const char **argv) {
             driver.parse(argv[1]);
         }
 
-        SPL::print_ast(driver.get_root());
+        if (driver.error_reported()) {
+            driver.print_errors();
+        } else {
+            SPL::print_ast(driver.get_root());
+        }
+
     } else {
         cout << "Only one parameter permitted! Use -h to see usage." << endl;
         return EXIT_FAILURE;

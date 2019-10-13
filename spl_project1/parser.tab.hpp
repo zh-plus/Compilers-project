@@ -464,8 +464,9 @@ namespace SPL {
         LB = 289,
         RB = 290,
         LINE_COMMENT = 291,
-        ADD = 292,
-        SUB = 293
+        ERROR = 292,
+        ADD = 293,
+        SUB = 294
       };
     };
 
@@ -752,6 +753,10 @@ namespace SPL {
 
     static inline
     symbol_type
+    make_ERROR (const location_type& l);
+
+    static inline
+    symbol_type
     make_ADD (const location_type& l);
 
     static inline
@@ -841,7 +846,7 @@ namespace SPL {
   // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
   // positive, shift that token.  If negative, reduce the rule whose
   // number is the opposite.  If YYTABLE_NINF, syntax error.
-  static const unsigned char yytable_[];
+  static const signed char yytable_[];
 
   static const signed char yycheck_[];
 
@@ -960,12 +965,12 @@ namespace SPL {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 287,     ///< Last index in yytable_.
+      yylast_ = 359,     ///< Last index in yytable_.
       yynnts_ = 20,  ///< Number of nonterminal symbols.
       yyfinal_ = 9, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 39  ///< Number of tokens.
+      yyntokens_ = 40  ///< Number of tokens.
     };
 
 
@@ -977,7 +982,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 981 "parser.tab.hpp" // lalr1.cc:377
+#line 986 "parser.tab.hpp" // lalr1.cc:377
 
 
 

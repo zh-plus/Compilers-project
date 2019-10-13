@@ -43,6 +43,7 @@ namespace SPL {
 
         switch (this->leaf_type) {
             case token::INT:
+//                std::cout << "lexeme: " << lexeme << std::endl;
                 value = (unsigned int)std::stoul(lexeme, nullptr, 0);
                 break;
             case token::FLOAT:
@@ -342,7 +343,7 @@ namespace SPL {
     }
 
     int AST_Node::propagate_line_no() {
-        if (is_leaf() && !is_empty()) {
+        if (is_leaf() || is_empty() || line_no != INT32_MAX) {
             return line_no;
         }
 
@@ -359,5 +360,9 @@ namespace SPL {
 
     bool AST_Node::is_empty() {
         return to_string().empty();
+    }
+
+    std::vector<AST_Node *> AST_Node::get_child() {
+        return std::vector<AST_Node *>();
     }
 }
