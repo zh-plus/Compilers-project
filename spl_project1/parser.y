@@ -101,7 +101,7 @@
 %left OR
 %left AND
 %left LT LE GT GE EQ NE
-%left ADD SUB
+%left PLUS SUB
 %left MUL DIV
 %right NOT
 %left DOT
