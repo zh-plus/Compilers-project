@@ -588,6 +588,8 @@ namespace SPL {
 
     Leaf_Node *make_leaf(token_type leaf_type, Scan_Info *info);
 
+    Leaf_Node *make_leaf(token_type leaf_type, std::string lexeme, int line_no);
+
     void print_ast(AST_Node *node, int indent_level = 0);
 }
 

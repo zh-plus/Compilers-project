@@ -763,7 +763,7 @@ case 1:
 YY_RULE_SETUP
 #line 58 "scanner.l"
 {
-	std::cout << "DECIMAL_INT" << std::endl;
+	//std::cout << "DECIMAL_INT" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::INT;
 }
@@ -772,7 +772,7 @@ case 2:
 YY_RULE_SETUP
 #line 64 "scanner.l"
 {
-	std::cout << "HEX_INT" << std::endl;
+	//std::cout << "HEX_INT" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::INT;
 }
@@ -781,7 +781,7 @@ case 3:
 YY_RULE_SETUP
 #line 70 "scanner.l"
 {
-	std::cout << "ILLEGAL_HEX_INT" << std::endl;
+	//std::cout << "ILLEGAL_HEX_INT" << std::endl;
 	add_error(new Scan_Info(std::string(yytext), yylineno));
 	yylval->build<Scan_Info*>(new Scan_Info(std::string("0"), yylineno));
     return token::INT;
@@ -791,7 +791,7 @@ case 4:
 YY_RULE_SETUP
 #line 77 "scanner.l"
 {
-	std::cout << "DECIMAL_INT_OVERFLOW" << std::endl;
+	//std::cout << "DECIMAL_INT_OVERFLOW" << std::endl;
     printf("Error type INT at Line %d: int range overflow(%s is more than 2^32 - 1)\n",
            yylineno, yytext);
 }
@@ -800,7 +800,7 @@ case 5:
 YY_RULE_SETUP
 #line 83 "scanner.l"
 {
-	std::cout << "{CHAR}|{HEX_CHAR}" << std::endl;
+	//std::cout << "{CHAR}|{HEX_CHAR}" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::CHAR;
 }
@@ -809,7 +809,7 @@ case 6:
 YY_RULE_SETUP
 #line 89 "scanner.l"
 {
-	std::cout << "{ILLEGAL_HEX_CHAR}" << std::endl;
+	//std::cout << "{ILLEGAL_HEX_CHAR}" << std::endl;
 	add_error(new Scan_Info(std::string(yytext), yylineno));
 	yylval->build<Scan_Info*>(new Scan_Info(std::string("'o'"), yylineno));
     return token::CHAR;
@@ -819,7 +819,7 @@ case 7:
 YY_RULE_SETUP
 #line 96 "scanner.l"
 {
-	std::cout << "FLOAT" << std::endl;
+	//std::cout << "FLOAT" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::FLOAT;
 }
@@ -828,7 +828,7 @@ case 8:
 YY_RULE_SETUP
 #line 102 "scanner.l"
 {        // reserved type
-	std::cout << "int|float|char" << std::endl;
+	//std::cout << "int|float|char" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::TYPE;
 }
@@ -837,7 +837,7 @@ case 9:
 YY_RULE_SETUP
 #line 108 "scanner.l"
 {             // reserved key word
-	std::cout << "struct" << std::endl;
+	//std::cout << "struct" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::STRUCT;
 }
@@ -846,7 +846,7 @@ case 10:
 YY_RULE_SETUP
 #line 114 "scanner.l"
 {             // reserved key word
-	std::cout << "if" << std::endl;
+	//std::cout << "if" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::IF;
 }
@@ -855,7 +855,7 @@ case 11:
 YY_RULE_SETUP
 #line 120 "scanner.l"
 {             // reserved key word
-	std::cout << "else" << std::endl;
+	//std::cout << "else" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::ELSE;
 }
@@ -864,7 +864,7 @@ case 12:
 YY_RULE_SETUP
 #line 126 "scanner.l"
 {             // reserved key word
-	std::cout << "while" << std::endl;
+	//std::cout << "while" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::WHILE;
 }
@@ -873,7 +873,7 @@ case 13:
 YY_RULE_SETUP
 #line 132 "scanner.l"
 {             // reserved key word
-	std::cout << "return" << std::endl;
+	//std::cout << "return" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::RETURN;
 }
@@ -882,17 +882,16 @@ case 14:
 YY_RULE_SETUP
 #line 138 "scanner.l"
 {
-	std::cout << "ID" << std::endl;
+	//std::cout << "ID" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
-    std::cout << "ID end" << std::endl;
     return token::ID;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 145 "scanner.l"
+#line 144 "scanner.l"
 {
-	std::cout << "ILLEGAL_ID" << std::endl;
+	//std::cout << "ILLEGAL_ID" << std::endl;
 	add_error(new Scan_Info(std::string(yytext), yylineno));
     yylval->build<Scan_Info*>(new Scan_Info(std::string("id"), yylineno));
     return token::ID;
@@ -900,180 +899,180 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 152 "scanner.l"
+#line 151 "scanner.l"
 {
-	std::cout << "DOT" << std::endl;
+	//std::cout << "DOT" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::DOT;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 158 "scanner.l"
+#line 157 "scanner.l"
 {
-	std::cout << "SEMI" << std::endl;
+	//std::cout << "SEMI" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::SEMI;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 164 "scanner.l"
+#line 163 "scanner.l"
 {
-	std::cout << "COMMA" << std::endl;
+	//std::cout << "COMMA" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::COMMA;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 170 "scanner.l"
+#line 169 "scanner.l"
 {
-	std::cout << "EQ" << std::endl;
+	//std::cout << "EQ" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::EQ;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 176 "scanner.l"
+#line 175 "scanner.l"
 {
-	std::cout << "ASSIGN" << std::endl;
+	//std::cout << "ASSIGN" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::ASSIGN;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 182 "scanner.l"
+#line 181 "scanner.l"
 {
-	std::cout << "LE" << std::endl;
+	//std::cout << "LE" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::LE;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 188 "scanner.l"
+#line 187 "scanner.l"
 {
-	std::cout << "LT" << std::endl;
+	//std::cout << "LT" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::LT;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 194 "scanner.l"
+#line 193 "scanner.l"
 {
-	std::cout << "GE" << std::endl;
+	//std::cout << "GE" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::GE;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 200 "scanner.l"
+#line 199 "scanner.l"
 {
-	std::cout << "GT" << std::endl;
+	//std::cout << "GT" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::GT;
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 206 "scanner.l"
+#line 205 "scanner.l"
 {
-	std::cout << "NE" << std::endl;
+	//std::cout << "NE" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::NE;
 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 212 "scanner.l"
+#line 211 "scanner.l"
 {
-	std::cout << "NOT" << std::endl;
+	//std::cout << "NOT" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return token::NOT;
 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 218 "scanner.l"
+#line 217 "scanner.l"
 {
-	std::cout << "PLUS" << std::endl;
+	//std::cout << "PLUS" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::PLUS;
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 224 "scanner.l"
+#line 223 "scanner.l"
 {
-	std::cout << "MINUS" << std::endl;
+	//std::cout << "MINUS" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::MINUS;
 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 230 "scanner.l"
+#line 229 "scanner.l"
 {
-	std::cout << "MUL" << std::endl;
+	//std::cout << "MUL" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::MUL;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 236 "scanner.l"
+#line 235 "scanner.l"
 {
-	std::cout << "DIV" << std::endl;
+	//std::cout << "DIV" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::DIV;
 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 242 "scanner.l"
+#line 241 "scanner.l"
 {
-	std::cout << "AND" << std::endl;
+	//std::cout << "AND" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::AND;
 }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 248 "scanner.l"
+#line 247 "scanner.l"
 {
-	std::cout << "OR" << std::endl;
+	//std::cout << "OR" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return token::OR;
 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 254 "scanner.l"
+#line 253 "scanner.l"
 {
-	std::cout << "LPRP" << std::endl;
+	//std::cout << "LPRP" << std::endl;
 	yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
 	return yytext[0] == '(' ? token::LP : token::RP;
 }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 260 "scanner.l"
+#line 259 "scanner.l"
 {
-    std::cout << "LCRC" << std::endl;
+    //std::cout << "LCRC" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return yytext[0] == '{' ? token::LC : token::RC;
 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 266 "scanner.l"
+#line 265 "scanner.l"
 {
-    std::cout << "LBRB" << std::endl;
+    //std::cout << "LBRB" << std::endl;
     yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     return yytext[0] == '[' ? token::LB : token::RB;
 }
@@ -1081,7 +1080,7 @@ YY_RULE_SETUP
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 272 "scanner.l"
+#line 271 "scanner.l"
 {
 	//yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
     //return token::LINE_COMMENT;
@@ -1091,16 +1090,16 @@ YY_RULE_SETUP
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
-#line 278 "scanner.l"
+#line 277 "scanner.l"
 {
     /* Eat up one-line_no comments */
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 282 "scanner.l"
+#line 281 "scanner.l"
 {
-	std::cout << "OTHER" << std::endl;
+	//std::cout << "OTHER" << std::endl;
 	add_error(new Scan_Info(std::string(yytext), yylineno));
     yylval->build<Scan_Info*>(new Scan_Info(std::string("0"), yylineno));
     return token::INT;
@@ -1108,10 +1107,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 289 "scanner.l"
+#line 288 "scanner.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1115 "scanner.yy.cpp"
+#line 1114 "scanner.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2083,5 +2082,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 289 "scanner.l"
+#line 288 "scanner.l"
 

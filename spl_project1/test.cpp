@@ -7,15 +7,21 @@
 using namespace std;
 
 
-class A{
+class A {
 public:
     int i;
 };
 
-class B: public A {
+class B : public A {
 public:
     void print_i() { cout << i; }
 };
+
+int value = 0;
+
+int &r_get() {
+    return value;
+}
 
 
 
@@ -34,9 +40,8 @@ int main() {
     b.i = 10;
     cout << b.i << endl;
 
-    string lexeme = "'\x9'";
-    char c1 = SPL::trim(lexeme, "'").c_str()[0];
-    cout << c1 << endl;
+    r_get() = 2;
+    cout << value << endl;
 
     return 0;
 }

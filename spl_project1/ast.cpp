@@ -73,6 +73,10 @@ namespace SPL {
         return new Leaf_Node(leaf_type, info);
     }
 
+    Leaf_Node *make_leaf(token_type leaf_type, std::string lexeme, int line_no){
+        return new Leaf_Node(leaf_type, new Scan_Info(lexeme, line_no));
+    }
+
     void print_ast(AST_Node *node, int indent_level) {
         if (node->is_empty()) {
             return;

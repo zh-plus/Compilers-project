@@ -465,8 +465,7 @@ namespace SPL {
         RB = 290,
         LINE_COMMENT = 291,
         ERROR = 292,
-        ADD = 293,
-        SUB = 294
+        SUB = 293
       };
     };
 
@@ -757,10 +756,6 @@ namespace SPL {
 
     static inline
     symbol_type
-    make_ADD (const location_type& l);
-
-    static inline
-    symbol_type
     make_SUB (const location_type& l);
 
 
@@ -970,7 +965,7 @@ namespace SPL {
       yyfinal_ = 9, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 40  ///< Number of tokens.
+      yyntokens_ = 39  ///< Number of tokens.
     };
 
 
@@ -982,7 +977,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 986 "parser.tab.hpp" // lalr1.cc:377
+#line 981 "parser.tab.hpp" // lalr1.cc:377
 
 
 
