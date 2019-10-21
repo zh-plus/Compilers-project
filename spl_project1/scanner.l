@@ -280,8 +280,8 @@ int|float|char {        // reserved type
 . {
 	//std::cout << "OTHER" << std::endl;
 	add_error(new Scan_Info(std::string(yytext), yylineno));
-    yylval->build<Scan_Info*>(new Scan_Info(std::string("0"), yylineno));
-    return token::INT;
+    yylval->build<Scan_Info*>(new Scan_Info(std::string(yytext), yylineno));
+    return token::ERROR;
 }
 
 %%

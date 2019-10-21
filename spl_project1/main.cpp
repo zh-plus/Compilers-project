@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include <sstream>
 
 #include "spl_driver.hpp"
 
@@ -30,7 +32,6 @@ int main(const int argc, const char **argv) {
         } else {
             SPL::print_ast(driver.get_root());
         }
-
     } else {
         cout << "Only one parameter permitted! Use -h to see usage." << endl;
         return EXIT_FAILURE;

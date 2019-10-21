@@ -76,7 +76,7 @@
 %token <Scan_Info *> AND OR NOT
 %token <Scan_Info *> LP RP LC RC LB RB
 %token <Scan_Info *> LINE_COMMENT
-%token 		     ERROR
+%token <Scan_Info *> ERROR
 
 %type <Program_Node *> Program
 %type <ExtDefList_Node *> ExtDefList
@@ -581,6 +581,12 @@ Exp
   	#endif
   	$$ = new Binary_Exp_Node($1, make_leaf(token::OR, $2), $3);
   }
+  | Exp ERROR Exp {
+  	#ifdef LOCAL
+  	    std::cout << "Exp - > (Exp ERROR Exp) " << std::endl;
+  	#endif
+  	$$ = new Binary_Exp_Node($1, make_leaf(token::ERROR, $2), $3);
+  }
   | Exp LT Exp {
   	#ifdef LOCAL
   	    std::cout << "Exp - > (Exp LT Exp) " << std::endl;
@@ -757,6 +763,12 @@ Exp
   	#endif
   	$$ = new Leaf_Exp_Node(make_leaf(token::CHAR, $1));
   }
+  | ERROR {
+	#ifdef LOCAL
+  	    std::cout << "Exp - > (ERROR) " << $1->lexeme << std::endl;
+  	#endif
+  	$$ = new Leaf_Exp_Node(make_leaf(token::ERROR, $1));
+  }
   ;
 
 Args
@@ -777,6 +789,6 @@ Args
 %%
 
 void SPL::SPL_Parser::error(const location_type &l, const std::string &err_message){
-    std::cerr << "Auto parser error! " << l.begin << ": unknown lexeme " << err_message << std::endl;
+    std::cerr << "Auto parser error! " << l.begin << ": unknown " << err_message << std::endl;
     throw SPL_Parser::syntax_error(l, err_message);
 }
