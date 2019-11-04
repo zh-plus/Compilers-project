@@ -20,7 +20,8 @@ namespace SPL {
 
     class SPL_Driver {
     public:
-        SPL_Driver() : parser{nullptr}, scanner{nullptr}, root{nullptr}, syntax_errors{new std::vector<Error *>{}} {};
+        SPL_Driver() : parser{nullptr}, scanner{nullptr}, root{nullptr},
+                       syntax_errors{new std::vector<Error *>{}}, semantic_errors{new std::vector<Error *>{}} {};
 
         virtual ~SPL_Driver();
 
@@ -44,9 +45,13 @@ namespace SPL {
 
         void add_syntax_error(std::string lexeme, AST_Node *node);
 
-        bool error_reported();
+        bool grammar_error_reported();
+
+        bool semantic_error_reported();
 
         void print_errors();
+
+        void semantic_analyze();
 
     private:
         void parse_helper(std::istream &is);
@@ -56,7 +61,12 @@ namespace SPL {
 
         SPL::Program_Node *root = nullptr;
 
+        /* Get value after parsing process */
+        std::vector<Error *> *lexical_errors = nullptr;
+
         std::vector<Error *> *syntax_errors;
+
+        std::vector<Error *> *semantic_errors;
 
         /* define some pretty colors */
         const std::string red = "\033[1;31m";

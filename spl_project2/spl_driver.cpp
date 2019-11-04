@@ -59,6 +59,7 @@ namespace SPL {
 
         try {
             parser->parse();
+            lexical_errors = scanner->get_errors();
         } catch (const SPL_Parser::syntax_error &e) {
         }
     }
@@ -75,21 +76,24 @@ namespace SPL {
         return scanner;
     }
 
-    bool SPL_Driver::error_reported() {
-        return !syntax_errors->empty() || scanner->error_reported();
+    bool SPL_Driver::grammar_error_reported() {
+        return !syntax_errors->empty() || !lexical_errors->empty();
+    }
+
+    bool SPL_Driver::semantic_error_reported(){
+        return !semantic_errors->empty();
     }
 
     std::vector<Error *> *SPL_Driver::get_errors() {
-//        std::cout << "lexical errors: " << scanner->get_errors()->size() << std::endl;
+//        std::cout << "lexical errors: " << lexical_errors->size() << std::endl;
 //        std::cout << "syntax errors: " << syntax_errors->size() << std::endl;
-        if (scanner->get_errors()->empty()) {
+        if (lexical_errors->empty()) {
             return syntax_errors;
         } else if (syntax_errors->empty()) {
-            return scanner->get_errors();
+            return lexical_errors;
         }
 
-        auto *all_errors = new std::vector<Error *>(scanner->get_errors()->begin(),
-                                                    scanner->get_errors()->end());
+        auto *all_errors = new std::vector<Error *>(lexical_errors->begin(), lexical_errors->end());
 
         all_errors->insert(all_errors->end(), syntax_errors->begin(), syntax_errors->end());
 
@@ -111,6 +115,10 @@ namespace SPL {
         for (const auto &error: *get_errors()) {
             std::cout << error->to_string() << std::endl;
         }
+    }
+
+    void SPL_Driver::semantic_analyze() {
+
     }
 
 //    std::vector<Scan_Info *> make_leaves(std::initializer_list<Scan_Info *> terminal_leaves) {

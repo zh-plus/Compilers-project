@@ -1,10 +1,15 @@
 
-SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp
+SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp
 
-TESTS = test/test_1_r01.spl test/test_1_r02.spl
+SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp
+
+TESTS = test1/test_1_r01.spl test1/test_1_r02.spl
 
 bin/splc: $(SRCS)
 	g++ -g -std=c++17 $(SRCS) -o $@
+
+symbol: $(SYMBOL_SRCS)
+	g++ -g -std=c++17 $(SYMBOL_SRCS) -o $@
 
 scanner.yy.cpp: scanner.l
 	flex -o scanner.yy.cpp scanner.l
@@ -17,20 +22,12 @@ clean:
 	rm -rf parser.tab.cpp parser.tab.hpp stack.hh location.hh
 	rm -rf splc
 
-test: bin/splc $(TESTS)
-	./bin/splc test/test_1_r01.spl > test/test_1_r01.txt
-	./bin/splc test/test_1_r02.spl > test/test_1_r02.txt
-	./bin/splc test/test_1_o01.spl > test/test_1_o01.txt
-	diff test/test_1_r01.out test/test_1_r01.txt
-	diff test/test_1_r02.out test/test_1_r02.txt
-	diff test/test_1_o01.out test/test_1_o01.txt
-
-gen: splc
-	./splc test/test_1_r05.spl > test/test_1_r05.txt
-	./splc test/test_1_r06.spl > test/test_1_r06.txt
-	./splc test/test_1_r07.spl > test/test_1_r07.txt
-	./splc test/test_1_r08.spl > test/test_1_r08.txt
-	./splc test/test_1_r09.spl > test/test_1_r09.txt
-	./splc test/test_1_r10.spl > test/test_1_r10.txt
+test1: bin/splc $(TESTS)
+	./bin/splc test1/test_1_r01.spl > test1/test_1_r01.txt
+	./bin/splc test1/test_1_r02.spl > test1/test_1_r02.txt
+	./bin/splc test1/test_1_o01.spl > test1/test_1_o01.txt
+	diff test1/test_1_r01.out test1/test_1_r01.txt
+	diff test1/test_1_r02.out test1/test_1_r02.txt
+	diff test1/test_1_o01.out test1/test_1_o01.txt
 
 .PHONY: clean test

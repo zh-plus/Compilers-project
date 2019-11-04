@@ -27,7 +27,13 @@ int main(const int argc, const char **argv) {
             driver.parse(argv[1]);
         }
 
-        if (driver.error_reported()) {
+        if (driver.grammar_error_reported()) {
+            driver.print_errors();
+            return EXIT_SUCCESS;
+        }
+
+        driver.semantic_analyze();
+        if (driver.semantic_error_reported()) {
             driver.print_errors();
         } else {
             SPL::print_ast(driver.get_root());
