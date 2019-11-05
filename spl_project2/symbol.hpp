@@ -9,145 +9,139 @@
 #include <unordered_map>
 #include "parser.tab.hpp"
 #include "utils.hpp"
+#include "ast.hpp"
+#include "type.hpp"
 
 namespace SPL {
-    using namespace std;
-    using token_type = SPL_Parser::token_type;
+	class Symbol_Table;
 
-    class Type {
-    public:
-        virtual string to_string() const = 0;
+	class Local_Symbol_Table;
 
-        virtual ~Type() = default;
+	class Global_Symbol_Table;
 
-        friend ostream &operator<<(ostream &os, const Type &obj);
-    };
+	using token_type = SPL_Parser::token_type;
 
-    class Primitive_Type : public Type {
-    public:
-        explicit Primitive_Type(token_type type) : type{type} {};
+	class Symbol_Entry {
+	public:
+		virtual ~Symbol_Entry() = default;
 
-        string to_string() const override {
-            return symbol_map[type];
-        }
+		friend std::ostream &operator<<(std::ostream &os, const Symbol_Entry &obj);
 
-    private:
-        token_type type;
-    };
+		virtual std::string to_string() const = 0;
 
-    class Array_Type : public Type {
-    public:
-        explicit Array_Type(token_type type) : type{type} {};
+		std::string name;
 
-        string to_string() const override {
-            return symbol_map[type];
-        }
+		int line_no = -1;
+	};
 
-    private:
-        token_type type;
-    };
+	class Variable_Symbol : public Symbol_Entry {
+	public:
+		Variable_Symbol(std::string name, int line_no, Type *type) {
+			this->name = name;
+			this->line_no = line_no;
+			variable_type = type;
+		};
 
-    class Struct_Type : public Type {
-    public:
-        Struct_Type(initializer_list<Type *> members) : members{members} {};
+		~Variable_Symbol() override {
+			delete variable_type;
+		}
 
-        ~Struct_Type() override {
-            for (auto p: members) {
-                delete p;
-            }
-        }
+		std::string to_string() const override;
 
-        string to_string() const override {
-            string result = "Struct-Type:";
-            for (auto &x: members) {
-                result += " " + x->to_string();
-            }
+	private:
+		Type *variable_type;
+	};
 
-            return result;
-        }
+	class Function_Symbol : public Symbol_Entry {
+	public:
+		Function_Symbol(std::string name, int line_no, Type *return_type, std::initializer_list<Type *> parameters)
+				: return_type{return_type}, parameters{parameters} {
+			this->name = name;
+			this->line_no = line_no;
+		}
 
-    private:
-        vector<Type *> members;
-    };
+		~Function_Symbol() override {
+			delete return_type;
+			for (auto p: parameters) {
+				delete p;
+			}
+		}
 
-    class Symbol_Entry {
-    public:
-        virtual ~Symbol_Entry() = default;
+		std::string to_string() const override;
 
-        void add_reference(int line_no);
+	private:
+		Type *return_type;
+		std::vector<Type *> parameters;
+	};
 
-        int get_decl_line();
+	class Symbol_Table {
+	public:
+		Symbol_Table()
+				: m_children{std::vector<Local_Symbol_Table *>{}},
+				  table{std::unordered_map<std::string, Symbol_Entry *>{}} {};
 
-        friend ostream &operator<<(ostream &os, const Symbol_Entry &obj);
+		virtual ~Symbol_Table();
 
-        virtual string to_string() const = 0;
+		std::unordered_map<std::string, Symbol_Entry *> get_table();
 
-        vector<int> references;
-    };
+		void add_child(Local_Symbol_Table *local);
 
-    class Variable_Symbol : public Symbol_Entry {
-    public:
-        Variable_Symbol(int line_no, Type *variable_type) : variable_type{variable_type} {
-            references = vector<int>{line_no};
-        };
+		void insert(Symbol_Entry *entry);
 
-        ~Variable_Symbol() override {
-            delete variable_type;
-        }
+		virtual bool is_global() = 0;
 
-        string to_string() const override;
+		virtual Global_Symbol_Table *global_scope() = 0;
 
-    private:
-        Type *variable_type;
-    };
+		virtual Symbol_Table *parent() = 0;
 
-    class Function_Symbol : public Symbol_Entry {
-    public:
-        Function_Symbol(int line_no, Type *return_type, initializer_list<Type *> parameters)
-                : return_type{return_type}, parameters{parameters} {
-            references = vector<int>{line_no};
-        }
+		virtual Symbol_Entry *lookup(std::string name) = 0;
 
-        ~Function_Symbol() override {
-            delete return_type;
-            for (auto p: parameters) {
-                delete p;
-            }
-        }
+	protected:
 
-        string to_string() const override;
+		std::vector<Local_Symbol_Table *> m_children;
+		std::unordered_map<std::string, Symbol_Entry *> table;
+	};
 
-    private:
-        Type *return_type;
-        vector<Type *> parameters;
-    };
+	class Local_Symbol_Table : public Symbol_Table {
+	public:
+		explicit Local_Symbol_Table(Symbol_Table *parent) : m_parent{parent} {
+			parent->add_child(this);
+		};
 
-    class Symbol_Table {
-    public:
-        Symbol_Table() : tables{
-                vector<unordered_map<string, Symbol_Entry *> *>{1, new unordered_map<string, Symbol_Entry *>{}}} {};
+		~Local_Symbol_Table() override {
+			delete m_parent;
+		}
 
-        ~Symbol_Table() {
-            for (auto p: tables) {
-                delete p;
-            }
-        }
+		std::vector<Local_Symbol_Table *> children();
 
-        vector<unordered_map<string, Symbol_Entry *> *> get_tables();
+		bool is_global() override;
 
-        void insert(string key, Symbol_Entry *value);
+		Global_Symbol_Table *global_scope() override;
 
-        Symbol_Entry *lookup(const string &key);
+		Symbol_Table *parent() override;
 
-        void increase_scope();
+		Symbol_Entry *lookup(std::string name) override;
 
-        void decrease_scope();
+	private:
+		Symbol_Table *m_parent;
 
-    private:
-        int scope = 0;
+	};
 
-        vector<unordered_map<string, Symbol_Entry *> *> tables;
-    };
+	class Global_Symbol_Table : public Symbol_Table {
+	public:
+		Global_Symbol_Table() = default;
+
+		~Global_Symbol_Table() override = default;
+
+		bool is_global() override;
+
+		Global_Symbol_Table *global_scope() override;
+
+		Symbol_Table *parent() override;
+
+		Symbol_Entry *lookup(std::string name) override;
+
+	};
 }
 
 #endif //__SYMBOL_HPP__

@@ -9,19 +9,26 @@ using namespace SPL;
 using namespace std;
 
 int main() {
-    Symbol_Table st{};
+	vector<Symbol_Table *> scope_stacks{new Global_Symbol_Table{}};
+	scope_stacks.push_back(new Local_Symbol_Table(*scope_stacks.begin()));
+	scope_stacks.push_back(new Local_Symbol_Table(scope_stacks[1]));
 
-    st.insert("test1",
-              new Function_Symbol(10,
-                                  new Primitive_Type(token_type::INT),
-                                  {new Primitive_Type(token_type::INT), new Primitive_Type(token_type::CHAR)}));
+	scope_stacks[0]->insert(new Variable_Symbol("test1", 10, new Primitive_Type(token_type::INT)));
+	scope_stacks[0]->insert(new Variable_Symbol("test2", 12, new Primitive_Type(token_type::CHAR)));
+	scope_stacks[0]->insert(new Variable_Symbol("test3", 14, new Primitive_Type(token_type::FLOAT)));
 
-    for (auto &x: st.get_tables()) {
-        for (pair<const string, Symbol_Entry *> &y: *x) {
-            cout << "key: " << y.first << "\t=====\t"
-            << "value: " << *(y.second) << endl;
-        }
-    }
+	scope_stacks[1]->insert(new Function_Symbol("fn1", 20, new Primitive_Type(token_type::INT),
+	                                            {new Primitive_Type(token_type::FLOAT)}));
 
-    return 0;
+	int i = 0;
+	for (auto &x: scope_stacks) {
+		cout << "scope stack " << i << endl;
+		for (auto &y: x->get_table()) {
+			cout << "key: " << y.first << "\t=====\t"
+			     << "value: " << *(y.second) << endl;
+		}
+		++i;
+	}
+
+	return 0;
 }
