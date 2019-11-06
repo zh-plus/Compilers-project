@@ -369,4 +369,8 @@ namespace SPL {
     std::vector<AST_Node *> AST_Node::get_child() {
         return std::vector<AST_Node *>();
     }
+
+	void AST::print() {
+		print_ast(program, 0);
+	}
 }

@@ -64,12 +64,12 @@ namespace SPL {
         }
     }
 
-    void SPL_Driver::set_root(Program_Node *node) {
-        root = node;
+    void SPL_Driver::set_ast(Program_Node *node) {
+        ast = new AST(node);
     }
 
-    Program_Node *SPL_Driver::get_root() {
-        return root;
+    AST *SPL_Driver::get_ast() {
+        return ast;
     }
 
     SPL_Scanner *SPL_Driver::get_scanner() {

@@ -15,6 +15,7 @@
 #include "parser.tab.hpp"
 #include "utils.hpp"
 #include "scanner.hpp"
+#include "symbol.hpp"
 
 /**
  * Abstract syntax tree of SUSTech Programming Language.
@@ -22,6 +23,8 @@
 
 namespace SPL {
 	/* Class pre-definition */
+
+	class AST;
 
 	class AST_Node;
 
@@ -69,6 +72,23 @@ namespace SPL {
 
 	using token_type = SPL_Parser::token_type;
 	using token = SPL_Parser::token;
+
+	/**
+	 * AST Abstraction.
+	 */
+	class AST {
+	public:
+		Global_Symbol_Table *global_scope = nullptr;
+
+		Program_Node *program;
+
+		explicit AST(Program_Node *program) : program{program} {}
+
+		void print();
+
+	private:
+
+	};
 
 	/**
 	 * Base AST Node.

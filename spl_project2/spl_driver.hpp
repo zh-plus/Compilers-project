@@ -20,7 +20,7 @@ namespace SPL {
 
     class SPL_Driver {
     public:
-        SPL_Driver() : parser{nullptr}, scanner{nullptr}, root{nullptr},
+        SPL_Driver() : parser{nullptr}, scanner{nullptr}, ast{nullptr},
                        syntax_errors{new std::vector<Error *>{}}, semantic_errors{new std::vector<Error *>{}} {};
 
         virtual ~SPL_Driver();
@@ -33,9 +33,9 @@ namespace SPL {
 
         void parse(std::istream &is);
 
-        void set_root(SPL::Program_Node *node);
+        void set_ast(SPL::Program_Node *node);
 
-        SPL::Program_Node *get_root();
+        SPL::AST *get_ast();
 
         SPL_Scanner *get_scanner();
 
@@ -59,7 +59,7 @@ namespace SPL {
         SPL::SPL_Parser *parser = nullptr;
         SPL::SPL_Scanner *scanner = nullptr;
 
-        SPL::Program_Node *root = nullptr;
+        SPL::AST *ast = nullptr;
 
         /* Get value after parsing process */
         std::vector<Error *> *lexical_errors = nullptr;

@@ -9,7 +9,6 @@
 #include <unordered_map>
 #include "parser.tab.hpp"
 #include "utils.hpp"
-#include "ast.hpp"
 #include "type.hpp"
 
 namespace SPL {
@@ -27,7 +26,7 @@ namespace SPL {
 
 		friend std::ostream &operator<<(std::ostream &os, const Symbol_Entry &obj);
 
-		virtual std::string to_string() const = 0;
+		[[nodiscard]] virtual std::string to_string() const = 0;
 
 		std::string name;
 
@@ -46,7 +45,7 @@ namespace SPL {
 			delete variable_type;
 		}
 
-		std::string to_string() const override;
+		[[nodiscard]] std::string to_string() const override;
 
 	private:
 		Type *variable_type;
@@ -67,7 +66,7 @@ namespace SPL {
 			}
 		}
 
-		std::string to_string() const override;
+		[[nodiscard]] std::string to_string() const override;
 
 	private:
 		Type *return_type;
@@ -129,7 +128,7 @@ namespace SPL {
 
 	class Global_Symbol_Table : public Symbol_Table {
 	public:
-		Global_Symbol_Table() = default;
+		Global_Symbol_Table() : Symbol_Table() {};
 
 		~Global_Symbol_Table() override = default;
 

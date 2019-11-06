@@ -6,6 +6,8 @@
 #define __SEMANTICS_HPP__
 
 namespace SPL {
+
+
 	class AST_Visitor {
 		virtual
 	};

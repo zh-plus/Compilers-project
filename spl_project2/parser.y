@@ -121,7 +121,7 @@ Program
   	    std::cout << "Program -> (ExtDefList)" << std::endl;
   	#endif
   	$$ = new Program_Node($1);
-  	driver.set_root($$);
+  	driver.set_ast($$);
   }
   ;
 

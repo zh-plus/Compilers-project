@@ -3,6 +3,7 @@
 //
 
 #include "symbol.hpp"
+#include "ast.hpp"
 
 namespace SPL {
 	using namespace std;
@@ -12,8 +13,8 @@ namespace SPL {
 		return os;
 	}
 
-	Primitive_Type::Primitive_Type(SPL::Leaf_Node leaf) {
-		if (leaf.leaf_type != SPL::token_type::TYPE) {
+	Primitive_Type::Primitive_Type(Leaf_Node leaf) {
+		if (leaf.leaf_type != token_type::TYPE) {
 			cout << "The type class should be initialized from TYPE Leaf_Node!" << endl;
 			exit(EXIT_FAILURE);
 		} else {
@@ -22,8 +23,8 @@ namespace SPL {
 		}
 	}
 
-	Array_Type::Array_Type(SPL::Leaf_Node leaf) {
-		if (leaf.leaf_type != SPL::token_type::TYPE) {
+	Array_Type::Array_Type(Leaf_Node leaf) {
+		if (leaf.leaf_type != token_type::TYPE) {
 			cout << "The type class should be initialized from TYPE Leaf_Node!" << endl;
 			exit(EXIT_FAILURE);
 		} else {

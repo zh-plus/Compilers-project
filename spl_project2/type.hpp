@@ -9,9 +9,10 @@
 #include <unordered_map>
 #include "parser.tab.hpp"
 #include "utils.hpp"
-#include "ast.hpp"
 
 namespace SPL {
+	using token_type = SPL_Parser::token_type;
+
 	class Type {
 	public:
 		virtual std::string to_string() const = 0;
@@ -25,30 +26,30 @@ namespace SPL {
 
 	class Primitive_Type : public Type {
 	public:
-		explicit Primitive_Type(SPL::token_type type) : type{type} {};
+		explicit Primitive_Type(token_type type) : type{type} {};
 
-		explicit Primitive_Type(SPL::Leaf_Node leaf);
+		explicit Primitive_Type(Leaf_Node leaf);
 
 		std::string to_string() const override {
-			return SPL::symbol_map[type];
+			return symbol_map[type];
 		}
 
 	private:
-		SPL::token_type type;
+		token_type type;
 	};
 
 	class Array_Type : public Type {
 	public:
-		explicit Array_Type(SPL::token_type type) : type{type} {};
+		explicit Array_Type(token_type type) : type{type} {};
 
-		explicit Array_Type(SPL::Leaf_Node leaf);
+		explicit Array_Type(Leaf_Node leaf);
 
 		std::string to_string() const override {
-			return SPL::symbol_map[type];
+			return symbol_map[type];
 		}
 
 	private:
-		SPL::token_type type;
+		token_type type;
 	};
 
 	class Struct_Type : public Type {
