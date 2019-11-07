@@ -56,6 +56,16 @@ namespace SPL {
 
 	class Stmt_Node;
 
+	class Exp_Stmt_Node;
+
+	class CompSt_Stmt_Node;
+
+	class Return_Stmt_Node;
+
+	class If_Stmt_Node;
+
+	class While_Stmt_Node;
+
 	class DefList_Node;
 
 	class Def_Node;
@@ -285,6 +295,19 @@ namespace SPL {
 		std::string to_string() override;
 	};
 
+	class ParamDec_Node : public AST_Node {
+	public:
+		Specifier_Node *specifier;
+		VarDec_Node *var_dec;
+
+		ParamDec_Node(Specifier_Node *specifier, VarDec_Node *var_dec)
+				: specifier{specifier}, var_dec{var_dec} {};
+
+		std::vector<AST_Node *> get_child() override;
+
+		std::string to_string() override;
+	};
+
 	class VarList_Node : public AST_Node {
 	public:
 		ParamDec_Node *param_dec;
@@ -293,19 +316,6 @@ namespace SPL {
 
 		explicit VarList_Node(ParamDec_Node *param_dec, Leaf_Node *comma = nullptr, VarList_Node *var_list = nullptr)
 				: param_dec{param_dec}, comma{comma}, var_list{var_list} {};
-
-		std::vector<AST_Node *> get_child() override;
-
-		std::string to_string() override;
-	};
-
-	class ParamDec_Node : public AST_Node {
-	public:
-		Specifier_Node *specifier;
-		VarDec_Node *var_dec;
-
-		ParamDec_Node(Specifier_Node *specifier, VarDec_Node *var_dec)
-				: specifier{specifier}, var_dec{var_dec} {};
 
 		std::vector<AST_Node *> get_child() override;
 

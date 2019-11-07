@@ -10,39 +10,60 @@ using namespace T;
 
 class A {
 public:
-    int i;
+	int i = 0;
+
+	virtual void accept() {
+		cout << "A" << endl;
+	}
 };
 
 class B : public A {
 public:
-    void print_i() { cout << i; }
+	void print_i() { cout << i; }
+
+	void accept() override {
+		cout << "B" << endl;
+	}
+};
+
+class C {
+public:
+	virtual void print(A *a) {
+		cout << "A" << endl;
+	}
+
+	virtual void print(B *B) {
+		cout << "B" << endl;
+	}
+};
+
+class Visitor {
+public:
+	static void visit(A *a) {
+		a->accept();
+	}
+
+	static void visit(B *b) {
+		b->accept();
+	}
 };
 
 int value = 0;
 
 int &r_get() {
-    return value;
+	return value;
 }
 
 
-
 int main() {
-    const char *s = "-10";
-    int a = atoi(s);
+	A *a = new A();
+	A *b = new B();
+	C *c = new C();
 
-    cout << a << endl;
+	Visitor v;
+	v.visit(a);
+	v.visit(b);
 
-    const char *c = "'\x7E'";
-    char ch = (char) c[1];
-    char trimmed = SPL::trim(c, "'").c_str()[0];
-    cout << ch << endl;
 
-    A b = B();
-    b.i = 10;
-    cout << b.i << endl;
-
-    r_get() = 2;
-    cout << value << endl;
-
-    return 0;
+	return 0;
 }
