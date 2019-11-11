@@ -17,12 +17,15 @@
 #include "scanner.hpp"
 #include "symbol.hpp"
 
+
 /**
  * Abstract syntax tree of SUSTech Programming Language.
  */
 
 namespace SPL {
 	/* Class pre-definition */
+
+	class Visitor;
 
 	class AST;
 
@@ -117,7 +120,9 @@ namespace SPL {
 
 		virtual std::string to_string() = 0;
 
-		virtual std::vector<AST_Node *> get_child() = 0;
+		virtual std::vector<AST_Node *> children() = 0;
+
+		virtual void accept(Visitor *visitor) = 0;
 	};
 
 	/**
@@ -135,7 +140,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	/* High-level definition */
@@ -150,7 +157,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class ExtDefList_Node : public AST_Node {
@@ -163,7 +172,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Empty_ExtDefList_Node : public ExtDefList_Node {
@@ -172,7 +183,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class ExtDef_Node : public AST_Node {
@@ -195,7 +208,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class ExtDecList_Node : public AST_Node {
@@ -210,7 +225,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	/* specifier */
@@ -227,7 +244,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class StructSpecifier_Node : public AST_Node {
@@ -244,7 +263,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 
@@ -261,7 +282,9 @@ namespace SPL {
 
 		explicit ID_VarDec_Node(Leaf_Node *id) : id{id} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Array_VarDec_Node : public VarDec_Node {
@@ -274,7 +297,9 @@ namespace SPL {
 		explicit Array_VarDec_Node(VarDec_Node *var_dec, Leaf_Node *lb, Leaf_Node *_int, Leaf_Node *rb)
 				: var_dec{var_dec}, lb{lb}, _int{_int}, rb{rb} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class FunDec_Node : public AST_Node {
@@ -290,9 +315,11 @@ namespace SPL {
 		FunDec_Node(Leaf_Node *id, Leaf_Node *lp, Leaf_Node *rp)
 				: id{id}, lp{lp}, var_list{nullptr}, rp{rp} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
 
 		std::string to_string() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class ParamDec_Node : public AST_Node {
@@ -303,9 +330,11 @@ namespace SPL {
 		ParamDec_Node(Specifier_Node *specifier, VarDec_Node *var_dec)
 				: specifier{specifier}, var_dec{var_dec} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
 
 		std::string to_string() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class VarList_Node : public AST_Node {
@@ -317,9 +346,11 @@ namespace SPL {
 		explicit VarList_Node(ParamDec_Node *param_dec, Leaf_Node *comma = nullptr, VarList_Node *var_list = nullptr)
 				: param_dec{param_dec}, comma{comma}, var_list{var_list} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
 
 		std::string to_string() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	/* statement */
@@ -336,7 +367,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class StmtList_Node : public AST_Node {
@@ -349,7 +382,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Empty_StmtList_Node : public StmtList_Node {
@@ -358,7 +393,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Stmt_Node : public AST_Node {
@@ -373,7 +410,9 @@ namespace SPL {
 
 		Exp_Stmt_Node(Exp_Node *exp, Leaf_Node *semi) : exp{exp}, semi{semi} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class CompSt_Stmt_Node : public Stmt_Node {
@@ -382,7 +421,9 @@ namespace SPL {
 
 		explicit CompSt_Stmt_Node(CompSt_Node *comp_st) : comp_st{comp_st} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Return_Stmt_Node : public Stmt_Node {
@@ -394,7 +435,9 @@ namespace SPL {
 		explicit Return_Stmt_Node(Leaf_Node *ret, Exp_Node *exp, Leaf_Node *semi)
 				: ret{ret}, exp{exp}, semi{semi} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class If_Stmt_Node : public Stmt_Node {
@@ -415,7 +458,9 @@ namespace SPL {
 				  _else{_else},
 				  stmt_else{stmt_else} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class While_Stmt_Node : public Stmt_Node {
@@ -429,7 +474,9 @@ namespace SPL {
 		explicit While_Stmt_Node(Leaf_Node *_while, Leaf_Node *lp, Exp_Node *exp, Leaf_Node *rp, Stmt_Node *stmt)
 				: _while{_while}, lp{lp}, exp{exp}, rp{rp}, stmt{stmt} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 
@@ -444,7 +491,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Empty_DefList_Node : public DefList_Node {
@@ -453,7 +502,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Def_Node : public AST_Node {
@@ -468,7 +519,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class DecList_Node : public AST_Node {
@@ -482,7 +535,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Empty_DecList_Node : public DecList_Node {
@@ -491,7 +546,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Dec_Node : public AST_Node {
@@ -505,7 +562,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	/* Expression */
@@ -523,7 +582,9 @@ namespace SPL {
 
 		Parentheses_Exp_Node(Leaf_Node *lp, Exp_Node *exp, Leaf_Node *rp) : lp{lp}, exp{exp}, rp{rp} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class ID_Parentheses_Exp_Node : public Exp_Node {
@@ -539,7 +600,9 @@ namespace SPL {
 		ID_Parentheses_Exp_Node(Leaf_Node *id, Leaf_Node *lp, Leaf_Node *rp)
 				: id{id}, lp{lp}, args{nullptr}, rp{rp} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Bracket_Exp_Node : public Exp_Node {
@@ -552,7 +615,9 @@ namespace SPL {
 		Bracket_Exp_Node(Exp_Node *exp1, Leaf_Node *lb, Exp_Node *exp2, Leaf_Node *rb)
 				: exp1{exp1}, lb{lb}, exp2{exp2}, rb{rb} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Dot_Exp_Node : public Exp_Node {
@@ -563,7 +628,9 @@ namespace SPL {
 
 		Dot_Exp_Node(Exp_Node *exp, Leaf_Node *dot, Leaf_Node *id) : exp{exp}, dot{dot}, id{id} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Binary_Exp_Node : public Exp_Node {
@@ -575,7 +642,9 @@ namespace SPL {
 		Binary_Exp_Node(Exp_Node *left, Leaf_Node *op_type, Exp_Node *right)
 				: op_node{op_type}, left{left}, right{right} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Unary_Exp_Node : public Exp_Node {
@@ -585,7 +654,9 @@ namespace SPL {
 
 		Unary_Exp_Node(Leaf_Node *op_node, Exp_Node *node) : op_node{op_node}, node{node} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Leaf_Exp_Node : public Exp_Node {
@@ -594,7 +665,9 @@ namespace SPL {
 
 		explicit Leaf_Exp_Node(Leaf_Node *leaf) : leaf{leaf} {};
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	class Args_Node : public AST_Node {
@@ -608,7 +681,9 @@ namespace SPL {
 
 		std::string to_string() override;
 
-		std::vector<AST_Node *> get_child() override;
+		std::vector<AST_Node *> children() override;
+
+		void accept(Visitor *visitor) override;
 	};
 
 	/* Useful Function */

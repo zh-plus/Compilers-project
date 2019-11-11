@@ -4,6 +4,7 @@
 #include <iostream>
 #include "utils.hpp"
 #include "test.hpp"
+#include "type_case.hpp"
 
 //using namespace std;
 using namespace T;
@@ -22,6 +23,7 @@ public:
 	void print_i() { cout << i; }
 
 	void accept() override {
+		A::accept();
 		cout << "B" << endl;
 	}
 };
@@ -63,6 +65,16 @@ int main() {
 	Visitor v;
 	v.visit(a);
 	v.visit(b);
+
+	cout << "=========" << endl;
+
+	type_case(b,
+	          [&](A *first) {
+		          c->print(a);
+	          },
+	          [&](B *second) {
+		          c->print((B *) a);
+	          });
 
 
 	return 0;

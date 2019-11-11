@@ -1,7 +1,7 @@
 
-SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp
+SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp
 
-SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp type.cpp
+SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp type.cpp semantics.cpp
 
 TESTS = test1/test_1_r01.spl test1/test_1_r02.spl
 
