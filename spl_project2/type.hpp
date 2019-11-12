@@ -15,7 +15,7 @@ namespace SPL {
 
 	class Type {
 	public:
-		virtual std::string to_string() const = 0;
+		[[nodiscard]] virtual std::string to_string() const = 0;
 
 		virtual ~Type() = default;
 
@@ -30,7 +30,7 @@ namespace SPL {
 
 		explicit Primitive_Type(Leaf_Node leaf);
 
-		std::string to_string() const override {
+		[[nodiscard]] std::string to_string() const override {
 			return symbol_map[type];
 		}
 
@@ -44,7 +44,7 @@ namespace SPL {
 
 		explicit Array_Type(Leaf_Node leaf);
 
-		std::string to_string() const override {
+		[[nodiscard]] std::string to_string() const override {
 			return symbol_map[type];
 		}
 
@@ -62,7 +62,7 @@ namespace SPL {
 			}
 		}
 
-		std::string to_string() const override {
+		[[nodiscard]] std::string to_string() const override {
 			std::string result = "Struct-Type:";
 			for (auto &x: members) {
 				result += " " + x->to_string();

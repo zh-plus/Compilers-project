@@ -15,6 +15,7 @@
 #include "ast.hpp"
 #include "scanner.hpp"
 #include "parser.tab.hpp"
+#include "semantics.hpp"
 
 namespace SPL {
 

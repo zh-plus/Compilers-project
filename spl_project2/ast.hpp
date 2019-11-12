@@ -362,6 +362,8 @@ namespace SPL {
 		StmtList_Node *stmt_list;
 		Leaf_Node *rc;
 
+		Local_Symbol_Table *local_scope = nullptr;
+
 		CompSt_Node(Leaf_Node *lc, DefList_Node *def_list, StmtList_Node *stmt_list, Leaf_Node *rc)
 				: lc{lc}, def_list{def_list}, stmt_list{stmt_list}, rc{rc} {};
 

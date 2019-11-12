@@ -36,7 +36,8 @@ int main(const int argc, const char **argv) {
 		if (driver.semantic_error_reported()) {
 			driver.print_errors();
 		} else {
-			driver.get_ast()->print();
+//			driver.get_ast()->print();
+			cout << "Semantic analyze success!" << endl;
 		}
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;

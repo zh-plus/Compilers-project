@@ -3,6 +3,8 @@ SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp s
 
 SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp type.cpp semantics.cpp
 
+VISITOR_SRCS = test_visitor.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp
+
 TESTS = test1/test_1_r01.spl test1/test_1_r02.spl
 
 bin/splc: $(SRCS)
@@ -10,6 +12,9 @@ bin/splc: $(SRCS)
 
 symbol: $(SYMBOL_SRCS)
 	g++ -g -std=c++17 $(SYMBOL_SRCS) -o $@
+
+visitor: $(VISITOR_SRCS)
+	g++ -g -std=c++17 $(VISITOR_SRCS) -o $@
 
 scanner.yy.cpp: scanner.l
 	flex -o scanner.yy.cpp scanner.l

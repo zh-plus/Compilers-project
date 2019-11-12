@@ -57,6 +57,7 @@ int &r_get() {
 }
 
 
+
 int main() {
 	A *a = new A();
 	A *b = new B();

@@ -1803,7 +1803,7 @@ namespace SPL {
   	    std::cout << "Program -> (ExtDefList)" << std::endl;
   	#endif
   	yylhs.value.as< Program_Node * > () = new Program_Node(yystack_[0].value.as< ExtDefList_Node * > ());
-		            driver.set_ast(yylhs.value.as<Program_Node *>());
+  	driver.set_ast(yylhs.value.as< Program_Node * > ());
   }
 #line 1809 "parser.tab.cpp" // lalr1.cc:859
     break;
