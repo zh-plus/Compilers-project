@@ -56,7 +56,10 @@ int &r_get() {
 	return value;
 }
 
-
+struct s{
+	int a, b;
+	float c;
+};
 
 int main() {
 	A *a = new A();
@@ -77,6 +80,8 @@ int main() {
 		          c->print((B *) a);
 	          });
 
+	struct s test_s{};
+	cout << test_s.a << endl;
 
 	return 0;
 }

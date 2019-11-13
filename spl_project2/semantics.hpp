@@ -6,6 +6,8 @@
 #define __SEMANTICS_HPP__
 
 #include "visitor.hpp"
+#include "type.hpp"
+#include "symbol.hpp"
 
 namespace SPL {
 
@@ -28,10 +30,14 @@ namespace SPL {
 
 		void visit(Leaf_Node *node) override;
 
+
+
+
 	private:
 		std::vector<Symbol_Table *> *scope_stack;
 
 	};
+
 
 }
 

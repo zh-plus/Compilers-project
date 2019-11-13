@@ -4,6 +4,7 @@
 
 #include "ast.hpp"
 #include "visitor.hpp"
+#include "symbol.hpp"
 
 namespace SPL {
 
@@ -68,6 +69,10 @@ namespace SPL {
 
 	void Leaf_Node::accept(Visitor *visitor) {
 		visitor->visit(this);
+	}
+
+	std::string Leaf_Node::get_lexeme() {
+		return info->lexeme;
 	}
 
 	std::vector<AST_Node *> Unary_Exp_Node::children() {

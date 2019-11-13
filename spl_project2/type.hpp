@@ -7,8 +7,10 @@
 
 #include <vector>
 #include <unordered_map>
+#include <map>
 #include "parser.tab.hpp"
 #include "utils.hpp"
+#include "ast.hpp"
 
 namespace SPL {
 	using token_type = SPL_Parser::token_type;
@@ -28,13 +30,12 @@ namespace SPL {
 	public:
 		explicit Primitive_Type(token_type type) : type{type} {};
 
-		explicit Primitive_Type(Leaf_Node leaf);
+		explicit Primitive_Type(Leaf_Node *leaf);
 
 		[[nodiscard]] std::string to_string() const override {
 			return symbol_map[type];
 		}
 
-	private:
 		token_type type;
 	};
 
@@ -42,38 +43,47 @@ namespace SPL {
 	public:
 		explicit Array_Type(token_type type) : type{type} {};
 
-		explicit Array_Type(Leaf_Node leaf);
+		explicit Array_Type(Leaf_Node *leaf);
+
+		explicit Array_Type(Primitive_Type type);
 
 		[[nodiscard]] std::string to_string() const override {
 			return symbol_map[type];
 		}
 
-	private:
 		token_type type;
 	};
 
 	class Struct_Type : public Type {
 	public:
-		Struct_Type(std::initializer_list<Type *> members) : members{members} {};
+		explicit Struct_Type(StructSpecifier_Node *node);
 
 		~Struct_Type() override {
-			for (auto p: members) {
-				delete p;
+			for (const auto& p: members) {
+				delete p.second;
+				members.erase(p.first);
 			}
 		}
 
 		[[nodiscard]] std::string to_string() const override {
 			std::string result = "Struct-Type:";
 			for (auto &x: members) {
-				result += " " + x->to_string();
+				result += " " + x.second->to_string() + "-" + x.first + ", ";
 			}
 
 			return result;
 		}
 
+		std::string struct_id;
+
 	private:
-		std::vector<Type *> members;
+		std::map<std::string, Type *> members;
 	};
+
+	/* Useful functions */
+	static Type *get_type(Specifier_Node *node);
+
+	static std::pair<Type *, std::vector<VarDec_Node *> *> get_info(Def_Node *node);
 }
 
 

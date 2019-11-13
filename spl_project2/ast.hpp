@@ -15,7 +15,6 @@
 #include "parser.tab.hpp"
 #include "utils.hpp"
 #include "scanner.hpp"
-#include "symbol.hpp"
 
 
 /**
@@ -24,6 +23,10 @@
 
 namespace SPL {
 	/* Class pre-definition */
+
+	class Global_Symbol_Table;
+
+	class Local_Symbol_Table;
 
 	class Visitor;
 
@@ -143,6 +146,8 @@ namespace SPL {
 		std::vector<AST_Node *> children() override;
 
 		void accept(Visitor *visitor) override;
+
+		std::string get_lexeme();
 	};
 
 	/* High-level definition */
