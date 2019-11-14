@@ -1914,7 +1914,7 @@ namespace SPL {
 #line 192 "parser.y" // lalr1.cc:859
     {
   	#ifdef LOCAL
-  	    std::cout << "ExtDef - > (VarDec ExtDecList %prec ERROR)" << std::endl;
+  	    std::cout << "ExtDecList - > (VarDec ExtDecList %prec ERROR)" << std::endl;
   	#endif
   	driver.add_syntax_error(";", yystack_[1].value.as< VarDec_Node * > ());
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[1].value.as< VarDec_Node * > (), make_leaf(token::COMMA, ";", yystack_[0].value.as< ExtDecList_Node * > ()->propagate_line_no()), yystack_[0].value.as< ExtDecList_Node * > ());
@@ -2762,7 +2762,7 @@ namespace SPL {
 #line 760 "parser.y" // lalr1.cc:859
     {
   	#ifdef LOCAL
-  	    std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< Scan_Info * > ()->lexeme << std::endl;
+  	    std::cout << "Exp - > (CHAR) " << yystack_[0].value.as< Scan_Info * > ()->lexeme << std::enedl;
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::CHAR, yystack_[0].value.as< Scan_Info * > ()));
   }

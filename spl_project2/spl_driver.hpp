@@ -54,6 +54,8 @@ namespace SPL {
 
         void semantic_analyze();
 
+	    Local_Resolver local_resolver;
+
     private:
         void parse_helper(std::istream &is);
 

@@ -337,12 +337,28 @@ namespace SPL {
 		visitor->visit(this);
 	}
 
+	bool ID_VarDec_Node::is_atomic() {
+		return true;
+	}
+
+	std::string ID_VarDec_Node::get_id() {
+		return id->get_lexeme();
+	}
+
 	std::vector<AST_Node *> Array_VarDec_Node::children() {
 		return std::vector<AST_Node *>{var_dec, lb, _int, rb};
 	}
 
 	void Array_VarDec_Node::accept(Visitor *visitor) {
 		visitor->visit(this);
+	}
+
+	bool Array_VarDec_Node::is_atomic() {
+		return true;
+	}
+
+	std::string Array_VarDec_Node::get_id() {
+		return var_dec->get_id();
 	}
 
 	std::string FunDec_Node::to_string() {

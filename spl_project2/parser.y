@@ -191,7 +191,7 @@ ExtDecList
   }
   | VarDec ExtDecList %prec ERROR {
   	#ifdef LOCAL
-  	    std::cout << "ExtDef - > (VarDec ExtDecList %prec ERROR)" << std::endl;
+  	    std::cout << "ExtDecList - > (VarDec ExtDecList %prec ERROR)" << std::endl;
   	#endif
   	driver.add_syntax_error(";", $1);
   	$$ = new ExtDecList_Node($1, make_leaf(token::COMMA, ";", $2->propagate_line_no()), $2);
@@ -759,7 +759,7 @@ Exp
   }
   | CHAR {
   	#ifdef LOCAL
-  	    std::cout << "Exp - > (CHAR) " << $1->lexeme << std::endl;
+  	    std::cout << "Exp - > (CHAR) " << $1->lexeme << std::enedl;
   	#endif
   	$$ = new Leaf_Exp_Node(make_leaf(token::CHAR, $1));
   }

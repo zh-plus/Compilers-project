@@ -11,7 +11,10 @@
 #include "utils.hpp"
 #include "type.hpp"
 
+
 namespace SPL {
+
+
 	class Symbol_Table;
 
 	class Local_Symbol_Table;
@@ -33,13 +36,26 @@ namespace SPL {
 		int line_no = -1;
 	};
 
+	/**
+	 * Symbol for Struct definition.
+	 */
+	class Struct_Def_Symbol : public Symbol_Entry {
+	public:
+		~Struct_Def_Symbol() override {
+			delete struct_type;
+		}
+
+		explicit Struct_Def_Symbol(Struct_Type *struct_type);
+
+		[[nodiscard]] std::string to_string() const override;
+
+
+		Struct_Type *struct_type;
+	};
+
 	class Variable_Symbol : public Symbol_Entry {
 	public:
-		Variable_Symbol(std::string name, int line_no, Type *type) {
-			this->name = name;
-			this->line_no = line_no;
-			variable_type = type;
-		};
+		Variable_Symbol(std::string name, Type *type);
 
 		~Variable_Symbol() override {
 			delete variable_type;
@@ -53,11 +69,7 @@ namespace SPL {
 
 	class Function_Symbol : public Symbol_Entry {
 	public:
-		Function_Symbol(std::string name, int line_no, Type *return_type, std::initializer_list<Type *> parameters)
-				: return_type{return_type}, parameters{parameters} {
-			this->name = name;
-			this->line_no = line_no;
-		}
+		Function_Symbol(std::string name, Type *return_type, std::initializer_list<Type *> parameters);
 
 		~Function_Symbol() override {
 			delete return_type;

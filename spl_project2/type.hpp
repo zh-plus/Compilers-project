@@ -8,11 +8,14 @@
 #include <vector>
 #include <unordered_map>
 #include <map>
+#include <string>
 #include "parser.tab.hpp"
 #include "utils.hpp"
-#include "ast.hpp"
 
 namespace SPL {
+	/* Forward definition */
+	class Array_VarDec_Node;
+
 	using token_type = SPL_Parser::token_type;
 
 	class Type {
@@ -23,7 +26,7 @@ namespace SPL {
 
 		friend std::ostream &operator<<(std::ostream &os, const Type &obj);
 
-		int line_no;
+		int line_no = -1;
 	};
 
 	class Primitive_Type : public Type {
@@ -33,25 +36,29 @@ namespace SPL {
 		explicit Primitive_Type(Leaf_Node *leaf);
 
 		[[nodiscard]] std::string to_string() const override {
-			return symbol_map[type];
+			return type_name;
 		}
 
+		//TODO: Using enum to represent Primitive types: int, float, char
 		token_type type;
+		std::string type_name;
 	};
 
 	class Array_Type : public Type {
 	public:
-		explicit Array_Type(token_type type) : type{type} {};
-
-		explicit Array_Type(Leaf_Node *leaf);
-
-		explicit Array_Type(Primitive_Type type);
+		explicit Array_Type(Type *base_type, Array_VarDec_Node *array_node);
 
 		[[nodiscard]] std::string to_string() const override {
-			return symbol_map[type];
+			std::string s = m_base_type->to_string();
+			for (const auto &x: shape){
+				s += "[" + std::to_string(x) + "]";
+			}
+			return s;
 		}
 
-		token_type type;
+		Type *m_base_type;
+
+		std::vector<int> shape;
 	};
 
 	class Struct_Type : public Type {
@@ -59,7 +66,7 @@ namespace SPL {
 		explicit Struct_Type(StructSpecifier_Node *node);
 
 		~Struct_Type() override {
-			for (const auto& p: members) {
+			for (const auto &p: members) {
 				delete p.second;
 				members.erase(p.first);
 			}
@@ -76,14 +83,13 @@ namespace SPL {
 
 		std::string struct_id;
 
-	private:
 		std::map<std::string, Type *> members;
 	};
 
 	/* Useful functions */
-	static Type *get_type(Specifier_Node *node);
+	Type *get_type(Specifier_Node *node);
 
-	static std::pair<Type *, std::vector<VarDec_Node *> *> get_info(Def_Node *node);
+	std::pair<Type *, std::vector<VarDec_Node *> *> get_info(Def_Node *node);
 }
 
 

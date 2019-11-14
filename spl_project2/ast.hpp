@@ -279,6 +279,10 @@ namespace SPL {
 	class VarDec_Node : public AST_Node {
 	public:
 		std::string to_string() override;
+
+		virtual bool is_atomic() = 0;
+
+		virtual std::string get_id() = 0;
 	};
 
 	class ID_VarDec_Node : public VarDec_Node {
@@ -290,6 +294,10 @@ namespace SPL {
 		std::vector<AST_Node *> children() override;
 
 		void accept(Visitor *visitor) override;
+
+		bool is_atomic() override;
+
+		std::string get_id() override;
 	};
 
 	class Array_VarDec_Node : public VarDec_Node {
@@ -305,6 +313,10 @@ namespace SPL {
 		std::vector<AST_Node *> children() override;
 
 		void accept(Visitor *visitor) override;
+
+		bool is_atomic() override;
+
+		std::string get_id() override;
 	};
 
 	class FunDec_Node : public AST_Node {

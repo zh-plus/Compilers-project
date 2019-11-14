@@ -9,8 +9,22 @@
 #include <sstream>
 
 #include "spl_driver.hpp"
+#include "symbol.hpp"
 
-using std::cout, std::endl;
+using namespace std;
+using namespace SPL;
+
+void print_scope_stack(vector<Symbol_Table *> *scope_stacks){
+	int i = 0;
+	for (auto &x: *scope_stacks) {
+		cout << "scope stack " << i << endl;
+		for (auto &y: x->get_table()) {
+			cout << "key: " << y.first << "\t=====\t"
+			     << "value: " << *(y.second) << endl;
+		}
+		++i;
+	}
+}
 
 int main(const int argc, const char **argv) {
 	if (argc == 2) {
@@ -36,8 +50,8 @@ int main(const int argc, const char **argv) {
 		if (driver.semantic_error_reported()) {
 			driver.print_errors();
 		} else {
-//			driver.get_ast()->print();
 			cout << "Semantic analyze success!" << endl;
+			print_scope_stack(driver.local_resolver.get_scope_stack());
 		}
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;

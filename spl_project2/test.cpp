@@ -57,9 +57,20 @@ int &r_get() {
 }
 
 struct s{
-	int a, b;
+	int a, b[10][20];
 	float c;
 };
+
+struct s1{
+	int a, b[10][20];
+	float c;
+};
+
+class Test{
+public:
+	vector<int> v;
+};
+
 
 int main() {
 	A *a = new A();
@@ -81,7 +92,14 @@ int main() {
 	          });
 
 	struct s test_s{};
+	struct s1 test_s1{};
 	cout << test_s.a << endl;
+
+	Test t;
+	t.v.push_back(1);
+	for(auto &x: t.v) {
+		cout << x << endl;
+	}
 
 	return 0;
 }

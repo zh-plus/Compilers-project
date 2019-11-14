@@ -118,7 +118,7 @@ namespace SPL {
     }
 
     void SPL_Driver::semantic_analyze() {
-	    Local_Resolver().resolve(ast);
+	    local_resolver.resolve(ast);
     }
 
 //    std::vector<Scan_Info *> make_leaves(std::initializer_list<Scan_Info *> terminal_leaves) {

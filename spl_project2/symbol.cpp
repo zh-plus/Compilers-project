@@ -18,6 +18,24 @@ namespace SPL {
 		return result;
 	}
 
+	Variable_Symbol::Variable_Symbol(std::string name, Type *type) {
+		this->name = name;
+		this->line_no = type->line_no;
+		this->variable_type = type;
+	}
+
+	std::string Struct_Def_Symbol::to_string() const {
+		string result = "Struct Def: " + struct_type->struct_id + ": ";
+		result += struct_type->to_string();
+		return result;
+	}
+
+	Struct_Def_Symbol::Struct_Def_Symbol(Struct_Type *struct_type) {
+		this->name = struct_type->struct_id;
+		this->line_no = struct_type->line_no;
+		this->struct_type = struct_type;
+	}
+
 	string Function_Symbol::to_string() const {
 		string result = "Function: Return - " + return_type->to_string();
 		result += +", Parameters - ";
@@ -25,6 +43,13 @@ namespace SPL {
 			result += " " + x->to_string();
 		}
 		return result;
+	}
+
+	Function_Symbol::Function_Symbol(std::string name, Type *return_type, std::initializer_list<Type *> parameters) {
+		this->return_type = return_type;
+		this->parameters = parameters;
+		this->name = name;
+		this->line_no = return_type->line_no;
 	}
 
 	void Symbol_Table::add_child(Local_Symbol_Table *local) {
