@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install env
+      run: sudo apt-get install flex bison
+    - name: mkdir
+      working-directory: spl_project2
+      run: mkdir bin
+    - name: clean
+      working-directory: spl_project2
+      run: make clean
+    - name: make
+      working-directory: spl_project2
+      run: make
+    - name: make test1
+      working-directory: spl_project2
+      run: make test1
