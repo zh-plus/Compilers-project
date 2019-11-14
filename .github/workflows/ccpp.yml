@@ -9,6 +9,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: cd
+      run: cd spl_project2
     - name: clean
       run: make clean
     - name: make
