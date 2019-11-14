@@ -9,11 +9,12 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: cd
-      run: cd spl_project2
     - name: clean
+      working-directory: spl_project2
       run: make clean
     - name: make
+      working-directory: spl_project2
       run: make
     - name: make test1
+      working-directory: spl_project2
       run: make test1
