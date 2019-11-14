@@ -32,7 +32,7 @@ int main(const int argc, const char **argv) {
             return EXIT_SUCCESS;
         }
 
-        driver.semantic_analyze();
+//        driver.semantic_analyze();
         if (driver.semantic_error_reported()) {
             driver.print_errors();
         } else {
