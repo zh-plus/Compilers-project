@@ -40,9 +40,10 @@ namespace SPL {
 		line_no = base_type->line_no;
 		m_base_type = base_type;
 
-		VarDec_Node *var_dec = array_node->var_dec;
+		VarDec_Node *var_dec = array_node;
 		while (!var_dec->is_atomic()) {
 			shape.push_back(stoi(dynamic_cast<Array_VarDec_Node *>(var_dec)->_int->get_lexeme()));
+			var_dec = dynamic_cast<Array_VarDec_Node *>(var_dec)->var_dec;
 		}
 
 		std::reverse(shape.begin(), shape.end());
@@ -80,6 +81,20 @@ namespace SPL {
 			return new Struct_Type(node->struct_specifier);
 		}
 	}
+
+	Type *get_type(Specifier_Node *specifier, VarDec_Node *var_dec) {
+		Type *type = get_type(specifier);
+		if (!var_dec->is_atomic()) {
+			type = new Array_Type(type, dynamic_cast <Array_VarDec_Node *>(var_dec));
+		}
+
+		return type;
+	}
+
+	Type *get_type(ParamDec_Node *node) {
+		return get_type(node->specifier, node->var_dec);
+	}
+
 
 	std::pair<Type *, std::vector<VarDec_Node *> *> get_info(Def_Node *node) {
 		auto specifier_type = get_type(node->specifier);

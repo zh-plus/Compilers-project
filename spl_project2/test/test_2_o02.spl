@@ -9,7 +9,7 @@ struct Person
   int code;
   float weight;
 };
-int test_2_o02()
+int test_2_o02(int a[3][10], float b)
 {
   struct Student s;
   struct Person p;

@@ -10,6 +10,7 @@
 #include "parser.tab.hpp"
 #include "utils.hpp"
 #include "type.hpp"
+#include "ast.hpp"
 
 
 namespace SPL {
@@ -57,6 +58,10 @@ namespace SPL {
 	public:
 		Variable_Symbol(std::string name, Type *type);
 
+		explicit Variable_Symbol(ParamDec_Node *node) : Variable_Symbol(node->specifier, node->var_dec) {}
+
+		Variable_Symbol(Specifier_Node *specifier, VarDec_Node *var_dec);
+
 		~Variable_Symbol() override {
 			delete variable_type;
 		}
@@ -70,6 +75,8 @@ namespace SPL {
 	class Function_Symbol : public Symbol_Entry {
 	public:
 		Function_Symbol(std::string name, Type *return_type, std::initializer_list<Type *> parameters);
+
+		Function_Symbol(Specifier_Node *specifier, FunDec_Node *node);
 
 		~Function_Symbol() override {
 			delete return_type;
@@ -94,6 +101,8 @@ namespace SPL {
 		virtual ~Symbol_Table();
 
 		std::unordered_map<std::string, Symbol_Entry *> get_table();
+
+		std::string to_string();
 
 		void add_child(Local_Symbol_Table *local);
 

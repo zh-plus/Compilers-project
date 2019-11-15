@@ -91,6 +91,10 @@ namespace SPL {
 	/* Useful functions */
 	Type *get_type(Specifier_Node *node);
 
+	Type *get_type(ParamDec_Node *node);
+
+	Type *get_type(Specifier_Node *specifier, VarDec_Node *var_dec);
+
 	std::pair<Type *, std::vector<VarDec_Node *> *> get_info(Def_Node *node);
 }
 

@@ -18,11 +18,9 @@ void print_scope_stack(vector<Symbol_Table *> *scope_stacks){
 	int i = 0;
 	for (auto &x: *scope_stacks) {
 		cout << "scope stack " << i << endl;
-		for (auto &y: x->get_table()) {
-			cout << "key: " << y.first << "\t=====\t"
-			     << "value: " << *(y.second) << endl;
-		}
+		cout << x->to_string() << endl;
 		++i;
+		//TODO: Segmentation Fault
 	}
 }
 
@@ -46,6 +44,7 @@ int main(const int argc, const char **argv) {
 			return EXIT_SUCCESS;
 		}
 
+		driver.get_ast()->print();
 		driver.semantic_analyze();
 		if (driver.semantic_error_reported()) {
 			driver.print_errors();

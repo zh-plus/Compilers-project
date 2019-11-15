@@ -3,6 +3,7 @@
 //
 
 #include "symbol.hpp"
+#include "ast.hpp"
 
 
 namespace SPL {
@@ -24,6 +25,12 @@ namespace SPL {
 		this->variable_type = type;
 	}
 
+	Variable_Symbol::Variable_Symbol(Specifier_Node *specifier, VarDec_Node *var_dec) {
+		this->name = var_dec->get_id();
+		this->line_no = var_dec->line_no;
+		this->variable_type = get_type(specifier, var_dec);
+	}
+
 	std::string Struct_Def_Symbol::to_string() const {
 		string result = "Struct Def: " + struct_type->struct_id + ": ";
 		result += struct_type->to_string();
@@ -39,8 +46,11 @@ namespace SPL {
 	string Function_Symbol::to_string() const {
 		string result = "Function: Return - " + return_type->to_string();
 		result += +", Parameters - ";
-		for (const auto &x: parameters) {
-			result += " " + x->to_string();
+		for (int i = 0, sz = parameters.size(); i < sz; ++i) {
+			result += parameters[i]->to_string();
+			if (i != sz - 1) {
+				result += ", ";
+			}
 		}
 		return result;
 	}
@@ -50,6 +60,17 @@ namespace SPL {
 		this->parameters = parameters;
 		this->name = name;
 		this->line_no = return_type->line_no;
+	}
+
+	Function_Symbol::Function_Symbol(Specifier_Node *specifier, FunDec_Node *node) {
+		return_type = get_type(specifier);
+		name = node->id->get_lexeme();
+
+		auto var_list = node->var_list;
+		while (var_list) {
+			parameters.push_back(get_type(var_list->param_dec));
+			var_list = var_list->var_list;
+		}
 	}
 
 	void Symbol_Table::add_child(Local_Symbol_Table *local) {
@@ -72,6 +93,16 @@ namespace SPL {
 	Symbol_Table::~Symbol_Table() {
 		for (auto p: m_children) {
 			delete p;
+		}
+	}
+
+	string Symbol_Table::to_string() {
+		string result;
+		for (auto &y: get_table()) {
+			result += "key: " + y.first + "\t=====\t";
+			result += "value: " + (*(y.second)).to_string() + "\n";
+			cout << "key: " << y.first << "\t=====\t"
+			     << "value: " << *(y.second) << endl;
 		}
 	}
 

@@ -23,6 +23,8 @@ namespace SPL {
 
 		void resolve(AST *ast);
 
+		void push_scope(Local_Symbol_Table *local_scope);
+
 		void push_scope();
 
 		Local_Symbol_Table *pop_scope();
@@ -33,6 +35,8 @@ namespace SPL {
 
 		/* Visitors */
 		void visit(CompSt_Node *node) override;
+
+		void visit(CompSt_Node *node, Local_Symbol_Table *local_scope);
 
 		void visit(Leaf_Node *node) override;
 

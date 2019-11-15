@@ -354,7 +354,7 @@ namespace SPL {
 	}
 
 	bool Array_VarDec_Node::is_atomic() {
-		return true;
+		return false;
 	}
 
 	std::string Array_VarDec_Node::get_id() {
