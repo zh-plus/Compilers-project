@@ -17,10 +17,23 @@ namespace SPL {
 		if (leaf->leaf_type != token_type::TYPE) {
 			cout << "The type class should be initialized from TYPE Leaf_Node!" << endl;
 			exit(EXIT_FAILURE);
-		} else {
-			type_name = leaf->get_lexeme();
-			line_no = leaf->line_no;
 		}
+
+		string type_name = leaf->get_lexeme();
+		type = [&]() {
+			if (type_name == "int") {
+				return primitive_type::INT;
+			} else if (type_name == "float") {
+				return primitive_type::FLOAT;
+			} else if (type_name == "char") {
+				return primitive_type::CHAR;
+			} else {
+				cout << "The TYPE Leaf_Node should be one of [int, float, char]!" << endl;
+				exit(EXIT_FAILURE);
+			}
+		}();
+
+		line_no = leaf->line_no;
 	}
 
 	Array_Type::Array_Type(Type *base_type, Array_VarDec_Node *array_node) {

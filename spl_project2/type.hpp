@@ -29,19 +29,21 @@ namespace SPL {
 		int line_no = -1;
 	};
 
+	enum primitive_type {
+		INT, FLOAT, CHAR
+	};
+
 	class Primitive_Type : public Type {
 	public:
-		explicit Primitive_Type(token_type type) : type{type} {};
+		explicit Primitive_Type(primitive_type type) : type{type} {};
 
 		explicit Primitive_Type(Leaf_Node *leaf);
 
 		[[nodiscard]] std::string to_string() const override {
-			return type_name;
+			return std::vector{"int", "float", "char"}[type];
 		}
 
-		//TODO: Using enum to represent Primitive types: int, float, char
-		token_type type;
-		std::string type_name;
+		primitive_type type;
 	};
 
 	class Array_Type : public Type {
@@ -50,7 +52,7 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override {
 			std::string s = m_base_type->to_string();
-			for (const auto &x: shape){
+			for (const auto &x: shape) {
 				s += "[" + std::to_string(x) + "]";
 			}
 			return s;
