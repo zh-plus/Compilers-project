@@ -43,14 +43,12 @@ int main(const int argc, const char **argv) {
 			return EXIT_SUCCESS;
 		}
 
-//		driver.get_ast()->print();
 		driver.semantic_analyze();
 		if (driver.semantic_error_reported()) {
 			driver.print_errors(driver.get_semantic_errors());
 		} else {
 			cout << "Semantic analyze success!" << endl;
 		}
-        print_scope_stack(driver.local_resolver.get_scope_stack());
 
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;

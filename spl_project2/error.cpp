@@ -59,7 +59,7 @@ std::string SPL::Semantic_Error5::get_message() {
 }
 
 std::string SPL::Semantic_Error6::get_message() {
-    return "Rvalue: " + rvalue_id + " one the left side of assignment operator";
+    return "Rvalue on the left side of assignment operator";
 }
 
 std::string SPL::Semantic_Error7::get_message() {

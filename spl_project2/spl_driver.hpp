@@ -40,6 +40,8 @@ namespace SPL {
 
         SPL::AST *get_ast();
 
+        Local_Resolver *get_local_resolver();
+
         SPL_Scanner *get_scanner();
 
         std::vector<Error *> *get_grammar_errors();
@@ -60,7 +62,6 @@ namespace SPL {
 
         void semantic_analyze();
 
-        Local_Resolver local_resolver;
 
     private:
         void parse_helper(std::istream &is);
@@ -69,6 +70,11 @@ namespace SPL {
         SPL::SPL_Scanner *scanner = nullptr;
 
         SPL::AST *ast = nullptr;
+
+        /* Visitors */
+        Local_Resolver *local_resolver = nullptr;
+
+        Dereference_Checker *dereference_checker = nullptr;
 
         /* Get value after parsing process */
         std::vector<Error *> *lexical_errors = nullptr;

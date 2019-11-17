@@ -1,5 +1,5 @@
 //
-// Created by 10578 on 10/8/2019.
+// Created by 10578 on 10/29/2019.
 //
 
 #include <iostream>
@@ -7,11 +7,21 @@
 #include <cstring>
 #include <fstream>
 #include <sstream>
-#include <regex>
 
 #include "spl_driver.hpp"
+#include "symbol.hpp"
 
 using namespace std;
+using namespace SPL;
+
+void print_scope_stack(vector<Symbol_Table *> scope_stacks) {
+    int i = 0;
+    for (auto &x: scope_stacks) {
+        cout << "scope stack " << i << endl;
+        cout << x->to_string() << endl;
+        ++i;
+    }
+}
 
 int main(const int argc, const char **argv) {
     if (argc == 2) {
@@ -28,24 +38,13 @@ int main(const int argc, const char **argv) {
             driver.parse(argv[1]);
         }
 
-        string source_name(argv[1]);
-        string out_name = regex_replace(source_name, regex("spl"), "out");
-
-        ofstream out_f(out_name);
-        auto cout_buf = cout.rdbuf(out_f.rdbuf());
-
         if (driver.grammar_error_reported()) {
             driver.print_errors(driver.get_grammar_errors());
-            cout.rdbuf(cout_buf);
             return EXIT_SUCCESS;
+        } else {
+            driver.get_ast()->print();
         }
 
-        driver.semantic_analyze();
-        if (driver.semantic_error_reported()) {
-            driver.print_errors(driver.get_semantic_errors());
-        }
-
-        cout.rdbuf(cout_buf);
     } else {
         cout << "Only one parameter permitted! Use -h to see usage." << endl;
         return EXIT_FAILURE;

@@ -27,6 +27,8 @@ namespace SPL {
 
         friend std::ostream &operator<<(std::ostream &os, const Type &obj);
 
+        virtual bool compassionate(Type *other) = 0;
+
         int line_no = -1;
     };
 
@@ -36,9 +38,13 @@ namespace SPL {
 
     class Primitive_Type : public Type {
     public:
+        explicit Primitive_Type(token_type t_type);
+
         explicit Primitive_Type(primitive_type type) : type{type} {};
 
         explicit Primitive_Type(Leaf_Node *leaf);
+
+        bool compassionate(Type *other) override;
 
         [[nodiscard]] std::string to_string() const override {
             return std::vector{"int", "float", "char"}[type];
@@ -50,6 +56,14 @@ namespace SPL {
     class Array_Type : public Type {
     public:
         explicit Array_Type(Type *base_type, Array_VarDec_Node *array_node);
+
+        Array_Type(Type *base_type, std::vector<int> shape);
+
+        bool compassionate(Type *other) override;
+
+        bool same_shape_of(Array_Type * other_shape);
+
+        Type *reduce_dim();
 
         [[nodiscard]] std::string to_string() const override {
             std::string s = m_base_type->to_string();
@@ -75,6 +89,10 @@ namespace SPL {
                 members.erase(p.first);
             }
         }
+
+        bool compassionate(Type *other) override;
+
+        bool contains(std::string id);
 
         [[nodiscard]] std::string to_string() const override {
             std::string result = "Struct-Type:";

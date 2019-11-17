@@ -125,33 +125,22 @@ namespace SPL {
 
     class Semantic_Error5 :public Semantic_Error {
     public:
-        Semantic_Error5(int error_line, int defined_line, std::string func_id) {
+        Semantic_Error5(int error_line) {
             this->error_type = 5;
             this->line_no = error_line;
-            this->defined_line = defined_line;
-            this->func_id = func_id;
         };
 
         std::string get_message() override;
-
-    private:
-        int defined_line;
-
-        std::string func_id;
     };
 
     class Semantic_Error6 :public Semantic_Error {
     public:
-        Semantic_Error6(int error_line, std::string rvalue_id) {
+        explicit Semantic_Error6(int error_line) {
             this->error_type = 6;
             this->line_no = error_line;
-            this->rvalue_id = rvalue_id;
         };
 
         std::string get_message() override;
-
-    private:
-        std::string rvalue_id;
     };
 
     class Semantic_Error7 :public Semantic_Error {

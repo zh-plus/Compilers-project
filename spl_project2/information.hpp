@@ -19,10 +19,27 @@ namespace SPL {
 
     class Exp_Info {
     public:
-        bool is_rvalue;
+        Exp_Info() : m_is_rvalue{false}, exp_type{nullptr} {}
 
-        Type *exp_type;
+        Exp_Info(Type *exp_type, bool t_is_rvalue);
 
+        explicit Exp_Info(bool is_known);
+
+        bool is_rvalue();
+
+        bool is_lvalue();
+
+        virtual bool is_known();
+
+        bool compassionate(Exp_Info *other);
+
+        bool m_is_rvalue = false;
+        Type *exp_type = nullptr;
+
+    };
+
+    class Unknown_Exp_Info : public Exp_Info {
+        bool is_known() override;
     };
 }
 

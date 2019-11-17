@@ -97,7 +97,7 @@ namespace SPL {
         virtual void visit(Empty_DecList_Node *node) = 0;
     };
 
-    class Visitor : public AST_Visitor<void, void, Exp_Info> {
+    class Visitor : public AST_Visitor<void, void, Exp_Info *> {
     public:
         /* Internal Nodes */
         void visit(Program_Node *node) override;
@@ -145,19 +145,19 @@ namespace SPL {
         void visit(While_Stmt_Node *node) override;
 
         /* Expression Node */
-        Exp_Info visit(Parentheses_Exp_Node *node) override;
+        Exp_Info *visit(Parentheses_Exp_Node *node) override;
 
-        Exp_Info visit(ID_Parentheses_Exp_Node *node) override;
+        Exp_Info *visit(ID_Parentheses_Exp_Node *node) override;
 
-        Exp_Info visit(Bracket_Exp_Node *node) override;
+        Exp_Info *visit(Bracket_Exp_Node *node) override;
 
-        Exp_Info visit(Dot_Exp_Node *node) override;
+        Exp_Info *visit(Dot_Exp_Node *node) override;
 
-        Exp_Info visit(Binary_Exp_Node *node) override;
+        Exp_Info *visit(Binary_Exp_Node *node) override;
 
-        Exp_Info visit(Unary_Exp_Node *node) override;
+        Exp_Info *visit(Unary_Exp_Node *node) override;
 
-        Exp_Info visit(Leaf_Exp_Node *node) override;
+        Exp_Info *visit(Leaf_Exp_Node *node) override;
 
         /* Definition Node */
         void visit(Def_Node *node) override;

@@ -121,8 +121,13 @@ namespace SPL {
     }
 
     void SPL_Driver::semantic_analyze() {
-        local_resolver.resolve(ast);
-        extend_semantic_errors(local_resolver.get_errors());
+        local_resolver = new Local_Resolver();
+        local_resolver->resolve(ast);
+        extend_semantic_errors(local_resolver->get_errors());
+
+        dereference_checker = new Dereference_Checker(local_resolver->top_scope());
+        dereference_checker->check(ast);
+        extend_semantic_errors(dereference_checker->get_errors());
     }
 
     void SPL_Driver::extend_semantic_errors(std::vector<Error *> errors) {
@@ -132,6 +137,10 @@ namespace SPL {
 
     std::vector<Error *> *SPL_Driver::get_semantic_errors() {
         return semantic_errors;
+    }
+
+    Local_Resolver *SPL_Driver::get_local_resolver() {
+        return local_resolver;
     }
 
 }

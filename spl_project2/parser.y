@@ -619,7 +619,7 @@ Exp
   }
   | Exp EQ Exp {
   	#ifdef LOCAL
-  	    std::cout << "Exp - > (ID) " << std::endl;
+  	    std::cout << "Exp - > (Exp EQ Exp) " << std::endl;
   	#endif
   	$$ = new Binary_Exp_Node($1, make_leaf(token::EQ, $2), $3);
   }

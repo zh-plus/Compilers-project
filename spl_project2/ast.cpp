@@ -77,7 +77,7 @@ namespace SPL {
 	}
 
 	std::vector<AST_Node *> Unary_Exp_Node::children() {
-		return std::vector<AST_Node *>{this->op_node, this->node};
+		return std::vector<AST_Node *>{this->op_node, this->exp_node};
 	}
 
 	void Unary_Exp_Node::accept(Visitor *visitor) {

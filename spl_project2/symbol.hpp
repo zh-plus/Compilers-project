@@ -30,6 +30,8 @@ namespace SPL {
 
         friend std::ostream &operator<<(std::ostream &os, const Symbol_Entry &obj);
 
+        virtual Type *get_type() = 0;
+
         [[nodiscard]] virtual std::string to_string() const = 0;
 
         std::string name;
@@ -48,6 +50,8 @@ namespace SPL {
 
         explicit Struct_Def_Symbol(Struct_Type *struct_type);
 
+        Type *get_type() override;
+
         [[nodiscard]] std::string to_string() const override;
 
 
@@ -63,6 +67,8 @@ namespace SPL {
         ~Variable_Symbol() override {
             delete variable_type;
         }
+
+        Type *get_type() override;
 
         [[nodiscard]] std::string to_string() const override;
 
@@ -82,6 +88,10 @@ namespace SPL {
                 delete p;
             }
         }
+
+        Type *get_type() override;
+
+        std::vector<Type *> get_parameters();
 
         [[nodiscard]] std::string to_string() const override;
 

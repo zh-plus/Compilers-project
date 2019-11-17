@@ -670,9 +670,9 @@ namespace SPL {
 	class Unary_Exp_Node : public Exp_Node {
 	public:
 		Leaf_Node *op_node;
-		Exp_Node *node;
+		Exp_Node *exp_node;
 
-		Unary_Exp_Node(Leaf_Node *op_node, Exp_Node *node) : op_node{op_node}, node{node} {};
+		Unary_Exp_Node(Leaf_Node *op_node, Exp_Node *exp_node) : op_node{op_node}, exp_node{exp_node} {};
 
 		std::vector<AST_Node *> children() override;
 

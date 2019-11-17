@@ -32,6 +32,10 @@ namespace SPL {
         this->variable_type = type;
     }
 
+    Type *Variable_Symbol::get_type() {
+        return variable_type;
+    }
+
     std::string Struct_Def_Symbol::to_string() const {
         string result = "Struct Def: " + struct_type->struct_id + ": ";
         result += struct_type->to_string();
@@ -42,6 +46,10 @@ namespace SPL {
         this->name = struct_type->struct_id;
         this->line_no = struct_type->line_no;
         this->struct_type = struct_type;
+    }
+
+    Type *Struct_Def_Symbol::get_type() {
+        return struct_type;
     }
 
     string Function_Symbol::to_string() const {
@@ -70,6 +78,14 @@ namespace SPL {
         this->line_no = line_no;
 
         this->parameters = std::move(parameter_v);
+    }
+
+    Type *Function_Symbol::get_type() {
+        return return_type;
+    }
+
+    std::vector<Type *> Function_Symbol::get_parameters() {
+        return parameters;
     }
 
     void Symbol_Table::add_child(Local_Symbol_Table *local) {
