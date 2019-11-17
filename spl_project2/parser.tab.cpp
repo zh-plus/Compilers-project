@@ -63,6 +63,7 @@
 
     /* include for all AST functions */
     #include "ast.hpp"
+#include "information.hpp"
 
 #undef yylex
 #define yylex scanner.yylex

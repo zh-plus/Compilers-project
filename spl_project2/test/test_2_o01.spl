@@ -1,18 +1,22 @@
-int i;
 int foo()
 {
   int a = 10;
+  int b = 10;
+  char a;
   return a;
 }
 int test_2_o01(int a, int b)
 {
   int c;
+  int c;
   c = foo();
   if (b > 0)
   {
+    int c;
     int a = c + 3;
     b = b - a;
   }
+
   a = a + b;
   return a;
 }

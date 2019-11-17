@@ -14,13 +14,12 @@
 using namespace std;
 using namespace SPL;
 
-void print_scope_stack(vector<Symbol_Table *> *scope_stacks){
+void print_scope_stack(vector<Symbol_Table *> scope_stacks){
 	int i = 0;
-	for (auto &x: *scope_stacks) {
+	for (auto &x: scope_stacks) {
 		cout << "scope stack " << i << endl;
 		cout << x->to_string() << endl;
 		++i;
-		//TODO: Segmentation Fault
 	}
 }
 
@@ -40,18 +39,19 @@ int main(const int argc, const char **argv) {
 		}
 
 		if (driver.grammar_error_reported()) {
-			driver.print_errors();
+			driver.print_errors(driver.get_grammar_errors());
 			return EXIT_SUCCESS;
 		}
 
-		driver.get_ast()->print();
+//		driver.get_ast()->print();
 		driver.semantic_analyze();
 		if (driver.semantic_error_reported()) {
-			driver.print_errors();
+			driver.print_errors(driver.get_semantic_errors());
 		} else {
 			cout << "Semantic analyze success!" << endl;
-			print_scope_stack(driver.local_resolver.get_scope_stack());
 		}
+        print_scope_stack(driver.local_resolver.get_scope_stack());
+
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;
 		return EXIT_FAILURE;

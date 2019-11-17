@@ -16,6 +16,8 @@
 #include "scanner.hpp"
 #include "parser.tab.hpp"
 #include "semantics.hpp"
+#include "error.hpp"
+#include "information.hpp"
 
 namespace SPL {
 
@@ -40,7 +42,9 @@ namespace SPL {
 
         SPL_Scanner *get_scanner();
 
-        std::vector<Error *> *get_errors();
+        std::vector<Error *> *get_grammar_errors();
+
+        std::vector<Error *> *get_semantic_errors();
 
         void add_syntax_error(std::string lexeme, Scan_Info *info);
 
@@ -50,11 +54,13 @@ namespace SPL {
 
         bool semantic_error_reported();
 
-        void print_errors();
+        void print_errors(std::vector<Error *> *errors);
+
+        void extend_semantic_errors(std::vector<Error *> errors);
 
         void semantic_analyze();
 
-	    Local_Resolver local_resolver;
+        Local_Resolver local_resolver;
 
     private:
         void parse_helper(std::istream &is);

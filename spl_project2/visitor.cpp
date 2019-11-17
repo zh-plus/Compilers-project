@@ -3,6 +3,7 @@
 //
 
 #include "visitor.hpp"
+#include "semantics.hpp"
 
 namespace SPL {
 
@@ -95,31 +96,31 @@ namespace SPL {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Parentheses_Exp_Node *node) {
+    Exp_Info Visitor::visit(Parentheses_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(ID_Parentheses_Exp_Node *node) {
+    Exp_Info Visitor::visit(ID_Parentheses_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Bracket_Exp_Node *node) {
+    Exp_Info Visitor::visit(Bracket_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Dot_Exp_Node *node) {
+    Exp_Info Visitor::visit(Dot_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Binary_Exp_Node *node) {
+    Exp_Info Visitor::visit(Binary_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Unary_Exp_Node *node) {
+    Exp_Info Visitor::visit(Unary_Exp_Node *node) {
 		visit_children(node);
 	}
 
-	void Visitor::visit(Leaf_Exp_Node *node) {
+    Exp_Info Visitor::visit(Leaf_Exp_Node *node) {
 		visit_children(node);
 	}
 

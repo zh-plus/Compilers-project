@@ -1,9 +1,9 @@
 
-SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp
+SRCS = main.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp error.cpp information.cpp
 
-SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp type.cpp semantics.cpp visitor.cpp
+SYMBOL_SRCS = test_symbol.cpp parser.tab.cpp ast.cpp symbol.cpp spl_driver.cpp scanner.yy.cpp utils.cpp type.cpp semantics.cpp visitor.cpp error.cpp information.cpp
 
-VISITOR_SRCS = test_visitor.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp
+VISITOR_SRCS = test_visitor.cpp scanner.yy.cpp parser.tab.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp type.cpp semantics.cpp visitor.cpp error.cpp information.cpp
 
 TESTS = test1/test_1_r01.spl test1/test_1_r02.spl
 

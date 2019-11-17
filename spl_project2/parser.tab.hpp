@@ -81,6 +81,7 @@
 # include <vector>
 # include "stack.hh"
 # include "location.hh"
+#include "information.hpp"
 #include <typeinfo>
 #ifndef YYASSERT
 # include <cassert>

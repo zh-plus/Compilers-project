@@ -5,6 +5,7 @@
 #include "ast.hpp"
 #include "visitor.hpp"
 #include "symbol.hpp"
+#include "information.hpp"
 
 namespace SPL {
 

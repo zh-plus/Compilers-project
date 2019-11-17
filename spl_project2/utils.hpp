@@ -9,10 +9,13 @@
 #include <functional>
 #include <locale>
 #include <string>
+#include <unordered_map>
 #include "parser.tab.hpp"
 
 namespace SPL {
-    using token = SPL::SPL_Parser::token;
+    class SPL_Parser;
+
+    using token = SPL_Parser::token;
 
     static std::unordered_map<int, std::string> symbol_map{
             {token::INT,    "INT"},

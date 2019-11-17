@@ -15,6 +15,7 @@
 #include "parser.tab.hpp"
 #include "utils.hpp"
 #include "scanner.hpp"
+#include "information.hpp"
 
 
 /**

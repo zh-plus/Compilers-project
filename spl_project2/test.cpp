@@ -4,7 +4,7 @@
 #include <iostream>
 #include "utils.hpp"
 #include "test.hpp"
-#include "type_case.hpp"
+#include "type_switch.hpp"
 
 //using namespace std;
 using namespace T;
@@ -71,6 +71,8 @@ public:
 	vector<int> v;
 };
 
+struct test_s;
+
 
 int main() {
 	A *a = new A();
@@ -81,16 +83,6 @@ int main() {
 	v.visit(a);
 	v.visit(b);
 
-	cout << "=========" << endl;
-
-	type_case(b,
-	          [&](A *first) {
-		          c->print(a);
-	          },
-	          [&](B *second) {
-		          c->print((B *) a);
-	          });
-
 	struct s test_s{};
 	struct s1 test_s1{};
 	cout << test_s.a << endl;
@@ -100,6 +92,8 @@ int main() {
 	for(auto &x: t.v) {
 		cout << x << endl;
 	}
+
+	struct test_s f;
 
 	return 0;
 }

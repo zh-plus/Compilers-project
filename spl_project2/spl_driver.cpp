@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "spl_driver.hpp"
+#include "information.hpp"
 
 
 namespace SPL {
@@ -80,13 +81,15 @@ namespace SPL {
         return !syntax_errors->empty() || !lexical_errors->empty();
     }
 
-    bool SPL_Driver::semantic_error_reported(){
+    bool SPL_Driver::semantic_error_reported() {
         return !semantic_errors->empty();
     }
 
-    std::vector<Error *> *SPL_Driver::get_errors() {
-//        std::cout << "lexical errors: " << lexical_errors->size() << std::endl;
-//        std::cout << "syntax errors: " << syntax_errors->size() << std::endl;
+    /**
+     * Get lexical and syntax errors.
+     * @return
+     */
+    std::vector<Error *> *SPL_Driver::get_grammar_errors() {
         if (lexical_errors->empty()) {
             return syntax_errors;
         } else if (syntax_errors->empty()) {
@@ -98,7 +101,7 @@ namespace SPL {
         all_errors->insert(all_errors->end(), syntax_errors->begin(), syntax_errors->end());
 
         std::sort(all_errors->begin(), all_errors->end(),
-                  [](Error *a, Error *b) { return a->info->line_no < b->info->line_no; });
+                  [](Error *a, Error *b) { return a->line_no < b->line_no; });
 
         return all_errors;
     }
@@ -111,17 +114,24 @@ namespace SPL {
         syntax_errors->push_back(new Syntax_Error(lexeme, info->propagate_line_no()));
     }
 
-    void SPL_Driver::print_errors() {
-        for (const auto &error: *get_errors()) {
+    void SPL_Driver::print_errors(std::vector<Error *> *errors) {
+        for (const auto &error: *errors) {
             std::cout << error->to_string() << std::endl;
         }
     }
 
     void SPL_Driver::semantic_analyze() {
-	    local_resolver.resolve(ast);
+        local_resolver.resolve(ast);
+        extend_semantic_errors(local_resolver.get_errors());
     }
 
-//    std::vector<Scan_Info *> make_leaves(std::initializer_list<Scan_Info *> terminal_leaves) {
-//        return std::vector<Scan_Info *>(terminal_leaves.begin(), terminal_leaves.end());
-//    }
+    void SPL_Driver::extend_semantic_errors(std::vector<Error *> errors) {
+        semantic_errors->reserve(errors.size() + std::distance(errors.begin(), errors.end()));
+        semantic_errors->insert(semantic_errors->end(), errors.begin(), errors.end());
+    }
+
+    std::vector<Error *> *SPL_Driver::get_semantic_errors() {
+        return semantic_errors;
+    }
+
 }
