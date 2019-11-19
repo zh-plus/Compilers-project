@@ -31,18 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file stack.hh
+ ** \file /mnt/e/C++/compiler/compilers/spl_project3/stack.hh
  ** Define the SPL::stack class.
  */
 
-#ifndef YY_YY_STACK_HH_INCLUDED
-# define YY_YY_STACK_HH_INCLUDED
+#ifndef YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_STACK_HH_INCLUDED
+# define YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_STACK_HH_INCLUDED
 
 # include <vector>
 
 #line 5 "parser.y" // stack.hh:132
 namespace SPL {
-#line 46 "stack.hh" // stack.hh:132
+#line 46 "/mnt/e/C++/compiler/compilers/spl_project3/stack.hh" // stack.hh:132
   template <class T, class S = std::vector<T> >
   class stack
   {
@@ -152,6 +152,6 @@ namespace SPL {
 
 #line 5 "parser.y" // stack.hh:132
 } // SPL
-#line 156 "stack.hh" // stack.hh:132
+#line 156 "/mnt/e/C++/compiler/compilers/spl_project3/stack.hh" // stack.hh:132
 
-#endif // !YY_YY_STACK_HH_INCLUDED
+#endif // !YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_STACK_HH_INCLUDED

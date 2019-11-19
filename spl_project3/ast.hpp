@@ -275,7 +275,7 @@ namespace SPL {
 	};
 
 
-	/* declarator */
+	/* declaration */
 
 	class VarDec_Node : public AST_Node {
 	public:

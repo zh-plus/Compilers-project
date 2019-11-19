@@ -50,7 +50,6 @@ namespace SPL {
 
 		switch (this->leaf_type) {
 			case token::INT:
-//                std::cout << "lexeme: " << lexeme << std::endl;
 				value = (unsigned int) std::stoul(lexeme, nullptr, 0);
 				break;
 			case token::FLOAT:

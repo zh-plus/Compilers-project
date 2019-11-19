@@ -14,12 +14,6 @@ jobs:
       - name: clean
         working-directory: spl_project3
         run: make clean
-      - name: make
+      - name: cmake .
         working-directory: spl_project3
         run: make
-      - name: make test1
-        working-directory: spl_project3
-        run: make test1
-      - name: make test2
-        working-directory: spl_project3
-        run: make test2

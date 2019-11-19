@@ -33,7 +33,7 @@
 
 // First part of user declarations.
 
-#line 37 "parser.tab.cpp" // lalr1.cc:404
+#line 37 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:404
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -47,7 +47,7 @@
 
 // User implementation prologue.
 
-#line 51 "parser.tab.cpp" // lalr1.cc:412
+#line 51 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:412
 // Unqualified %code blocks.
 #line 42 "parser.y" // lalr1.cc:413
 
@@ -63,13 +63,12 @@
 
     /* include for all AST functions */
     #include "ast.hpp"
-#include "information.hpp"
 
 #undef yylex
 #define yylex scanner.yylex
 
 
-#line 72 "parser.tab.cpp" // lalr1.cc:413
+#line 72 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:413
 
 
 #ifndef YY_
@@ -155,7 +154,7 @@
 
 #line 5 "parser.y" // lalr1.cc:479
 namespace SPL {
-#line 158 "parser.tab.cpp" // lalr1.cc:479
+#line 158 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:479
 
   /// Build a parser object.
   SPL_Parser::SPL_Parser (SPL_Scanner  &scanner_yyarg, SPL_Driver  &driver_yyarg)
@@ -1806,7 +1805,7 @@ namespace SPL {
   	yylhs.value.as< Program_Node * > () = new Program_Node(yystack_[0].value.as< ExtDefList_Node * > ());
   	driver.set_ast(yylhs.value.as< Program_Node * > ());
   }
-#line 1809 "parser.tab.cpp" // lalr1.cc:859
+#line 1809 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 3:
@@ -1817,7 +1816,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDefList_Node * > () = new ExtDefList_Node(yystack_[1].value.as< ExtDef_Node * > (), yystack_[0].value.as< ExtDefList_Node * > ());
   }
-#line 1820 "parser.tab.cpp" // lalr1.cc:859
+#line 1820 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 4:
@@ -1828,7 +1827,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDefList_Node * > () = new Empty_ExtDefList_Node();
   }
-#line 1831 "parser.tab.cpp" // lalr1.cc:859
+#line 1831 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 5:
@@ -1839,7 +1838,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[2].value.as< Specifier_Node * > (), yystack_[1].value.as< ExtDecList_Node * > (), make_leaf(token::SEMI, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 1842 "parser.tab.cpp" // lalr1.cc:859
+#line 1842 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 6:
@@ -1851,7 +1850,7 @@ namespace SPL {
   	driver.add_syntax_error(";", yystack_[1].value.as< Specifier_Node * > ());
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[1].value.as< Specifier_Node * > (), yystack_[0].value.as< ExtDecList_Node * > (), make_leaf(token::SEMI, ";", yystack_[0].value.as< ExtDecList_Node * > ()->propagate_line_no()));
   }
-#line 1854 "parser.tab.cpp" // lalr1.cc:859
+#line 1854 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
@@ -1863,7 +1862,7 @@ namespace SPL {
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[1].value.as< Specifier_Node * > (), make_leaf(token::SEMI, yystack_[0].value.as< Scan_Info * > ()));
 
   }
-#line 1866 "parser.tab.cpp" // lalr1.cc:859
+#line 1866 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
@@ -1875,7 +1874,7 @@ namespace SPL {
   	driver.add_syntax_error(";", yystack_[0].value.as< Specifier_Node * > ());
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[0].value.as< Specifier_Node * > (), make_leaf(token::SEMI, ";", yystack_[0].value.as< Specifier_Node * > ()->propagate_line_no()));
   }
-#line 1878 "parser.tab.cpp" // lalr1.cc:859
+#line 1878 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
@@ -1886,7 +1885,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDef_Node * > () = new ExtDef_Node(yystack_[2].value.as< Specifier_Node * > (), yystack_[1].value.as< FunDec_Node * > (), yystack_[0].value.as< CompSt_Node * > ());
   }
-#line 1889 "parser.tab.cpp" // lalr1.cc:859
+#line 1889 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 10:
@@ -1897,7 +1896,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[0].value.as< VarDec_Node * > ());
   }
-#line 1900 "parser.tab.cpp" // lalr1.cc:859
+#line 1900 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 11:
@@ -1908,7 +1907,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[2].value.as< VarDec_Node * > (), make_leaf(token::COMMA, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< ExtDecList_Node * > ());
   }
-#line 1911 "parser.tab.cpp" // lalr1.cc:859
+#line 1911 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 12:
@@ -1920,7 +1919,7 @@ namespace SPL {
   	driver.add_syntax_error(";", yystack_[1].value.as< VarDec_Node * > ());
   	yylhs.value.as< ExtDecList_Node * > () = new ExtDecList_Node(yystack_[1].value.as< VarDec_Node * > (), make_leaf(token::COMMA, ";", yystack_[0].value.as< ExtDecList_Node * > ()->propagate_line_no()), yystack_[0].value.as< ExtDecList_Node * > ());
   }
-#line 1923 "parser.tab.cpp" // lalr1.cc:859
+#line 1923 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 13:
@@ -1931,7 +1930,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Specifier_Node * > () = new Specifier_Node(make_leaf(token::TYPE, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 1934 "parser.tab.cpp" // lalr1.cc:859
+#line 1934 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 14:
@@ -1942,7 +1941,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Specifier_Node * > () = new Specifier_Node(yystack_[0].value.as< StructSpecifier_Node * > ());
   }
-#line 1945 "parser.tab.cpp" // lalr1.cc:859
+#line 1945 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 15:
@@ -1957,7 +1956,7 @@ namespace SPL {
   				      yystack_[1].value.as< DefList_Node * > (),
   				      make_leaf(token::RC, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 1960 "parser.tab.cpp" // lalr1.cc:859
+#line 1960 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 16:
@@ -1973,7 +1972,7 @@ namespace SPL {
   				      yystack_[0].value.as< DefList_Node * > (),
   				      make_leaf(token::RC, "}", yystack_[0].value.as< DefList_Node * > ()->propagate_line_no()));
   }
-#line 1976 "parser.tab.cpp" // lalr1.cc:859
+#line 1976 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 17:
@@ -1985,7 +1984,7 @@ namespace SPL {
   	yylhs.value.as< StructSpecifier_Node * > () = new StructSpecifier_Node(make_leaf(token::STRUCT, yystack_[1].value.as< Scan_Info * > ()),
           			      make_leaf(token::ID, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 1988 "parser.tab.cpp" // lalr1.cc:859
+#line 1988 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 18:
@@ -1996,7 +1995,7 @@ namespace SPL {
   	#endif
 	yylhs.value.as< VarDec_Node * > () = new ID_VarDec_Node(make_leaf(token::ID, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 1999 "parser.tab.cpp" // lalr1.cc:859
+#line 1999 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 19:
@@ -2010,7 +2009,7 @@ namespace SPL {
 			     	   make_leaf(token::INT, yystack_[1].value.as< Scan_Info * > ()),
 			     	   make_leaf(token::RB, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2013 "parser.tab.cpp" // lalr1.cc:859
+#line 2013 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 20:
@@ -2025,7 +2024,7 @@ namespace SPL {
 			     	   make_leaf(token::INT, yystack_[0].value.as< Scan_Info * > ()),
 			     	   make_leaf(token::RB, "]", yystack_[0].value.as< Scan_Info * > ()->line_no));
   }
-#line 2028 "parser.tab.cpp" // lalr1.cc:859
+#line 2028 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 21:
@@ -2039,7 +2038,7 @@ namespace SPL {
 			     yystack_[1].value.as< VarList_Node * > (),
 			     make_leaf(token::RP, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2042 "parser.tab.cpp" // lalr1.cc:859
+#line 2042 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 22:
@@ -2054,7 +2053,7 @@ namespace SPL {
 			     yystack_[0].value.as< VarList_Node * > (),
 			     make_leaf(token::RP, ")", yystack_[0].value.as< VarList_Node * > ()->propagate_line_no()));
   }
-#line 2057 "parser.tab.cpp" // lalr1.cc:859
+#line 2057 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 23:
@@ -2067,7 +2066,7 @@ namespace SPL {
 			     make_leaf(token::LP, yystack_[1].value.as< Scan_Info * > ()),
 			     make_leaf(token::RP, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2070 "parser.tab.cpp" // lalr1.cc:859
+#line 2070 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 24:
@@ -2081,7 +2080,7 @@ namespace SPL {
 			     make_leaf(token::LP, yystack_[0].value.as< Scan_Info * > ()),
 			     make_leaf(token::RP, ")", yystack_[0].value.as< Scan_Info * > ()->line_no));
   }
-#line 2084 "parser.tab.cpp" // lalr1.cc:859
+#line 2084 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 25:
@@ -2094,7 +2093,7 @@ namespace SPL {
 			      make_leaf(token::COMMA, yystack_[1].value.as< Scan_Info * > ()),
 			      yystack_[0].value.as< VarList_Node * > ());
   }
-#line 2097 "parser.tab.cpp" // lalr1.cc:859
+#line 2097 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 26:
@@ -2105,7 +2104,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< VarList_Node * > () = new VarList_Node(yystack_[0].value.as< ParamDec_Node * > ());
   }
-#line 2108 "parser.tab.cpp" // lalr1.cc:859
+#line 2108 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 27:
@@ -2116,7 +2115,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< ParamDec_Node * > () = new ParamDec_Node(yystack_[1].value.as< Specifier_Node * > (), yystack_[0].value.as< VarDec_Node * > ());
   }
-#line 2119 "parser.tab.cpp" // lalr1.cc:859
+#line 2119 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 28:
@@ -2130,7 +2129,7 @@ namespace SPL {
 		             yystack_[1].value.as< StmtList_Node * > (),
 		             make_leaf(token::RC, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2133 "parser.tab.cpp" // lalr1.cc:859
+#line 2133 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 29:
@@ -2145,7 +2144,7 @@ namespace SPL {
 		             yystack_[0].value.as< StmtList_Node * > (),
 		             make_leaf(token::RC, "}", yystack_[0].value.as< StmtList_Node * > ()->propagate_line_no()));
   }
-#line 2148 "parser.tab.cpp" // lalr1.cc:859
+#line 2148 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 30:
@@ -2156,7 +2155,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< StmtList_Node * > () = new StmtList_Node(yystack_[1].value.as< Stmt_Node * > (), yystack_[0].value.as< StmtList_Node * > ());
   }
-#line 2159 "parser.tab.cpp" // lalr1.cc:859
+#line 2159 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 31:
@@ -2167,7 +2166,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< StmtList_Node * > () = new Empty_StmtList_Node();
   }
-#line 2170 "parser.tab.cpp" // lalr1.cc:859
+#line 2170 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 32:
@@ -2179,7 +2178,7 @@ namespace SPL {
   	yylhs.value.as< Stmt_Node * > () = new Exp_Stmt_Node(yystack_[1].value.as< Exp_Node * > (),
   			       make_leaf(token::SEMI, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2182 "parser.tab.cpp" // lalr1.cc:859
+#line 2182 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 33:
@@ -2190,7 +2189,7 @@ namespace SPL {
   	#endif
   	driver.add_syntax_error(";", yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2193 "parser.tab.cpp" // lalr1.cc:859
+#line 2193 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 34:
@@ -2201,7 +2200,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Stmt_Node * > () = new CompSt_Stmt_Node(yystack_[0].value.as< CompSt_Node * > ());
   }
-#line 2204 "parser.tab.cpp" // lalr1.cc:859
+#line 2204 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 35:
@@ -2214,7 +2213,7 @@ namespace SPL {
   			   	  yystack_[1].value.as< Exp_Node * > (),
           		   	  make_leaf(token::SEMI, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2217 "parser.tab.cpp" // lalr1.cc:859
+#line 2217 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 36:
@@ -2228,7 +2227,7 @@ namespace SPL {
   			   	  yystack_[0].value.as< Exp_Node * > (),
           		   	  make_leaf(token::SEMI, ";", yystack_[0].value.as< Exp_Node * > ()->propagate_line_no()));
   }
-#line 2231 "parser.tab.cpp" // lalr1.cc:859
+#line 2231 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 37:
@@ -2243,7 +2242,7 @@ namespace SPL {
   			      make_leaf(token::RP, yystack_[1].value.as< Scan_Info * > ()),
           		      yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2246 "parser.tab.cpp" // lalr1.cc:859
+#line 2246 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 38:
@@ -2259,7 +2258,7 @@ namespace SPL {
   			      make_leaf(token::RP, ")", yystack_[1].value.as< Exp_Node * > ()->propagate_line_no()),
           		      yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2262 "parser.tab.cpp" // lalr1.cc:859
+#line 2262 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 39:
@@ -2276,7 +2275,7 @@ namespace SPL {
           		      make_leaf(token::ELSE, yystack_[1].value.as< Scan_Info * > ()),
           		      yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2279 "parser.tab.cpp" // lalr1.cc:859
+#line 2279 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 40:
@@ -2294,7 +2293,7 @@ namespace SPL {
           		      make_leaf(token::ELSE, yystack_[1].value.as< Scan_Info * > ()),
           		      yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2297 "parser.tab.cpp" // lalr1.cc:859
+#line 2297 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 41:
@@ -2309,7 +2308,7 @@ namespace SPL {
 			         make_leaf(token::RP, yystack_[1].value.as< Scan_Info * > ()),
 			         yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2312 "parser.tab.cpp" // lalr1.cc:859
+#line 2312 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 42:
@@ -2325,7 +2324,7 @@ namespace SPL {
 			         make_leaf(token::RP, ")", yystack_[1].value.as< Exp_Node * > ()->propagate_line_no()),
 			         yystack_[0].value.as< Stmt_Node * > ());
   }
-#line 2328 "parser.tab.cpp" // lalr1.cc:859
+#line 2328 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 43:
@@ -2336,7 +2335,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< DefList_Node * > () = new DefList_Node(yystack_[1].value.as< Def_Node * > (), yystack_[0].value.as< DefList_Node * > ());
   }
-#line 2339 "parser.tab.cpp" // lalr1.cc:859
+#line 2339 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 44:
@@ -2347,7 +2346,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< DefList_Node * > () = new Empty_DefList_Node();
   }
-#line 2350 "parser.tab.cpp" // lalr1.cc:859
+#line 2350 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 45:
@@ -2360,7 +2359,7 @@ namespace SPL {
   	 		  yystack_[1].value.as< DecList_Node * > (),
   	 		  make_leaf(token::SEMI, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2363 "parser.tab.cpp" // lalr1.cc:859
+#line 2363 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 46:
@@ -2374,7 +2373,7 @@ namespace SPL {
   	 		  yystack_[0].value.as< DecList_Node * > (),
   	 		  make_leaf(token::SEMI, ";", yystack_[0].value.as< DecList_Node * > ()->propagate_line_no()));
   }
-#line 2377 "parser.tab.cpp" // lalr1.cc:859
+#line 2377 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 47:
@@ -2385,7 +2384,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< DecList_Node * > () = new DecList_Node(yystack_[0].value.as< Dec_Node * > ());
   }
-#line 2388 "parser.tab.cpp" // lalr1.cc:859
+#line 2388 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 48:
@@ -2398,7 +2397,7 @@ namespace SPL {
   			      make_leaf(token::COMMA, yystack_[1].value.as< Scan_Info * > ()),
   			      yystack_[0].value.as< DecList_Node * > ());
   }
-#line 2401 "parser.tab.cpp" // lalr1.cc:859
+#line 2401 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 49:
@@ -2409,7 +2408,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Dec_Node * > () = new Dec_Node(yystack_[0].value.as< VarDec_Node * > ());
   }
-#line 2412 "parser.tab.cpp" // lalr1.cc:859
+#line 2412 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 50:
@@ -2422,7 +2421,7 @@ namespace SPL {
   			  make_leaf(token::ASSIGN, yystack_[1].value.as< Scan_Info * > ()),
   			  yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2425 "parser.tab.cpp" // lalr1.cc:859
+#line 2425 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 51:
@@ -2433,7 +2432,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::ASSIGN, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2436 "parser.tab.cpp" // lalr1.cc:859
+#line 2436 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 52:
@@ -2444,7 +2443,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::AND, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2447 "parser.tab.cpp" // lalr1.cc:859
+#line 2447 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 53:
@@ -2455,7 +2454,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::OR, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2458 "parser.tab.cpp" // lalr1.cc:859
+#line 2458 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 54:
@@ -2466,7 +2465,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::ERROR, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2469 "parser.tab.cpp" // lalr1.cc:859
+#line 2469 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 55:
@@ -2477,7 +2476,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::LT, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2480 "parser.tab.cpp" // lalr1.cc:859
+#line 2480 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 56:
@@ -2488,7 +2487,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::LE, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2491 "parser.tab.cpp" // lalr1.cc:859
+#line 2491 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 57:
@@ -2499,7 +2498,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::GT, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
    }
-#line 2502 "parser.tab.cpp" // lalr1.cc:859
+#line 2502 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 58:
@@ -2510,7 +2509,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::GE, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2513 "parser.tab.cpp" // lalr1.cc:859
+#line 2513 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 59:
@@ -2521,18 +2520,18 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::NE, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2524 "parser.tab.cpp" // lalr1.cc:859
+#line 2524 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 60:
 #line 620 "parser.y" // lalr1.cc:859
     {
   	#ifdef LOCAL
-  	    std::cout << "Exp - > (ID) " << std::endl;
+  	    std::cout << "Exp - > (Exp EQ Exp) " << std::endl;
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::EQ, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2535 "parser.tab.cpp" // lalr1.cc:859
+#line 2535 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 61:
@@ -2543,7 +2542,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::PLUS, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2546 "parser.tab.cpp" // lalr1.cc:859
+#line 2546 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
@@ -2554,7 +2553,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::MINUS, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2557 "parser.tab.cpp" // lalr1.cc:859
+#line 2557 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 63:
@@ -2565,7 +2564,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::MUL, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2568 "parser.tab.cpp" // lalr1.cc:859
+#line 2568 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 64:
@@ -2576,7 +2575,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Binary_Exp_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::DIV, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2579 "parser.tab.cpp" // lalr1.cc:859
+#line 2579 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 65:
@@ -2589,7 +2588,7 @@ namespace SPL {
   				      yystack_[1].value.as< Exp_Node * > (),
   				      make_leaf(token::RP, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2592 "parser.tab.cpp" // lalr1.cc:859
+#line 2592 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 66:
@@ -2603,7 +2602,7 @@ namespace SPL {
   				      yystack_[0].value.as< Exp_Node * > (),
   				      make_leaf(token::RP, ")", yystack_[0].value.as< Exp_Node * > ()->propagate_line_no()));
   }
-#line 2606 "parser.tab.cpp" // lalr1.cc:859
+#line 2606 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 67:
@@ -2614,7 +2613,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Unary_Exp_Node(make_leaf(token::MINUS, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2617 "parser.tab.cpp" // lalr1.cc:859
+#line 2617 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 68:
@@ -2625,7 +2624,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Unary_Exp_Node(make_leaf(token::NOT, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2628 "parser.tab.cpp" // lalr1.cc:859
+#line 2628 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 69:
@@ -2639,7 +2638,7 @@ namespace SPL {
 				         yystack_[1].value.as< Args_Node * > (),
 				         make_leaf(token::RP, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2642 "parser.tab.cpp" // lalr1.cc:859
+#line 2642 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 70:
@@ -2654,7 +2653,7 @@ namespace SPL {
 				         yystack_[0].value.as< Args_Node * > (),
 				         make_leaf(token::RP, ")", yystack_[0].value.as< Args_Node * > ()->propagate_line_no()));
   }
-#line 2657 "parser.tab.cpp" // lalr1.cc:859
+#line 2657 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 71:
@@ -2667,7 +2666,7 @@ namespace SPL {
 					 make_leaf(token::LP, yystack_[1].value.as< Scan_Info * > ()),
 					 make_leaf(token::RP, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2670 "parser.tab.cpp" // lalr1.cc:859
+#line 2670 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 72:
@@ -2681,7 +2680,7 @@ namespace SPL {
 					 make_leaf(token::LP, yystack_[0].value.as< Scan_Info * > ()),
 					 make_leaf(token::RP, ")", yystack_[0].value.as< Scan_Info * > ()->line_no));
   }
-#line 2684 "parser.tab.cpp" // lalr1.cc:859
+#line 2684 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 73:
@@ -2695,7 +2694,7 @@ namespace SPL {
 				  yystack_[1].value.as< Exp_Node * > (),
 				  make_leaf(token::RB, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2698 "parser.tab.cpp" // lalr1.cc:859
+#line 2698 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 74:
@@ -2710,7 +2709,7 @@ namespace SPL {
 				  yystack_[0].value.as< Exp_Node * > (),
 				  make_leaf(token::RB, "]", yystack_[0].value.as< Exp_Node * > ()->propagate_line_no()));
   }
-#line 2713 "parser.tab.cpp" // lalr1.cc:859
+#line 2713 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 75:
@@ -2723,7 +2722,7 @@ namespace SPL {
 			      make_leaf(token::DOT, yystack_[1].value.as< Scan_Info * > ()),
 			      make_leaf(token::ID, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2726 "parser.tab.cpp" // lalr1.cc:859
+#line 2726 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 76:
@@ -2734,7 +2733,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::ID, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2737 "parser.tab.cpp" // lalr1.cc:859
+#line 2737 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 77:
@@ -2745,7 +2744,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::INT, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2748 "parser.tab.cpp" // lalr1.cc:859
+#line 2748 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 78:
@@ -2756,7 +2755,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::FLOAT, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2759 "parser.tab.cpp" // lalr1.cc:859
+#line 2759 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 79:
@@ -2767,7 +2766,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::CHAR, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2770 "parser.tab.cpp" // lalr1.cc:859
+#line 2770 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 80:
@@ -2778,7 +2777,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Exp_Node * > () = new Leaf_Exp_Node(make_leaf(token::ERROR, yystack_[0].value.as< Scan_Info * > ()));
   }
-#line 2781 "parser.tab.cpp" // lalr1.cc:859
+#line 2781 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 81:
@@ -2789,7 +2788,7 @@ namespace SPL {
   	#endif
   	yylhs.value.as< Args_Node * > () = new Args_Node(yystack_[2].value.as< Exp_Node * > (), make_leaf(token::COMMA, yystack_[1].value.as< Scan_Info * > ()), yystack_[0].value.as< Args_Node * > ());
   }
-#line 2792 "parser.tab.cpp" // lalr1.cc:859
+#line 2792 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 82:
@@ -2800,11 +2799,11 @@ namespace SPL {
   	#endif
         yylhs.value.as< Args_Node * > () = new Args_Node(yystack_[0].value.as< Exp_Node * > ());
   }
-#line 2803 "parser.tab.cpp" // lalr1.cc:859
+#line 2803 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 2807 "parser.tab.cpp" // lalr1.cc:859
+#line 2807 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -3291,7 +3290,7 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:1167
 } // SPL
-#line 3294 "parser.tab.cpp" // lalr1.cc:1167
+#line 3294 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.cpp" // lalr1.cc:1167
 #line 789 "parser.y" // lalr1.cc:1168
 
 

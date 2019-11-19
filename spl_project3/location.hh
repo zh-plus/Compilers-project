@@ -31,18 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file location.hh
+ ** \file /mnt/e/C++/compiler/compilers/spl_project3/location.hh
  ** Define the SPL::location class.
  */
 
-#ifndef YY_YY_LOCATION_HH_INCLUDED
-# define YY_YY_LOCATION_HH_INCLUDED
+#ifndef YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_LOCATION_HH_INCLUDED
+# define YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_LOCATION_HH_INCLUDED
 
 # include "position.hh"
 
 #line 5 "parser.y" // location.cc:296
 namespace SPL {
-#line 46 "location.hh" // location.cc:296
+#line 46 "/mnt/e/C++/compiler/compilers/spl_project3/location.hh" // location.cc:296
   /// Abstract a location.
   class location
   {
@@ -188,5 +188,5 @@ namespace SPL {
 
 #line 5 "parser.y" // location.cc:296
 } // SPL
-#line 192 "location.hh" // location.cc:296
-#endif // !YY_YY_LOCATION_HH_INCLUDED
+#line 192 "/mnt/e/C++/compiler/compilers/spl_project3/location.hh" // location.cc:296
+#endif // !YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_LOCATION_HH_INCLUDED

@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file position.hh
+ ** \file /mnt/e/C++/compiler/compilers/spl_project3/position.hh
  ** Define the SPL::position class.
  */
 
-#ifndef YY_YY_POSITION_HH_INCLUDED
-# define YY_YY_POSITION_HH_INCLUDED
+#ifndef YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_POSITION_HH_INCLUDED
+# define YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_POSITION_HH_INCLUDED
 
 # include <algorithm> // std::max
 # include <iostream>
@@ -52,7 +52,7 @@
 
 #line 5 "parser.y" // location.cc:296
 namespace SPL {
-#line 56 "position.hh" // location.cc:296
+#line 56 "/mnt/e/C++/compiler/compilers/spl_project3/position.hh" // location.cc:296
   /// Abstract a position.
   class position
   {
@@ -176,5 +176,5 @@ namespace SPL {
 
 #line 5 "parser.y" // location.cc:296
 } // SPL
-#line 180 "position.hh" // location.cc:296
-#endif // !YY_YY_POSITION_HH_INCLUDED
+#line 180 "/mnt/e/C++/compiler/compilers/spl_project3/position.hh" // location.cc:296
+#endif // !YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_POSITION_HH_INCLUDED

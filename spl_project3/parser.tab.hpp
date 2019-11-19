@@ -31,14 +31,14 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.tab.hpp
+ ** \file /mnt/e/C++/compiler/compilers/spl_project3/parser.tab.hpp
  ** Define the SPL::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_PARSER_TAB_HPP_INCLUDED
 // //                    "%code requires" blocks.
 #line 8 "parser.y" // lalr1.cc:377
 
@@ -71,7 +71,7 @@
    }
 
 
-#line 75 "parser.tab.hpp" // lalr1.cc:377
+#line 75 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.hpp" // lalr1.cc:377
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -81,7 +81,6 @@
 # include <vector>
 # include "stack.hh"
 # include "location.hh"
-#include "information.hpp"
 #include <typeinfo>
 #ifndef YYASSERT
 # include <cassert>
@@ -149,7 +148,7 @@
 
 #line 5 "parser.y" // lalr1.cc:377
 namespace SPL {
-#line 152 "parser.tab.hpp" // lalr1.cc:377
+#line 152 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.hpp" // lalr1.cc:377
 
 
 
@@ -979,9 +978,9 @@ namespace SPL {
 
 #line 5 "parser.y" // lalr1.cc:377
 } // SPL
-#line 982 "parser.tab.hpp" // lalr1.cc:377
+#line 982 "/mnt/e/C++/compiler/compilers/spl_project3/parser.tab.hpp" // lalr1.cc:377
 
 
 
 
-#endif // !YY_YY_PARSER_TAB_HPP_INCLUDED
+#endif // !YY_YY_MNT_E_C_COMPILER_COMPILERS_SPL_PROJECT3_PARSER_TAB_HPP_INCLUDED

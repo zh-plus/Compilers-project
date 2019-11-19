@@ -12,101 +12,101 @@
 #include "parser.tab.hpp"
 
 namespace SPL {
-    /* Forward definition */
-    class Array_VarDec_Node;
+	/* Forward definition */
+	class Array_VarDec_Node;
 
-    class Leaf_Node;
+	class Leaf_Node;
 
-    using token_type = SPL_Parser::token_type;
+	using token_type = SPL_Parser::token_type;
 
-    class Type {
-    public:
-        [[nodiscard]] virtual std::string to_string() const = 0;
+	class Type {
+	public:
+		[[nodiscard]] virtual std::string to_string() const = 0;
 
-        virtual ~Type() = default;
+		virtual ~Type() = default;
 
-        friend std::ostream &operator<<(std::ostream &os, const Type &obj);
+		friend std::ostream &operator<<(std::ostream &os, const Type &obj);
 
-        virtual bool compassionate(Type *other) = 0;
+		virtual bool compassionate(Type *other) = 0;
 
-        int line_no = -1;
-    };
+		int line_no = -1;
+	};
 
-    enum primitive_type {
-        INT, FLOAT, CHAR
-    };
+	enum primitive_type {
+		INT, FLOAT, CHAR
+	};
 
-    class Primitive_Type : public Type {
-    public:
-        explicit Primitive_Type(token_type t_type);
+	class Primitive_Type : public Type {
+	public:
+		explicit Primitive_Type(token_type t_type);
 
-        explicit Primitive_Type(primitive_type type) : type{type} {};
+		explicit Primitive_Type(primitive_type type) : type{type} {};
 
-        explicit Primitive_Type(Leaf_Node *leaf);
+		explicit Primitive_Type(Leaf_Node *leaf);
 
-        bool compassionate(Type *other) override;
+		bool compassionate(Type *other) override;
 
-        [[nodiscard]] std::string to_string() const override {
-            return std::vector{"int", "float", "char"}[type];
-        }
+		[[nodiscard]] std::string to_string() const override {
+			return std::vector{"int", "float", "char"}[type];
+		}
 
-        primitive_type type;
-    };
+		primitive_type type;
+	};
 
-    class Array_Type : public Type {
-    public:
-        explicit Array_Type(Type *base_type, Array_VarDec_Node *array_node);
+	class Array_Type : public Type {
+	public:
+		explicit Array_Type(Type *base_type, Array_VarDec_Node *array_node);
 
-        Array_Type(Type *base_type, std::vector<int> shape);
+		Array_Type(Type *base_type, std::vector<int> shape);
 
-        bool compassionate(Type *other) override;
+		bool compassionate(Type *other) override;
 
-        bool same_shape_of(Array_Type * other_shape);
+		bool same_shape_of(Array_Type *other_shape);
 
-        Type *reduce_dim();
+		Type *reduce_dim();
 
-        [[nodiscard]] std::string to_string() const override {
-            std::string s = m_base_type->to_string();
-            for (const auto &x: shape) {
-                s += "[" + std::to_string(x) + "]";
-            }
-            return s;
-        }
+		[[nodiscard]] std::string to_string() const override {
+			std::string s = m_base_type->to_string();
+			for (const auto &x: shape) {
+				s += "[" + std::to_string(x) + "]";
+			}
+			return s;
+		}
 
-        Type *m_base_type;
+		Type *m_base_type;
 
-        std::vector<int> shape;
-    };
+		std::vector<int> shape;
+	};
 
-    class Struct_Type : public Type {
-    public:
+	class Struct_Type : public Type {
+	public:
 
-        Struct_Type(std::string id, int line_no, std::vector<std::pair<std::string, Type *>> member_vector);
+		Struct_Type(std::string id, int line_no, std::vector<std::pair<std::string, Type *>> member_vector);
 
-        ~Struct_Type() override {
-            for (const auto &p: members) {
-                delete p.second;
-                members.erase(p.first);
-            }
-        }
+		~Struct_Type() override {
+			for (const auto &p: members) {
+				delete p.second;
+				members.erase(p.first);
+			}
+		}
 
-        bool compassionate(Type *other) override;
+		bool compassionate(Type *other) override;
 
-        bool contains(std::string id);
+		bool contains(std::string id);
 
-        [[nodiscard]] std::string to_string() const override {
-            std::string result = "Struct-Type:";
-            for (auto &x: members) {
-                result += " " + x.second->to_string() + "-" + x.first + ", ";
-            }
+		[[nodiscard]] std::string to_string() const override {
+			std::string result = "Struct-Type:";
+			for (auto &x: members) {
+				result += " " + x.second->to_string() + "-" + x.first + ", ";
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        std::string struct_id;
+		std::string struct_id;
 
-        std::map<std::string, Type *> members;
-    };
+		std::map<std::string, Type *> members;
+	};
 
 }
 
