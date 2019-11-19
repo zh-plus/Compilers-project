@@ -2,8 +2,16 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="cd8bc0f2-4826-433f-aa09-7f90709ce585" name="wsl" url="http://127.0.0.1">
+      <webServer id="cd8bc0f2-4826-433f-aa09-7f90709ce585" name="desktop_wsl" url="http://127.0.0.1">
         <fileTransfer host="127.0.0.1" port="2222" rootFolder="/home/pc/course/compilers" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="2222" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="16cb3cf1-4e4f-45a1-b0ab-3f7361e21a92" name="xps_wsl" url="http://localhost">
+        <fileTransfer host="localhost" port="2222" rootFolder="/home/xps/course/compiler/compilers" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

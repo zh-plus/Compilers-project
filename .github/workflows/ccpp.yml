@@ -12,14 +12,14 @@ jobs:
       - name: Install env
         run: sudo apt-get install flex bison
       - name: clean
-        working-directory: spl_project2
+        working-directory: spl_project3
         run: make clean
       - name: make
-        working-directory: spl_project2
+        working-directory: spl_project3
         run: make
       - name: make test1
-        working-directory: spl_project2
+        working-directory: spl_project3
         run: make test1
       - name: make test2
-        working-directory: spl_project2
+        working-directory: spl_project3
         run: make test2
