@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" autoUpload="Always" serverName="xps_wsl" showDifferentInSync="false" showNewOnSourceInSync="false">
     <serverData>
+      <paths name="WSL (c44d642e-142e-4538-aeff-46154cc39d8e)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="desktop_wsl">
         <serverdata>
           <mappings>
@@ -12,7 +19,7 @@
       <paths name="xps_wsl">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/spl_project3" local="$PROJECT_DIR$/spl_project3" web="/" />
           </mappings>
         </serverdata>
       </paths>

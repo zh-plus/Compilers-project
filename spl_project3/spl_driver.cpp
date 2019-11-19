@@ -25,6 +25,7 @@ namespace SPL {
         std::ifstream in_file(filename);
 
         if (not in_file.good()) {
+        	std::cout << "file not good!" << std::endl;
             exit(EXIT_FAILURE);
         }
 
