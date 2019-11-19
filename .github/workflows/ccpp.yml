@@ -14,6 +14,6 @@ jobs:
       - name: clean
         working-directory: spl_project3
         run: rm -rf ./bin/*
-      - name: cmake .
+      - name: build
         working-directory: spl_project3
-        run: make
+        run: cmake . && make
