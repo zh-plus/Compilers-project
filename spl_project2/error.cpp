@@ -22,11 +22,12 @@ SPL::Lexical_Error::Lexical_Error(Scan_Info *info) {
 
 SPL::Syntax_Error::Syntax_Error(std::string lexeme, int line_no) {
     this->info = new Scan_Info(lexeme, line_no);
+	this->line_no = line_no;
 }
 
 std::string SPL::Syntax_Error::to_string() {
     return "Error type B at Line " + std::to_string(info->line_no) +
-           ": Missing " + punctuation_map[info->lexeme] + " " + info->lexeme;
+           ": Missing " + punctuation_map[info->lexeme] + " '" + info->lexeme + "'";
 }
 
 SPL::Syntax_Error::Syntax_Error(Scan_Info *info) {

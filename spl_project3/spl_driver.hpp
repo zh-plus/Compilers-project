@@ -74,7 +74,7 @@ namespace SPL {
 		/* Visitors */
 		Local_Resolver *local_resolver = nullptr;
 
-		Dereference_Checker *dereference_checker = nullptr;
+		Type_Checker *dereference_checker = nullptr;
 
 		/* Get value after parsing process */
 		std::vector<Error *> *lexical_errors = nullptr;

@@ -233,34 +233,34 @@ namespace SPL {
 		return new Function_Symbol(return_type, name, line_no, parameter_v);
 	}
 
-	void Dereference_Checker::check(AST *ast) {
+	void Type_Checker::check(AST *ast) {
 		visit(ast->program);
 	}
 
-	void Dereference_Checker::visit(CompSt_Node *node) {
+	void Type_Checker::visit(CompSt_Node *node) {
 		push_scope(node->local_scope);
 		Visitor::visit(node);
 		pop_scope();
 	}
 
-	void Dereference_Checker::pop_scope() {
+	void Type_Checker::pop_scope() {
 		scope_stack.pop_back();
 	}
 
-	Dereference_Checker::Dereference_Checker(Global_Symbol_Table *top_scope) {
+	Type_Checker::Type_Checker(Global_Symbol_Table *top_scope) {
 		scope_stack.push_back(top_scope);
 	}
 
 
-	void Dereference_Checker::visit(Exp_Stmt_Node *node) {
+	void Type_Checker::visit(Exp_Stmt_Node *node) {
 		Visitor::visit(node);
 	}
 
-	void Dereference_Checker::visit(CompSt_Stmt_Node *node) {
+	void Type_Checker::visit(CompSt_Stmt_Node *node) {
 		Visitor::visit(node);
 	}
 
-	void Dereference_Checker::visit(Return_Stmt_Node *node) {
+	void Type_Checker::visit(Return_Stmt_Node *node) {
 		Exp_Info *exp_info = get_info(node->exp);
 		if (!exp_info->is_known()) {
 			return;
@@ -271,23 +271,23 @@ namespace SPL {
 		}
 	}
 
-	void Dereference_Checker::visit(If_Stmt_Node *node) {
+	void Type_Checker::visit(If_Stmt_Node *node) {
 		Visitor::visit(node);
 	}
 
-	void Dereference_Checker::visit(While_Stmt_Node *node) {
+	void Type_Checker::visit(While_Stmt_Node *node) {
 		Visitor::visit(node);
 	}
 
-	void Dereference_Checker::visit(Dec_Node *node) {
+	void Type_Checker::visit(Dec_Node *node) {
 		Visitor::visit(node);
 	}
 
-	void Dereference_Checker::visit(Leaf_Node *node) {
+	void Type_Checker::visit(Leaf_Node *node) {
 		Visitor::visit(node);
 	}
 
-	Exp_Info *Dereference_Checker::get_info(Exp_Node *exp_node) {
+	Exp_Info *Type_Checker::get_info(Exp_Node *exp_node) {
 		Exp_Info *result = new Unknown_Exp_Info();
 		type_case(exp_node,
 		          [&](Parentheses_Exp_Node *node) {
@@ -315,7 +315,7 @@ namespace SPL {
 		return result;
 	}
 
-	Exp_Info *Dereference_Checker::visit(Leaf_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Leaf_Exp_Node *node) {
 		int error_line_no = node->propagate_line_no();
 		Leaf_Node *leaf = node->leaf;
 		token_type leaf_token = leaf->leaf_type;
@@ -352,7 +352,7 @@ namespace SPL {
 		}
 	}
 
-	Exp_Info *Dereference_Checker::visit(Binary_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Binary_Exp_Node *node) {
 		Exp_Info *l_info = get_info(node->left);
 		Exp_Info *r_info = get_info(node->right);
 
@@ -407,7 +407,7 @@ namespace SPL {
 	}
 
 
-	Exp_Info *Dereference_Checker::visit(Unary_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Unary_Exp_Node *node) {
 		auto *exp_info = get_info(node->exp_node);
 		if (!exp_info->is_known()) {
 			return new Unknown_Exp_Info();
@@ -421,11 +421,11 @@ namespace SPL {
 		return exp_info;
 	}
 
-	Exp_Info *Dereference_Checker::visit(Parentheses_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Parentheses_Exp_Node *node) {
 		return get_info(node->exp);
 	}
 
-	Exp_Info *Dereference_Checker::visit(ID_Parentheses_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(ID_Parentheses_Exp_Node *node) {
 		int error_line_no = node->propagate_line_no();
 		string func_name = node->id->get_lexeme();
 		Symbol_Entry *entry = current_scope()->lookup(func_name);
@@ -468,7 +468,7 @@ namespace SPL {
 		return new Exp_Info(func_entry->get_type(), true);
 	}
 
-	Exp_Info *Dereference_Checker::visit(Bracket_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Bracket_Exp_Node *node) {
 		int error_line_no = node->propagate_line_no();
 
 		Exp_Info *exp1_info = get_info(node->exp1);
@@ -494,7 +494,7 @@ namespace SPL {
 		return new Exp_Info(new_type, false);
 	}
 
-	Exp_Info *Dereference_Checker::visit(Dot_Exp_Node *node) {
+	Exp_Info *Type_Checker::visit(Dot_Exp_Node *node) {
 		int error_line_no = node->propagate_line_no();
 
 		auto *exp_info = get_info(node->exp);
@@ -517,7 +517,7 @@ namespace SPL {
 		return new Exp_Info(struct_type->members[member_id], false);
 	}
 
-	Type *Dereference_Checker::merge_type(Primitive_Type *lhs, Primitive_Type *rhs) {
+	Type *Type_Checker::merge_type(Primitive_Type *lhs, Primitive_Type *rhs) {
 		if (lhs->type == primitive_type::CHAR) {
 			return lhs;
 		} else if (lhs->type == primitive_type::FLOAT) {
@@ -529,7 +529,7 @@ namespace SPL {
 		}
 	}
 
-	void Dereference_Checker::visit(ExtDef_Node *node) {
+	void Type_Checker::visit(ExtDef_Node *node) {
 		if (node->fun_dec) {
 			string func_id = node->fun_dec->id->get_lexeme();
 			Symbol_Entry *entry = current_scope()->lookup(func_id);

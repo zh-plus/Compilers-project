@@ -1,0 +1,14 @@
+[DEBUG] 2019-12-02 21:38:25,960 (irsim.py 620): Parsed arguments: {'irpath': 'sample/test01.ir', 'inputs': '10', 'logpath': 'irsim.log'}
+[INFO] 2019-12-02 21:38:25,966 (irsim.py 567): File loaded successfully
+[INFO] 2019-12-02 21:38:35,851 (irsim.py 567): Program has exited gracefully
+[INFO] 2019-12-02 21:38:35,851 (irsim.py 567): Total instructions = 10
+[ERROR] 2019-12-02 21:38:37,005 (irsim.py 581): An error occurred at line 2: Illegal memory access
+[ERROR] 2019-12-02 21:38:37,660 (irsim.py 581): An error occurred at line 2: Illegal memory access
+[DEBUG] 2019-12-02 21:39:02,927 (irsim.py 620): Parsed arguments: {'irpath': 'sample/test01.ir', 'inputs': '10', 'logpath': 'irsim.log'}
+[INFO] 2019-12-02 21:39:02,930 (irsim.py 567): File loaded successfully
+[INFO] 2019-12-02 21:39:04,870 (irsim.py 567): Program has exited gracefully
+[INFO] 2019-12-02 21:39:04,870 (irsim.py 567): Total instructions = 10
+[ERROR] 2019-12-02 21:39:11,348 (irsim.py 581): An error occurred at line 2: Illegal memory access
+[WARNING] 2019-12-02 21:39:22,832 (irsim.py 574): Program Counter goes out of bound. The running program will be terminated instantly
+[DEBUG] 2019-12-02 21:39:25,919 (irsim.py 620): Parsed arguments: {'irpath': 'sample/test01.ir', 'inputs': '10', 'logpath': 'irsim.log'}
+[INFO] 2019-12-02 21:39:25,920 (irsim.py 567): File loaded successfully

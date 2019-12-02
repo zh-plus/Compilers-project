@@ -126,7 +126,7 @@ namespace SPL {
 		local_resolver->resolve(ast);
 		extend_semantic_errors(local_resolver->get_errors());
 
-		dereference_checker = new Dereference_Checker(local_resolver->top_scope());
+		dereference_checker = new Type_Checker(local_resolver->top_scope());
 		dereference_checker->check(ast);
 		extend_semantic_errors(dereference_checker->get_errors());
 	}

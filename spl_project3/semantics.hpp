@@ -84,11 +84,11 @@ namespace SPL {
 
 	};
 
-	class Dereference_Checker : public Semantic_Checker {
+	class Type_Checker : public Semantic_Checker {
 	public:
 		using Visitor::visit;
 
-		explicit Dereference_Checker(Global_Symbol_Table *top_scope);
+		explicit Type_Checker(Global_Symbol_Table *top_scope);
 
 		void check(AST *ast);
 

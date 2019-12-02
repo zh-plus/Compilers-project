@@ -10,6 +10,24 @@ BISON_TARGET(SPL_Parser parser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser.tab.cpp)
 FLEX_TARGET(SPL_Scanner scanner.l ${CMAKE_CURRENT_SOURCE_DIR}/scanner.yy.cpp)
 ADD_FLEX_BISON_DEPENDENCY(SPL_Scanner SPL_Parser)
 
-set(SRCS main.cpp spl_driver.cpp utils.cpp ast.cpp symbol.cpp visitor.cpp type.cpp type_switch.hpp semantics.cpp error.cpp information.cpp)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
-add_executable(splc ${SRCS} ${BISON_SPL_Parser_OUTPUTS} ${FLEX_SPL_Scanner_OUTPUTS})
+set(SRCS
+		spl_driver.cpp
+		utils.cpp ast.cpp
+		symbol.cpp
+		visitor.cpp
+		type.cpp
+		type_switch.hpp
+		semantics.cpp
+		error.cpp
+		information.cpp)
+
+add_library(dependents ${SRCS} ${BISON_SPL_Parser_OUTPUTS} ${FLEX_SPL_Scanner_OUTPUTS})
+
+add_executable(splc main.cpp)
+target_link_libraries (splc dependents)
+
+add_executable(test check.cpp)
+target_link_libraries (test dependents)
+add_dependencies(test splc)
