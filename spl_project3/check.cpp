@@ -103,10 +103,10 @@ void check_test1() {
 
 	/* o... files */
 	for (int i = 1; i <= 1; ++i) {
-		test_spl_path = "../test1/test_1_o" + leading_zero(i) + ".spl";
+		test_spl_path = "test1/test_1_o" + leading_zero(i) + ".spl";
 		test_output_name = "test_1_o" + leading_zero(i) + ".out";
-		test_output_path = "../test1/" + test_output_name;
-		test_ans_path = "../test1/answer/" + test_output_name;
+		test_output_path = "test1/" + test_output_name;
+		test_ans_path = "test1/answer/" + test_output_name;
 
 		project1(test_spl_path);
 
@@ -118,10 +118,10 @@ void check_test1() {
 
 	/* r... files */
 	for (int i = 1; i <= 4; ++i) {
-		test_spl_path = "../test1/test_1_r" + leading_zero(i) + ".spl";
+		test_spl_path = "test1/test_1_r" + leading_zero(i) + ".spl";
 		test_output_name = "test_1_r" + leading_zero(i) + ".out";
-		test_output_path = "../test1/" + test_output_name;
-		test_ans_path = "../test1/answer/" + test_output_name;
+		test_output_path = "test1/" + test_output_name;
+		test_ans_path = "test1/answer/" + test_output_name;
 
 		project1(test_spl_path);
 
@@ -143,10 +143,10 @@ void check_test2() {
 
 	/* o... files */
 	for (int i = 1; i <= 2; ++i) {
-		test_spl_path = "../test2/test_2_o" + leading_zero(i) + ".spl";
+		test_spl_path = "test2/test_2_o" + leading_zero(i) + ".spl";
 		test_output_name = "test_2_o" + leading_zero(i) + ".out";
-		test_output_path = "../test2/" + test_output_name;
-		test_ans_path = "../test2/answer/" + test_output_name;
+		test_output_path = "test2/" + test_output_name;
+		test_ans_path = "test2/answer/" + test_output_name;
 
 		project2(test_spl_path);
 
@@ -158,10 +158,10 @@ void check_test2() {
 
 	/* r... files */
 	for (int i = 1; i <= 15; ++i) {
-		test_spl_path = "../test2/test_2_r" + leading_zero(i) + ".spl";
+		test_spl_path = "test2/test_2_r" + leading_zero(i) + ".spl";
 		test_output_name = "test_2_r" + leading_zero(i) + ".out";
-		test_output_path = "../test2/" + test_output_name;
-		test_ans_path = "../test2/answer/" + test_output_name;
+		test_output_path = "test2/" + test_output_name;
+		test_ans_path = "test2/answer/" + test_output_name;
 
 		project2(test_spl_path);
 
