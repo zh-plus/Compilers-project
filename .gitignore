@@ -70,4 +70,7 @@ fabric.properties
 # Self-defined
 spl_project3/CMakeCache.txt
 spl_project3/cmake_install.cmake
+spl_project3/Makefile
+spl_project3/irsim
+spl_project3/irsim.log
 /CMakeFiles/
