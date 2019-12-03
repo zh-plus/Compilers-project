@@ -31,12 +31,12 @@ int main(const int argc, const char **argv) {
 		string source_name(argv[1]);
 		string out_name = regex_replace(source_name, regex("spl"), "out");
 
-        ofstream out_f(out_name);
-        auto cout_buf = cout.rdbuf(out_f.rdbuf());
+		ofstream out_f(out_name);
+		auto cout_buf = cout.rdbuf(out_f.rdbuf());
 
 		if (driver.grammar_error_reported()) {
 			driver.print_errors(driver.get_grammar_errors());
-            cout.rdbuf(cout_buf);
+			cout.rdbuf(cout_buf);
 			return EXIT_SUCCESS;
 		}
 
@@ -45,7 +45,7 @@ int main(const int argc, const char **argv) {
 			driver.print_errors(driver.get_semantic_errors());
 		}
 
-        cout.rdbuf(cout_buf);
+		cout.rdbuf(cout_buf);
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;
 		return EXIT_FAILURE;

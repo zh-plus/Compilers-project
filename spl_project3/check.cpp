@@ -53,7 +53,7 @@ void project1(string input) {
 	SPL::SPL_Driver driver;
 	driver.parse(input.c_str());
 
-	const string& source_name(input);
+	const string &source_name(input);
 	string out_name = regex_replace(source_name, regex("spl"), "out");
 
 	ofstream out_f(out_name);
@@ -72,7 +72,7 @@ void project2(string input) {
 	SPL::SPL_Driver driver;
 	driver.parse(input.c_str());
 
-	const string& source_name(input);
+	const string &source_name(input);
 	string out_name = regex_replace(source_name, regex("spl"), "out");
 
 	ofstream out_f(out_name);
