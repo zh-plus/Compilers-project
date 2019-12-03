@@ -31,4 +31,3 @@ target_link_libraries(splc dependents)
 
 add_executable(check check.cpp)
 target_link_libraries(check dependents)
-add_dependencies(check splc)

@@ -14,10 +14,24 @@
 namespace SPL {
 
 	SPL_Driver::~SPL_Driver() {
-		delete (scanner);
-		scanner = nullptr;
-		delete (parser);
-		parser = nullptr;
+		delete parser;
+		delete scanner;
+		delete ast;
+		delete local_resolver;
+		delete dereference_checker;
+
+		auto delete_pointer = [](Error *const ptr) {
+			delete ptr;
+		};
+
+		std::for_each(lexical_errors->begin(), lexical_errors->end(), delete_pointer);
+		delete lexical_errors;
+
+		std::for_each(syntax_errors->begin(), syntax_errors->end(), delete_pointer);
+		delete syntax_errors;
+
+		std::for_each(semantic_errors->begin(), semantic_errors->end(), delete_pointer);
+		delete semantic_errors;
 	}
 
 	void SPL_Driver::parse(const char *filename) {
@@ -143,5 +157,6 @@ namespace SPL {
 	Local_Resolver *SPL_Driver::get_local_resolver() {
 		return local_resolver;
 	}
+
 
 }

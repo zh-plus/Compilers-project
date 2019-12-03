@@ -26,7 +26,8 @@ namespace SPL {
 		SPL_Driver() : parser{nullptr}, scanner{nullptr}, ast{nullptr},
 		               syntax_errors{new std::vector<Error *>{}}, semantic_errors{new std::vector<Error *>{}} {};
 
-		virtual ~SPL_Driver();
+		~SPL_Driver();
+
 
 		/**
 		 * Parse from a file.
@@ -82,11 +83,6 @@ namespace SPL {
 		std::vector<Error *> *syntax_errors;
 
 		std::vector<Error *> *semantic_errors;
-
-		/* define some pretty colors */
-		const std::string red = "\033[1;31m";
-		const std::string blue = "\033[1;36m";
-		const std::string norm = "\033[0m";
 	};
 
 	/* Useful functions */

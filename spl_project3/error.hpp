@@ -14,7 +14,9 @@ namespace SPL {
 
 	class Error {
 	public:
-		int line_no;
+		int line_no{};
+
+		virtual ~Error() {};
 
 		virtual std::string to_string() = 0;
 
@@ -26,6 +28,10 @@ namespace SPL {
 		explicit Lexical_Error(Scan_Info *info);
 
 		std::string to_string() override;
+
+		~Lexical_Error() override {
+			delete info;
+		};
 
 		Scan_Info *info{};
 	};
@@ -43,6 +49,10 @@ namespace SPL {
 		explicit Syntax_Error(Scan_Info *info);
 
 		Syntax_Error(std::string lexeme, int line_no);
+
+		~Syntax_Error() override {
+			delete info;
+		};
 
 		std::string to_string() override;
 

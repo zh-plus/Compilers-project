@@ -26,6 +26,10 @@ namespace SPL {
 		                                lexical_errors{new std::vector<Error *>{}} {
 		};
 
+		~SPL_Scanner() {
+			delete loc;
+		}
+
 		//get rid of override virtual function warning
 		using FlexLexer::yylex;
 
