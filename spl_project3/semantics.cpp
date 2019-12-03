@@ -17,6 +17,7 @@ namespace SPL {
 	void SPL::Local_Resolver::resolve(AST *ast) {
 		auto *global_scope = new Global_Symbol_Table();
 		scope_stack.push_back(global_scope);
+		add_builtin(); // Add builtin read and write function into global scope
 
 		visit(ast->program);
 
@@ -231,6 +232,18 @@ namespace SPL {
 		}
 
 		return new Function_Symbol(return_type, name, line_no, parameter_v);
+	}
+
+	void Local_Resolver::add_builtin() {
+		// write
+		auto *write_symbol = new Function_Symbol(new Primitive_Type(token_type::INT), "write",
+		                                         {new Primitive_Type(token_type::INT)});
+
+		auto *read_symbol = new Function_Symbol(new Primitive_Type(token_type::INT), "read",
+		                                        {});
+
+		scope_stack.front()->insert(write_symbol);
+		scope_stack.front()->insert(read_symbol);
 	}
 
 	void Type_Checker::check(AST *ast) {

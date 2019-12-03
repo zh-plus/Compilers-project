@@ -11,6 +11,8 @@
 
 #include "spl_driver.hpp"
 
+//#define LOCAL
+
 using namespace std;
 
 int main(const int argc, const char **argv) {
@@ -28,24 +30,31 @@ int main(const int argc, const char **argv) {
 			driver.parse(argv[1]);
 		}
 
+#ifdef LOCAL
 		string source_name(argv[1]);
 		string out_name = regex_replace(source_name, regex("spl"), "out");
 
 		ofstream out_f(out_name);
 		auto cout_buf = cout.rdbuf(out_f.rdbuf());
+#endif
 
 		if (driver.grammar_error_reported()) {
 			driver.print_errors(driver.get_grammar_errors());
+#ifdef LOCAL
 			cout.rdbuf(cout_buf);
+#endif
 			return EXIT_SUCCESS;
 		}
 
 		driver.semantic_analyze();
 		if (driver.semantic_error_reported()) {
 			driver.print_errors(driver.get_semantic_errors());
+		} else {
+			cout << "Semantic analyze success!" << endl;
 		}
-
+#ifdef LOCAL
 		cout.rdbuf(cout_buf);
+#endif
 	} else {
 		cout << "Only one parameter permitted! Use -h to see usage." << endl;
 		return EXIT_FAILURE;

@@ -64,17 +64,17 @@ namespace SPL {
 		return result;
 	}
 
-	Function_Symbol::Function_Symbol(std::string name, Type *return_type, std::initializer_list<Type *> parameters) {
+	Function_Symbol::Function_Symbol(Type *return_type, std::string id, std::initializer_list<Type *> parameters) {
 		this->return_type = return_type;
-		this->parameters = parameters;
-		this->name = name;
+		this->parameters = vector<Type *>(parameters);
+		this->name = id;
 		this->line_no = return_type->line_no;
 	}
 
-	Function_Symbol::Function_Symbol(Type *return_type, std::string name,
+	Function_Symbol::Function_Symbol(Type *return_type, std::string id,
 	                                 int line_no, vector<Type *> parameter_v) {
 		this->return_type = return_type;
-		this->name = name;
+		this->name = id;
 		this->line_no = line_no;
 
 		this->parameters = std::move(parameter_v);

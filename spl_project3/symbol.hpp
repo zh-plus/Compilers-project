@@ -78,7 +78,7 @@ namespace SPL {
 
 	class Function_Symbol : public Symbol_Entry {
 	public:
-		Function_Symbol(std::string name, Type *return_type, std::initializer_list<Type *> parameters);
+		Function_Symbol(Type *return_type, std::string id, std::initializer_list<Type *> parameters);
 
 		Function_Symbol(Type *return_type, std::string id, int line_no, std::vector<Type *> parameter_v);
 

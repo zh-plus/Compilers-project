@@ -55,6 +55,8 @@ namespace SPL {
 
 		void insert(Symbol_Entry *entry);
 
+		void add_builtin();
+
 		/* Useful Function */
 		Variable_Symbol *get_var_symbol(Type *specifier_type, VarDec_Node *var_dec);
 
@@ -136,7 +138,6 @@ namespace SPL {
 		Type *current_return_type = nullptr;
 
 	};
-
 
 }
 
