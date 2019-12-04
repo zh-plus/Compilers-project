@@ -74,3 +74,10 @@ spl_project3/Makefile
 spl_project3/irsim
 spl_project3/irsim.log
 /CMakeFiles/
+/reference/
+*/stack.hh
+*/scanner.yy.cpp
+*/parser.tab.cpp
+*/parser.tab.hpp
+*/location.hh
+*/position.hh

@@ -4,3 +4,4 @@ project(compilers CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 ADD_SUBDIRECTORY(spl_project3 spl_project3/bin)
+add_subdirectory(reference)
