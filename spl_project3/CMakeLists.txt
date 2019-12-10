@@ -15,6 +15,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 set(SRCS
 		ir.cpp
+		tac.cpp
 		spl_driver.cpp
 		utils.cpp ast.cpp
 		symbol.cpp
@@ -32,3 +33,5 @@ target_link_libraries(splc dependents)
 
 add_executable(check check.cpp)
 target_link_libraries(check dependents)
+
+add_executable(test test.cpp)

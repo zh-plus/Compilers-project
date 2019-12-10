@@ -592,6 +592,8 @@ namespace SPL {
 	class Exp_Node : public AST_Node {
 	public:
 		std::string to_string() override;
+
+		Exp_Info *info = nullptr;
 	};
 
 	class Parentheses_Exp_Node : public Exp_Node {

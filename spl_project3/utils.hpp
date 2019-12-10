@@ -54,6 +54,12 @@ namespace SPL {
 	};
 
 	std::string trim(const std::string &str, const std::string &ws);
+
+	template<typename Iter>
+	std::string join(Iter begin, Iter end, std::string const &separator);
+
+	template<typename T>
+	std::string join(std::initializer_list<T> seq, std::string const &separator);
 }
 
 #endif //COMPILERS_UTIL_HPP

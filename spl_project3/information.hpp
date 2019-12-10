@@ -1,9 +1,13 @@
+#include <utility>
+
 //
 // Created by 10578 on 2019/11/17.
 //
 
 #ifndef __INFORMATION_HPP__
 #define __INFORMATION_HPP__
+
+#include "tac.hpp"
 
 namespace SPL {
 	/* Forward Declaration */
@@ -14,7 +18,7 @@ namespace SPL {
 		std::string lexeme;
 		int line_no;
 
-		Scan_Info(std::string lexeme, int line) : lexeme{lexeme}, line_no{line} {};
+		Scan_Info(std::string lexeme, int line) : lexeme{std::move(lexeme)}, line_no{line} {};
 	};
 
 	class Exp_Info {
@@ -33,8 +37,13 @@ namespace SPL {
 
 		bool compassionate(Exp_Info *other);
 
+		/* Type checker */
 		bool m_is_rvalue = false;
 		Type *exp_type = nullptr;
+
+		/* IR generator */
+		std::string temp_name;
+		TAC code;
 
 	};
 

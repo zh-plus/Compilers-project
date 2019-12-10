@@ -15,9 +15,8 @@
 using namespace std;
 
 template<typename InputIterator1, typename InputIterator2>
-bool
-range_equal(InputIterator1 first1, InputIterator1 last1,
-            InputIterator2 first2, InputIterator2 last2) {
+bool range_equal(InputIterator1 first1, InputIterator1 last1,
+                 InputIterator2 first2, InputIterator2 last2) {
 	while (first1 != last1 && first2 != last2) {
 		if (*first1 != *first2) return false;
 		++first1;
@@ -49,7 +48,7 @@ string leading_zero(int number, int leading_width = 2) {
 	return ss.str();
 }
 
-void project1(string input) {
+void project1(const string &input) {
 	SPL::SPL_Driver driver;
 	driver.parse(input.c_str());
 
@@ -68,7 +67,7 @@ void project1(string input) {
 	cout.rdbuf(cout_buf);
 }
 
-void project2(string input) {
+void project2(const string &input) {
 	SPL::SPL_Driver driver;
 	driver.parse(input.c_str());
 

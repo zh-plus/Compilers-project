@@ -80,7 +80,7 @@ namespace SPL {
 	}
 
 	void Unary_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::vector<AST_Node *> Binary_Exp_Node::children() {
@@ -88,7 +88,7 @@ namespace SPL {
 	}
 
 	void Binary_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	Leaf_Node *make_leaf(token_type leaf_type, Scan_Info *info) {
@@ -121,7 +121,7 @@ namespace SPL {
 	}
 
 	void Parentheses_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::vector<AST_Node *> ID_Parentheses_Exp_Node::children() {
@@ -133,7 +133,7 @@ namespace SPL {
 	}
 
 	void ID_Parentheses_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::vector<AST_Node *> Bracket_Exp_Node::children() {
@@ -141,7 +141,7 @@ namespace SPL {
 	}
 
 	void Bracket_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::vector<AST_Node *> Dot_Exp_Node::children() {
@@ -149,7 +149,7 @@ namespace SPL {
 	}
 
 	void Dot_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::vector<AST_Node *> Leaf_Exp_Node::children() {
@@ -157,7 +157,7 @@ namespace SPL {
 	}
 
 	void Leaf_Exp_Node::accept(Visitor *visitor) {
-		visitor->visit(this);
+		info = visitor->visit(this);
 	}
 
 	std::string DefList_Node::to_string() {

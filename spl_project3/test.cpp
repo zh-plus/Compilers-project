@@ -2,146 +2,50 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
-#include "utils.hpp"
-#include "test.hpp"
-#include "type_switch.hpp"
+#include <utility>
 
-//using namespace std;
-using namespace T;
+using namespace std;
 
-class A {
+class Label {
 public:
-	int i = 0;
+	string name;
 
-	virtual void accept() {
-		cout << "A" << endl;
-	}
-};
+	Label() {
+		name = "label_" + std::to_string(get_number());
+	};
 
-class B : public A {
-public:
-	void print_i() { cout << i; }
-
-	void accept() override {
-		A::accept();
-		cout << "B" << endl;
-	}
-};
-
-class C {
-public:
-	virtual void print(A *a) {
-		cout << "A" << endl;
+	[[nodiscard]] string to_string() const {
+		return name;
 	}
 
-	virtual void print(B *B) {
-		cout << "B" << endl;
-	}
-};
-
-class Visitor {
-public:
-	static void visit(A *a) {
-		a->accept();
+	static int get_number() {
+		return number++;
 	}
 
-	static void visit(B *b) {
-		b->accept();
-	}
+private:
+	static int number;
 };
 
-int value = 0;
+int Label::number = 0;
 
-int &r_get() {
-	return value;
-}
-
-struct s {
-	int a, b[10][20];
-	float c;
-};
-
-struct s1 {
-	int a, b[10][20];
-	float c;
-};
-
-class Test {
-public:
-	vector<int> v;
-};
-
-struct test_s;
-
-class MyBaseClass {
-public:
-	virtual ~MyBaseClass() {}
-};
-
-class MyDerivedA : public MyBaseClass {
-};
-
-class MyDerivedB : public MyBaseClass {
-};
-
-int g = 0;
-
-int compare1(int x, int y) {
-	if (x > y) { return 1; }
-	else if (y > x) { return -1; }
-	else { return 0; }
-}
-
-float compare2(int a, int b) {
-	if (b > a) { return -1.0; }
-	if (b == a) { return 0.0; }
-	return 1.0;
-}
-
-int test_2_r08(int i, int m, int n) {
-	if (i == 0) {
-		return compare1(m, n);
-	} else {
-		return compare2(m, n);
+template<typename T>
+void print_labels(initializer_list<T> l) {
+	for (auto &&x: l) {
+		cout << x.to_string() << endl;
 	}
 }
-
 
 int main() {
-	A *a = new A();
-	A *b = new B();
-	C *c = new C();
+	auto l1 = Label();
+	auto l2 = Label();
+	auto l3 = Label();
+	auto l4 = Label();
 
-	Visitor v;
-	v.visit(a);
-	v.visit(b);
+	print_labels({l1, l2, l3, l4});
+	print_labels({Label(), Label()});
 
-	struct s test_s{};
-	struct s1 test_s1{};
-	cout << test_s.a << endl;
-
-	Test t;
-	t.v.push_back(1);
-	for (auto &x: t.v) {
-		cout << x << endl;
-	}
-
-	string s1 = "1234562222";
-	string s2 = "1234562222";
-
-	cout << (s1 == s2 ? "true" : "false") << endl;
-
-	int i = 1;
-	switch (i) {
-		case 1: {
-			cout << 1 << endl;
-		}
-		case 2: {
-			cout << 2 << endl;
-		}
-		default:
-			cout << "Default" << endl;
-	}
+	int n;
+	(n + 1) = 10;
 
 	return 0;
 }
