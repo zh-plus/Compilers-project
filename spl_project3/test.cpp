@@ -44,8 +44,5 @@ int main() {
 	print_labels({l1, l2, l3, l4});
 	print_labels({Label(), Label()});
 
-	int n;
-	(n + 1) = 10;
-
 	return 0;
 }
