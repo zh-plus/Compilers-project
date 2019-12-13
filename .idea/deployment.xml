@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="xps_wsl" showDifferentInSync="false" showNewOnSourceInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="desktop_wsl" showDifferentInSync="false" showNewOnSourceInSync="false">
     <serverData>
-      <paths name="WSL (c44d642e-142e-4538-aeff-46154cc39d8e)">
+      <paths name="WSL (365b6b16-29dc-4586-92a8-5ca6a18f7c63)">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
