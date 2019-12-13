@@ -20,11 +20,11 @@ namespace SPL {
 	using token_type = SPL_Parser::token_type;
 
 	enum op_type {
-		ADD, MINUS, MUL, DIV, LT, LE, GT, GE, NE, EQ
+		PLUS, MINUS, MUL, DIV, LT, LE, GT, GE, NE, EQ
 	};
 
 	static std::unordered_map<op_type, std::string> op_map{
-			{op_type::ADD,   "+"},
+			{op_type::PLUS,  "+"},
 			{op_type::MINUS, "-"},
 			{op_type::MUL,   "*"},
 			{op_type::DIV,   "/"},
