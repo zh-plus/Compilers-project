@@ -35,11 +35,16 @@ namespace SPL {
 		auto *lhs_info = get_info(node->left);
 		auto *rhs_info = get_info(node->right);
 
+		node_info->code.extend(lhs_info->code);
+		node_info->code.extend(rhs_info->code);
+
 		switch (node->op_node->leaf_type) {
 			case token_type::ASSIGN:
-				node_info->code.extend(rhs_info->code);
-				node_info->code.add(new Assign_Quadru());
+				node_info->code.add(new Assign_Value_Quadru(lhs_info->temp_name, rhs_info->temp_name));
 				break;
+//			case token_type::LT:
+//				node_info->code.add()
+
 		}
 
 		return node_info;

@@ -37,6 +37,8 @@ namespace SPL {
 		std::string name;
 
 		int line_no = -1;
+
+		std::string ir_name = "__undefined__";
 	};
 
 	/**
