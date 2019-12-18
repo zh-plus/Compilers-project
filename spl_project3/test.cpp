@@ -2,47 +2,55 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <utility>
+#include <unistd.h>
+
+#include "utils.hpp"
 
 using namespace std;
 
-class Label {
-public:
-	string name;
+void write(int n) {
+	cout << n << endl;
+}
 
-	Label() {
-		name = "label_" + std::to_string(get_number());
-	};
+int read() {
+	int result = 0;
+	cin >> result;
+	return result;
+}
 
-	[[nodiscard]] string to_string() const {
-		return name;
+int squaRever(int num) {
+	int flag = 0;
+	int array[3];
+	int j = 0;
+	array[0] = num / 100;
+	array[1] = num / 10 - 10 * array[0];
+	array[2] = num - 100 * array[0] - 10 * array[1];
+	if (array[0] != array[2]) {
+		flag = 0;
+	} else {
+		while (j < 12) {
+			if ((j * j - num) == 0)
+				flag = 1;
+			j = j + 1;
+		}
 	}
-
-	static int get_number() {
-		return number++;
-	}
-
-private:
-	static int number;
-};
-
-int Label::number = 0;
-
-template<typename T>
-void print_labels(initializer_list<T> l) {
-	for (auto &&x: l) {
-		cout << x.to_string() << endl;
-	}
+	if (flag == 1)
+		return 1;
+	else
+		return 0;
 }
 
 int main() {
-	auto l1 = Label();
-	auto l2 = Label();
-	auto l3 = Label();
-	auto l4 = Label();
-
-	print_labels({l1, l2, l3, l4});
-	print_labels({Label(), Label()});
-
+	int i = 100;
+	while (i < 150) {
+		if (squaRever(i) == 1)
+			write(i);
+		i = i + 1;
+	}
 	return 0;
 }
+
+
+//121

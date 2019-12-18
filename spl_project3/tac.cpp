@@ -2,15 +2,13 @@
 // Created by 10578 on 12/4/2019.
 //
 
-#include <utility>
-
 #include "tac.hpp"
 #include "utils.hpp"
 
 namespace SPL {
 	using namespace std::string_literals;
 
-	int Label::number = 0;
+	int Label::number = 1;
 
 
 	std::string Assign_Quadru::to_string() const {
@@ -38,7 +36,7 @@ namespace SPL {
 	}
 
 	std::string Arith_Quadru::to_string() const {
-		return join({lhs, ":="s, arg1, arg2}, " ");
+		return join({lhs, ":="s, arg1, op_map[op], arg2}, " ");
 	}
 
 	std::string Goto_Quadru::to_string() const {
@@ -49,13 +47,12 @@ namespace SPL {
 		return join({"IF"s, arg1, op_map[op], arg2, "GOTO"s, label->name}, " ");
 	}
 
-
 	std::string Return_Quadru::to_string() const {
 		return join({"RETURN"s, name}, " ");
 	}
 
 	std::string Dec_Quadru::to_string() const {
-		return join({"DEC"s, name}, " ");
+		return join({"DEC"s, name, std::to_string(size)}, " ");
 	}
 
 	std::string Param_Quadru::to_string() const {
@@ -88,4 +85,17 @@ namespace SPL {
 		instructions.push_back(quadruple);
 	}
 
+	std::string Label_Quadru::to_string() const {
+		return join({"LABEL"s, label->name, ":"s}, " ");
+	}
+
+	std::string Func_Quadru::to_string() const {
+		return join({"FUNCTION"s, name, ":"s}, " ");
+	}
+
+	void TAC::print() {
+		for (auto &&x:instructions) {
+			std::cout << x->to_string() << std::endl;
+		}
+	}
 }

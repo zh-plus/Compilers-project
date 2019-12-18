@@ -11,3 +11,7 @@ int main()
     write(final);
     return 0;
 }
+
+//175
+//36
+//103

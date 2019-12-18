@@ -103,7 +103,7 @@
 %left OR
 %left AND
 %left LT LE GT GE EQ NE
-%left PLUS SUB
+%left PLUS MINUS
 %left MUL DIV
 %right NOT
 %left DOT
@@ -664,7 +664,7 @@ Exp
   				      $2,
   				      make_leaf(token::RP, ")", $2->propagate_line_no()));
   }
-  | MINUS Exp {
+  | MINUS Exp %prec NOT {
   	#ifdef LOCAL
   	    std::cout << "Exp - > (MINUS Exp) " << std::endl;
   	#endif

@@ -15,3 +15,8 @@ int main(){
     write(r);
     return 0;
 }
+
+//in:3
+//3
+//9
+//27

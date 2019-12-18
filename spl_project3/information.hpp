@@ -25,6 +25,8 @@ namespace SPL {
 	public:
 		Exp_Info() : m_is_rvalue{false}, exp_type{nullptr} {}
 
+		Exp_Info(const Exp_Info &other);
+
 		Exp_Info(Type *exp_type, bool t_is_rvalue);
 
 		explicit Exp_Info(bool is_known);
@@ -42,8 +44,9 @@ namespace SPL {
 		Type *exp_type = nullptr;
 
 		/* IR generator */
-		std::string temp_name;
+		std::string temp_name = "__undefined__";
 		TAC code;
+		bool is_address = false;
 
 	};
 

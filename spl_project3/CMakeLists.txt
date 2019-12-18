@@ -14,10 +14,11 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 set(SRCS
+		utils.cpp
 		ir.cpp
 		tac.cpp
 		spl_driver.cpp
-		utils.cpp ast.cpp
+		ast.cpp
 		symbol.cpp
 		visitor.cpp
 		type.cpp
@@ -26,12 +27,12 @@ set(SRCS
 		error.cpp
 		information.cpp)
 
-add_library(dependents ${SRCS} ${BISON_SPL_Parser_OUTPUTS} ${FLEX_SPL_Scanner_OUTPUTS})
+add_library(dependence ${SRCS} ${BISON_SPL_Parser_OUTPUTS} ${FLEX_SPL_Scanner_OUTPUTS})
 
 add_executable(splc main.cpp)
-target_link_libraries(splc dependents)
+target_link_libraries(splc dependence)
 
 add_executable(check check.cpp)
-target_link_libraries(check dependents)
+target_link_libraries(check dependence)
 
 add_executable(testing test.cpp)

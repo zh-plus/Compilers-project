@@ -65,6 +65,10 @@ namespace SPL {
 		return type == p_other->type;
 	}
 
+	int Primitive_Type::ir_size() {
+		return 4;
+	}
+
 	Array_Type::Array_Type(Type *base_type, Array_VarDec_Node *array_node) {
 		line_no = base_type->line_no;
 		m_base_type = base_type;
@@ -76,6 +80,14 @@ namespace SPL {
 		}
 
 		std::reverse(shape.begin(), shape.end());
+	}
+
+	bool Type::is_primitive() {
+		return false;
+	}
+
+	bool Primitive_Type::is_primitive() {
+		return true;
 	}
 
 	bool Array_Type::compassionate(Type *other) {
@@ -104,18 +116,37 @@ namespace SPL {
 		return new Array_Type(m_base_type, new_shape);
 	}
 
-	Array_Type::Array_Type(Type *base_type, std::vector<int> shape) {
+	Array_Type::Array_Type(Type *base_type, vector<int> shape) {
 		this->m_base_type = base_type;
 		this->shape = std::move(shape);
 	}
 
+	int Array_Type::ir_size() {
+		int result = 4;
+		for (auto &&x: shape) {
+			result *= x;
+		}
 
-	Struct_Type::Struct_Type(std::string id, int line_no, std::vector<std::pair<std::string, Type *>> member_vector) {
-		this->struct_id = id;
+		return result;
+	}
+
+	int Array_Type::get_layer_size() {
+		int result = 4;
+		for (int i = 1, sz = shape.size(); i < sz; ++i) {
+			result *= shape[i];
+		}
+
+		return result;
+	}
+
+	Struct_Type::Struct_Type(string id, int line_no, vector<pair<string, Type *>> member_vector) {
+		this->struct_id = std::move(id);
 		this->line_no = line_no;
 
+		member_ids.reserve(member_vector.size());
 		for (auto &p: member_vector) {
-			members.insert(p);
+			member_map.insert(p);
+			member_ids.push_back(p.first);
 		}
 	}
 
@@ -132,8 +163,32 @@ namespace SPL {
 		return this->struct_id == s_other->struct_id;
 	}
 
-	bool Struct_Type::contains(const std::string id) {
-		return members.find(id) != members.end();
+	bool Struct_Type::contains(const string id) {
+		return member_map.find(id) != member_map.end();
+	}
+
+	int Struct_Type::ir_size() {
+		int result = 0;
+
+		for (auto &&x: member_map) {
+			result += x.second->ir_size();
+		}
+
+		return result;
+	}
+
+	int Struct_Type::get_offset(const string &member_id) {
+		int offset = 0;
+		for (auto &&x: member_ids) {
+			if (x == member_id) {
+				return offset;
+			} else {
+				offset += member_map[x]->ir_size();
+			}
+		}
+
+		cout << "Member " << member_id << " not exist!" << endl;
+		return offset;
 	}
 
 }

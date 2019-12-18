@@ -2,7 +2,6 @@
 // Created by 10578 on 10/9/2019.
 //
 
-#include <cctype>
 #include <fstream>
 #include <cassert>
 #include <algorithm>
@@ -158,5 +157,10 @@ namespace SPL {
 		return local_resolver;
 	}
 
+	void SPL_Driver::generate_ir() {
+		ir_generator = new IR_Generator(local_resolver->top_scope());
+		ir_generator->generate(ast);
+		ir_generator->get_tac()->print();
+	}
 
 }

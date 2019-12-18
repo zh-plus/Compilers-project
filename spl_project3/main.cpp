@@ -30,7 +30,7 @@ int main(const int argc, const char **argv) {
 			driver.parse(argv[1]);
 		}
 
-#ifdef LOCAL
+#ifndef LOCAL
 		string source_name(argv[1]);
 		string out_name = regex_replace(source_name, regex("spl"), "out");
 
@@ -40,21 +40,24 @@ int main(const int argc, const char **argv) {
 
 		if (driver.grammar_error_reported()) {
 			driver.print_errors(driver.get_grammar_errors());
-#ifdef LOCAL
+#ifndef LOCAL
 			cout.rdbuf(cout_buf);
 #endif
 			return EXIT_SUCCESS;
 		}
 
+#ifdef LOCAL
 		driver.get_ast()->print();
+#endif
 
 		driver.semantic_analyze();
 		if (driver.semantic_error_reported()) {
 			driver.print_errors(driver.get_semantic_errors());
-		} else {
-			cout << "Semantic analyze success!" << endl;
 		}
-#ifdef LOCAL
+
+		driver.generate_ir();
+
+#ifndef LOCAL
 		cout.rdbuf(cout_buf);
 #endif
 	} else {

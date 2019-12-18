@@ -99,6 +99,7 @@ namespace SPL {
 
 	class Visitor : public AST_Visitor<void, void, Exp_Info *> {
 	public:
+
 		/* Internal Nodes */
 		void visit(Program_Node *node) override;
 
@@ -184,7 +185,6 @@ namespace SPL {
 
 		void check(AST_Node *node);
 	};
-
 
 }
 

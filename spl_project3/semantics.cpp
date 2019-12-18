@@ -220,13 +220,13 @@ namespace SPL {
 	Function_Symbol *Local_Resolver::get_fun_symbol(Type *return_type, FunDec_Node *fun_dec) {
 		string name = fun_dec->id->get_lexeme();
 		int line_no = fun_dec->propagate_line_no();
-		vector<Type *> parameter_v;
+		vector<std::pair<std::string, Type *>> parameter_v;
 
 		auto var_list = fun_dec->var_list;
 		while (var_list) {
 			auto param_dec = var_list->param_dec;
 			auto type = get_type(param_dec->specifier);
-			parameter_v.push_back(get_type(type, param_dec->var_dec));
+			parameter_v.emplace_back(param_dec->var_dec->get_id(), get_type(type, param_dec->var_dec));
 
 			var_list = var_list->var_list;
 		}
@@ -237,7 +237,7 @@ namespace SPL {
 	void Local_Resolver::add_builtin() {
 		// write
 		auto *write_symbol = new Function_Symbol(new Primitive_Type(token_type::INT), "write",
-		                                         {new Primitive_Type(token_type::INT)});
+		                                         {{"num"s, new Primitive_Type(token_type::INT)}});
 
 		auto *read_symbol = new Function_Symbol(new Primitive_Type(token_type::INT), "read",
 		                                        {});
@@ -325,6 +325,8 @@ namespace SPL {
 			          result = visit(dynamic_cast<Leaf_Exp_Node *>(exp_node));
 		          }
 		);
+		exp_node->info = result;
+
 		return result;
 	}
 
@@ -431,11 +433,13 @@ namespace SPL {
 			return new Unknown_Exp_Info();
 		}
 
-		return exp_info;
+		return new Exp_Info(*exp_info);
 	}
 
 	Exp_Info *Type_Checker::visit(Parentheses_Exp_Node *node) {
-		return get_info(node->exp);
+		Exp_Info *exp_info = get_info(node->exp);
+
+		return new Exp_Info(*exp_info);
 	}
 
 	Exp_Info *Type_Checker::visit(ID_Parentheses_Exp_Node *node) {
@@ -456,7 +460,10 @@ namespace SPL {
 		vector<Type *> args_types;
 		Args_Node *args = node->args;
 		while (args) {
-			Exp_Info *arg_info = get_info(args->exp);
+//			auto *exp_info = get_info(args->exp);
+//			auto *arg_info = new Exp_Info(exp_info);
+			auto *arg_info = get_info(args->exp);
+
 			if (!arg_info->is_known()) {
 				return new Unknown_Exp_Info();
 			}
@@ -472,7 +479,7 @@ namespace SPL {
 		}
 
 		for (int i = 0, sz = func_parameters.size(); i < sz; ++i) {
-			if (!func_parameters[i]->compassionate(args_types[i])) {
+			if (!func_parameters[i].second->compassionate(args_types[i])) {
 				add_error(new Semantic_Error9(error_line_no));
 				return new Unknown_Exp_Info();
 			}
@@ -527,7 +534,7 @@ namespace SPL {
 			return new Unknown_Exp_Info;
 		}
 
-		return new Exp_Info(struct_type->members[member_id], false);
+		return new Exp_Info(struct_type->member_map[member_id], false);
 	}
 
 	Type *Type_Checker::merge_type(Primitive_Type *lhs, Primitive_Type *rhs) {

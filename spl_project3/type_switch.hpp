@@ -83,39 +83,39 @@ namespace SPL {
 		}
 	}
 
-/* Example Usage */
-
-	class MyBaseClass {
-	public:
-		virtual ~MyBaseClass() = default;
-	};
-
-	class MyDerivedA : public MyBaseClass {
-	};
-
-	class MyDerivedB : public MyBaseClass {
-	};
-
-	int g = 0;
-
-	void usage() {
-		MyBaseClass *basePtr = new MyDerivedB();
-		int ab = 1;
-
-		type_case(basePtr,
-		          [&](MyDerivedA *a) {
-			          std::cout << "is type A!" << std::endl;
-			          ab = 2;
-		          },
-		          [&](MyDerivedB *b) {
-			          std::cout << "is type B!" << std::endl;
-			          ab = 3;
-			          g = 2;
-		          });
-
-		std::cout << ab << std::endl;
-		std::cout << g << std::endl;
-	}
+///* Example Usage */
+//
+//	class MyBaseClass {
+//	public:
+//		virtual ~MyBaseClass() = default;
+//	};
+//
+//	class MyDerivedA : public MyBaseClass {
+//	};
+//
+//	class MyDerivedB : public MyBaseClass {
+//	};
+//
+//	int g = 0;
+//
+//	void usage() {
+//		MyBaseClass *basePtr = new MyDerivedB();
+//		int ab = 1;
+//
+//		type_case(basePtr,
+//		          [&](MyDerivedA *a) {
+//			          std::cout << "is type A!" << std::endl;
+//			          ab = 2;
+//		          },
+//		          [&](MyDerivedB *b) {
+//			          std::cout << "is type B!" << std::endl;
+//			          ab = 3;
+//			          g = 2;
+//		          });
+//
+//		std::cout << ab << std::endl;
+//		std::cout << g << std::endl;
+//	}
 }
 
 #endif //__TYPE_CASE_HPP__

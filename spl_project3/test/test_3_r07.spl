@@ -38,3 +38,7 @@ int main()
     write(gcd2(m,n));
     return 0;
 }
+
+//in:18 9
+//9
+//9

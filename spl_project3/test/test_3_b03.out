@@ -1,0 +1,75 @@
+FUNCTION main :
+t0 := #0
+t1 := #5
+t2 := #0
+LABEL label1 :
+IF t0 < #5 GOTO label2
+GOTO label3
+LABEL label2 :
+DEC t3 20
+t4 := t0 * #4
+t5 := &t3 + t4
+READ t6
+*t5 := t6
+t7 := t0 + #1
+t0 := t7
+GOTO label1
+LABEL label3 :
+t0 := t1
+LABEL label4 :
+IF t0 > #0 GOTO label5
+GOTO label6
+LABEL label5 :
+t8 := t0 - #1
+LABEL label7 :
+IF t2 < t8 GOTO label8
+GOTO label9
+LABEL label8 :
+t9 := t2 * #4
+t10 := &t3 + t9
+t11 := t2 + #1
+t12 := t11 * #4
+t13 := &t3 + t12
+t14 := *t10
+t15 := *t13
+IF t14 > t15 GOTO label10
+GOTO label11
+LABEL label10 :
+t17 := t2 * #4
+t18 := &t3 + t17
+t16 := *t18
+t19 := t2 * #4
+t20 := &t3 + t19
+t21 := t2 + #1
+t22 := t21 * #4
+t23 := &t3 + t22
+t24 := *t23
+*t20 := t24
+t25 := t2 + #1
+t26 := t25 * #4
+t27 := &t3 + t26
+*t27 := t16
+LABEL label11 :
+t28 := t2 + #1
+t2 := t28
+GOTO label7
+LABEL label9 :
+t2 := #0
+t29 := t0 - #1
+t0 := t29
+GOTO label4
+LABEL label6 :
+t0 := #0
+LABEL label12 :
+IF t0 < #5 GOTO label13
+GOTO label14
+LABEL label13 :
+t30 := t0 * #4
+t31 := &t3 + t30
+t33 := *t31
+WRITE t33
+t34 := t0 + #1
+t0 := t34
+GOTO label12
+LABEL label14 :
+RETURN #0

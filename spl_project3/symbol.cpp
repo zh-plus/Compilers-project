@@ -56,7 +56,7 @@ namespace SPL {
 		string result = "Function: Return - " + return_type->to_string();
 		result += +", Parameters - ";
 		for (int i = 0, sz = parameters.size(); i < sz; ++i) {
-			result += parameters[i]->to_string();
+			result += parameters[i].second->to_string();
 			if (i != sz - 1) {
 				result += ", ";
 			}
@@ -64,15 +64,16 @@ namespace SPL {
 		return result;
 	}
 
-	Function_Symbol::Function_Symbol(Type *return_type, std::string id, std::initializer_list<Type *> parameters) {
+	Function_Symbol::Function_Symbol(Type *return_type, std::string id,
+	                                 std::initializer_list<std::pair<std::string, Type *>> parameters) {
 		this->return_type = return_type;
-		this->parameters = vector<Type *>(parameters);
+		this->parameters = vector<std::pair<std::string, Type *>>(parameters);
 		this->name = id;
 		this->line_no = return_type->line_no;
 	}
 
 	Function_Symbol::Function_Symbol(Type *return_type, std::string id,
-	                                 int line_no, vector<Type *> parameter_v) {
+	                                 int line_no, vector<std::pair<std::string, Type *>> parameter_v) {
 		this->return_type = return_type;
 		this->name = id;
 		this->line_no = line_no;
@@ -84,7 +85,7 @@ namespace SPL {
 		return return_type;
 	}
 
-	std::vector<Type *> Function_Symbol::get_parameters() {
+	std::vector<std::pair<std::string, Type *>> Function_Symbol::get_parameters() {
 		return parameters;
 	}
 

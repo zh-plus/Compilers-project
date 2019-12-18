@@ -7,3 +7,6 @@ int main()
   else write(0);
   return 0;
 }
+
+//in:1
+//1

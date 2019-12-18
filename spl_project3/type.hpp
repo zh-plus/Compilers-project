@@ -46,6 +46,10 @@ namespace SPL {
 
 		virtual bool compassionate(Type *other) = 0;
 
+		virtual int ir_size() = 0;
+
+		virtual bool is_primitive();
+
 		int line_no = -1;
 	};
 
@@ -66,6 +70,10 @@ namespace SPL {
 		[[nodiscard]] std::string to_string() const override {
 			return std::vector{"int", "float", "char"}[type];
 		}
+
+		int ir_size() override;
+
+		bool is_primitive() override;
 
 		primitive_type type;
 	};
@@ -90,6 +98,10 @@ namespace SPL {
 			return s;
 		}
 
+		int ir_size() override;
+
+		int get_layer_size();
+
 		Type *m_base_type;
 
 		std::vector<int> shape;
@@ -101,30 +113,38 @@ namespace SPL {
 		Struct_Type(std::string id, int line_no, std::vector<std::pair<std::string, Type *>> member_vector);
 
 		~Struct_Type() override {
-			for (const auto &p: members) {
+			for (const auto &p: member_map) {
 				delete p.second;
-				members.erase(p.first);
+				member_map.erase(p.first);
 			}
 		}
 
-		bool compassionate(Type *other) override;
-
-		bool contains(std::string id);
-
 		[[nodiscard]] std::string to_string() const override {
 			std::string result = "Struct-Type:";
-			for (auto &x: members) {
+			for (auto &x: member_map) {
 				result += " " + x.second->to_string() + "-" + x.first + ", ";
 			}
 
 			return result;
 		}
 
+		/* Semantic check related */
+		bool compassionate(Type *other) override;
+
+		bool contains(std::string id);
+
+
+		/* ir related */
+		int ir_size() override;
+
+		int get_offset(const std::string &member_id);
+
 		std::string struct_id;
 
-		std::map<std::string, Type *> members;
-	};
+		std::map<std::string, Type *> member_map;
 
+		std::vector<std::string> member_ids;
+	};
 }
 
 

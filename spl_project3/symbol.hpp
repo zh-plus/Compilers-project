@@ -39,6 +39,8 @@ namespace SPL {
 		int line_no = -1;
 
 		std::string ir_name = "__undefined__";
+
+		bool pass_by_address = false;
 	};
 
 	/**
@@ -80,26 +82,28 @@ namespace SPL {
 
 	class Function_Symbol : public Symbol_Entry {
 	public:
-		Function_Symbol(Type *return_type, std::string id, std::initializer_list<Type *> parameters);
+		Function_Symbol(Type *return_type, std::string id,
+		                std::initializer_list<std::pair<std::string, Type *>> parameters);
 
-		Function_Symbol(Type *return_type, std::string id, int line_no, std::vector<Type *> parameter_v);
+		Function_Symbol(Type *return_type, std::string id, int line_no,
+		                std::vector<std::pair<std::string, Type *>> parameter_v);
 
 		~Function_Symbol() override {
 			delete return_type;
-			for (auto p: parameters) {
-				delete p;
+			for (const auto &p: parameters) {
+				delete p.second;
 			}
 		}
 
 		Type *get_type() override;
 
-		std::vector<Type *> get_parameters();
+		std::vector<std::pair<std::string, Type *>> get_parameters();
 
 		[[nodiscard]] std::string to_string() const override;
 
 	private:
 		Type *return_type;
-		std::vector<Type *> parameters;
+		std::vector<std::pair<std::string, Type *>> parameters;
 	};
 
 	class Symbol_Table {

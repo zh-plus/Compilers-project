@@ -16,3 +16,6 @@ int main()
   write(result);
   return 0;
 }
+
+//in:8
+//40320

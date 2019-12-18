@@ -16,6 +16,7 @@
 #include "scanner.hpp"
 #include "parser.tab.hpp"
 #include "semantics.hpp"
+#include "ir.hpp"
 #include "error.hpp"
 #include "information.hpp"
 
@@ -63,6 +64,8 @@ namespace SPL {
 
 		void semantic_analyze();
 
+		void generate_ir();
+
 
 	private:
 		void parse_helper(std::istream &is);
@@ -76,6 +79,8 @@ namespace SPL {
 		Local_Resolver *local_resolver = nullptr;
 
 		Type_Checker *dereference_checker = nullptr;
+
+		IR_Generator *ir_generator = nullptr;
 
 		/* Get value after parsing process */
 		std::vector<Error *> *lexical_errors = nullptr;

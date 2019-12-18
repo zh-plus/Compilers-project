@@ -21,6 +21,11 @@ namespace SPL {
 		this->m_is_rvalue = t_is_rvalue;
 	}
 
+	Exp_Info::Exp_Info(const Exp_Info &other) {
+		this->exp_type = other.exp_type;
+		this->m_is_rvalue = other.m_is_rvalue;
+	}
+
 	Exp_Info::Exp_Info(bool is_known) {
 		this->exp_type = nullptr;
 		this->m_is_rvalue = false;
@@ -33,6 +38,7 @@ namespace SPL {
 	bool Exp_Info::compassionate(Exp_Info *other) {
 		return exp_type->compassionate(other->exp_type);
 	}
+
 
 	bool Unknown_Exp_Info::is_known() {
 		return false;
