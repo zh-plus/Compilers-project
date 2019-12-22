@@ -19,6 +19,7 @@
 #include "ir.hpp"
 #include "error.hpp"
 #include "information.hpp"
+#include "optimizer.hpp"
 
 namespace SPL {
 
@@ -88,6 +89,9 @@ namespace SPL {
 		std::vector<Error *> *syntax_errors;
 
 		std::vector<Error *> *semantic_errors;
+
+		/* Optimizer */
+		TAC_Optimizer *optimizer = nullptr;
 	};
 
 	/* Useful functions */

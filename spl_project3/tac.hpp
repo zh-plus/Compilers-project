@@ -47,7 +47,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		Label *label;
 	};
 
@@ -116,7 +115,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string lhs;
 		std::string arg1;
 		std::string arg2;
@@ -133,7 +131,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		Label *label;
 	};
 
@@ -171,11 +168,11 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		Label *label;
 	private:
 		std::string arg1;
 		std::string arg2;
 		op_type op;
-		Label *label;
 	};
 
 	class Return_Quadru : public Quadruple {
@@ -250,6 +247,10 @@ namespace SPL {
 	private:
 		std::string name;
 	};
+
+	/* Helpful functions */
+	Quadruple *make_assign(std::string lhs, std::string rhs);
+
 
 	class TAC {
 	public:

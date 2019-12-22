@@ -160,7 +160,10 @@ namespace SPL {
 	void SPL_Driver::generate_ir() {
 		ir_generator = new IR_Generator(local_resolver->top_scope());
 		ir_generator->generate(ast);
-		ir_generator->get_tac()->print();
-	}
+		TAC *tac = ir_generator->get_tac();
 
+//		optimizer = new TAC_Optimizer();
+//		optimizer->optimize(tac);
+		tac->print();
+	}
 }

@@ -6,6 +6,7 @@
 #include "utils.hpp"
 
 namespace SPL {
+	using namespace std;
 	using namespace std::string_literals;
 
 	int Label::number = 1;
@@ -97,5 +98,9 @@ namespace SPL {
 		for (auto &&x:instructions) {
 			std::cout << x->to_string() << std::endl;
 		}
+	}
+
+	Quadruple *make_assign(string lhs, string rhs) {
+
 	}
 }

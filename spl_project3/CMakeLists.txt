@@ -14,6 +14,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 set(SRCS
+		optimizer.cpp
 		utils.cpp
 		ir.cpp
 		tac.cpp
