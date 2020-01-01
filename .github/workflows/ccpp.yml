@@ -12,11 +12,11 @@ jobs:
       - name: Install env
         run: sudo apt-get install flex bison spim
       - name: clean
-        working-directory: spl_project3
+        working-directory: spl_project4
         run: rm -rf ./bin/*
       - name: build
-        working-directory: spl_project3
+        working-directory: spl_project4
         run: cmake . && make
       - name: check
-        working-directory: spl_project3
+        working-directory: spl_project4
         run: ./bin/check
