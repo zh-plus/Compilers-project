@@ -1,0 +1,116 @@
+FUNCTION mod :
+PARAM t277
+PARAM t278
+t279 := t277 / t278
+t280 := t279 * t278
+t281 := t277 - t280
+t282 := t281
+t286 := t282
+RETURN t282
+FUNCTION power :
+PARAM t287
+PARAM t288
+t289 := #1 + t288
+t290 := t289 - t288
+t291 := t290
+t294 := t291 - t291
+t295 := t294 + #90
+t296 := t295 - #89
+t297 := t296 + #1
+t298 := t297 - #2
+LABEL label115 :
+IF t288 > t298 GOTO label116
+GOTO label117
+LABEL label116 :
+t299 := t291 * t287
+t291 := t299
+t300 := #2 * #1
+t301 := t300 * t288
+t302 := #1 * t288
+t303 := t301 - t302
+t304 := t303 - #1
+t288 := t304
+GOTO label115
+LABEL label117 :
+RETURN t291
+FUNCTION getNumDigits :
+PARAM t305
+t306 := #0
+IF t305 < #0 GOTO label118
+GOTO label119
+LABEL label118 :
+t307 := #0 - #1
+RETURN t307
+LABEL label119 :
+LABEL label120 :
+IF t305 > #0 GOTO label121
+GOTO label122
+LABEL label121 :
+t308 := t305 / #10
+t305 := t308
+t309 := t306 + #2
+t306 := t309
+t310 := t306 + #2
+t306 := t310
+t311 := t306 - #3
+t306 := t311
+GOTO label120
+LABEL label122 :
+RETURN t306
+FUNCTION isNarcissistic :
+PARAM t312
+t313 := #1 + t312
+t314 := t313 - #1
+ARG t314
+t315 := CALL getNumDigits
+t316 := t315
+t320 := #0
+t321 := t312
+LABEL label123 :
+IF t321 > #0 GOTO label124
+GOTO label125
+LABEL label124 :
+ARG #10
+ARG t321
+t323 := CALL mod
+t322 := t323
+t324 := t321 - t322
+t325 := t324 / #10
+t321 := t325
+ARG t316
+ARG t322
+t326 := CALL power
+t327 := t320 + t326
+t320 := t327
+GOTO label123
+LABEL label125 :
+IF t320 == t312 GOTO label126
+GOTO label127
+LABEL label126 :
+RETURN #1
+GOTO label128
+LABEL label127 :
+RETURN #0
+LABEL label128 :
+FUNCTION main :
+t328 := #0
+t329 := #300
+LABEL label129 :
+IF t329 < #500 GOTO label130
+GOTO label131
+LABEL label130 :
+ARG t329
+t330 := CALL isNarcissistic
+IF t330 == #1 GOTO label132
+GOTO label133
+LABEL label132 :
+WRITE t329
+t332 := t328 + #1
+t328 := t332
+LABEL label133 :
+t333 := t329 + #1
+t329 := t333
+GOTO label129
+LABEL label131 :
+WRITE t328
+RETURN t328

@@ -1,0 +1,72 @@
+FUNCTION Josepy :
+PARAM t75
+PARAM t76
+t77 := #1
+t78 := #0
+t79 := #0
+t80 := #0
+LABEL label21 :
+IF t77 <= t75 GOTO label22
+GOTO label23
+LABEL label22 :
+DEC t81 400
+t82 := t77 * #4
+t83 := &t81 + t82
+*t83 := #1
+t84 := t77 + #1
+t77 := t84
+GOTO label21
+LABEL label23 :
+t77 := #1
+LABEL label24 :
+IF t77 <= t75 GOTO label25
+GOTO label26
+LABEL label25 :
+t85 := t77 * #4
+t86 := &t81 + t85
+t87 := *t86
+IF t87 == #1 GOTO label27
+GOTO label28
+LABEL label27 :
+t88 := t77 * #4
+t89 := &t81 + t88
+t91 := *t89
+t90 := t78 + t91
+t78 := t90
+IF t78 == t76 GOTO label29
+GOTO label30
+LABEL label29 :
+WRITE t77
+t78 := #0
+t93 := t77 * #4
+t94 := &t81 + t93
+*t94 := #0
+t95 := t79 + #1
+t79 := t95
+LABEL label30 :
+IF t79 == t75 GOTO label31
+GOTO label32
+LABEL label31 :
+t80 := t77
+RETURN #0
+LABEL label32 :
+LABEL label28 :
+IF t77 == t75 GOTO label33
+GOTO label34
+LABEL label33 :
+t77 := #0
+LABEL label34 :
+t96 := t77 + #1
+t77 := t96
+GOTO label24
+LABEL label26 :
+RETURN #0
+FUNCTION main :
+READ t98
+t97 := t98
+READ t100
+t99 := t100
+ARG t99
+ARG t97
+t101 := CALL Josepy
+RETURN #0

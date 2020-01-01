@@ -19,7 +19,7 @@
       <paths name="xps_wsl">
         <serverdata>
           <mappings>
-            <mapping deploy="/spl_project3" local="$PROJECT_DIR$/spl_project3" web="/" />
+            <mapping deploy="/spl_project4" local="$PROJECT_DIR$/spl_project4" web="/" />
           </mappings>
         </serverdata>
       </paths>

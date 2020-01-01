@@ -1,0 +1,98 @@
+FUNCTION main :
+READ t161
+t160 := t161
+READ t163
+t162 := t163
+t164 := t160 / #100
+t165 := t164 * #100
+IF t160 == t165 GOTO label51
+GOTO label52
+LABEL label51 :
+t166 := t160 / #400
+t167 := t166 * #400
+IF t160 == t167 GOTO label53
+GOTO label54
+LABEL label53 :
+IF t162 == #2 GOTO label55
+GOTO label56
+LABEL label55 :
+WRITE #29
+GOTO label57
+LABEL label56 :
+t169 := t162 / #2
+t170 := t169 * #2
+IF t162 == t170 GOTO label58
+GOTO label59
+LABEL label58 :
+WRITE #30
+GOTO label60
+LABEL label59 :
+WRITE #31
+LABEL label60 :
+LABEL label57 :
+GOTO label61
+LABEL label54 :
+IF t162 == #2 GOTO label62
+GOTO label63
+LABEL label62 :
+WRITE #28
+GOTO label64
+LABEL label63 :
+t174 := t162 / #2
+t175 := t174 * #2
+IF t162 == t175 GOTO label65
+GOTO label66
+LABEL label65 :
+WRITE #30
+GOTO label67
+LABEL label66 :
+WRITE #31
+LABEL label67 :
+LABEL label64 :
+LABEL label61 :
+GOTO label68
+LABEL label52 :
+t178 := t160 / #4
+t179 := t178 * #4
+IF t160 == t179 GOTO label69
+GOTO label70
+LABEL label69 :
+IF t162 == #2 GOTO label71
+GOTO label72
+LABEL label71 :
+WRITE #29
+GOTO label73
+LABEL label72 :
+t181 := t162 / #2
+t182 := t181 * #2
+IF t162 == t182 GOTO label74
+GOTO label75
+LABEL label74 :
+WRITE #30
+GOTO label76
+LABEL label75 :
+WRITE #31
+LABEL label76 :
+LABEL label73 :
+GOTO label77
+LABEL label70 :
+IF t162 == #2 GOTO label78
+GOTO label79
+LABEL label78 :
+WRITE #28
+GOTO label80
+LABEL label79 :
+t186 := t162 / #2
+t187 := t186 * #2
+IF t162 == t187 GOTO label81
+GOTO label82
+LABEL label81 :
+WRITE #30
+GOTO label83
+LABEL label82 :
+WRITE #31
+LABEL label83 :
+LABEL label80 :
+LABEL label77 :
+LABEL label68 :
+RETURN #0

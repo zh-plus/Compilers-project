@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/splc.dir/main.cpp.o  -o bin/splc  lib/libdependence.a 

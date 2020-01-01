@@ -3,12 +3,14 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <sourceRoots>
-      <file path="$PROJECT_DIR$/spl_project3" />
+      <file path="$PROJECT_DIR$/spl_project4" />
     </sourceRoots>
     <excludeRoots>
       <file path="$PROJECT_DIR$/lab" />
+      <file path="$PROJECT_DIR$/reference" />
       <file path="$PROJECT_DIR$/spl_project1" />
       <file path="$PROJECT_DIR$/spl_project2" />
+      <file path="$PROJECT_DIR$/spl_project3" />
     </excludeRoots>
   </component>
 </project>

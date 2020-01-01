@@ -1,0 +1,20 @@
+FUNCTION main :
+READ t272
+t271 := t272
+IF t271 > #0 GOTO label109
+GOTO label110
+LABEL label109 :
+WRITE #1
+GOTO label111
+LABEL label110 :
+IF t271 < #0 GOTO label112
+GOTO label113
+LABEL label112 :
+t274 := #0 - #1
+WRITE t274
+GOTO label114
+LABEL label113 :
+WRITE #0
+LABEL label114 :
+LABEL label111 :
+RETURN #0

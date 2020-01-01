@@ -1,0 +1,37 @@
+FUNCTION main :
+t190 := #30
+t191 := #0
+t192 := #1
+t193 := #1
+LABEL label84 :
+IF t193 <= t190 GOTO label85
+GOTO label86
+LABEL label85 :
+LABEL label87 :
+IF t192 <= t193 GOTO label88
+GOTO label89
+LABEL label88 :
+t194 := t193 / t192
+t195 := t194 * t192
+IF t193 == t195 GOTO label90
+GOTO label91
+LABEL label90 :
+t196 := t191 + #1
+t191 := t196
+LABEL label91 :
+t197 := t192 + #1
+t192 := t197
+GOTO label87
+LABEL label89 :
+IF t191 == #2 GOTO label92
+GOTO label93
+LABEL label92 :
+WRITE t193
+LABEL label93 :
+t192 := #1
+t191 := #0
+t199 := t193 + #1
+t193 := t199
+GOTO label84
+LABEL label86 :
+RETURN #0

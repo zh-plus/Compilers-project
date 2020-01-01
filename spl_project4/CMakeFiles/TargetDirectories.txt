@@ -1,0 +1,6 @@
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/edit_cache.dir
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/testing.dir
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/check.dir
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/rebuild_cache.dir
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/dependence.dir
+/home/xps/course/compiler/compilers/spl_project3/CMakeFiles/splc.dir

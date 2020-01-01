@@ -32,7 +32,7 @@ int main(const int argc, const char **argv) {
 
 #ifndef LOCAL
 		string source_name(argv[1]);
-		string out_name = regex_replace(source_name, regex("spl"), "out");
+		string out_name = regex_replace(source_name, regex("spl"), "ir");
 
 		ofstream out_f(out_name);
 		auto cout_buf = cout.rdbuf(out_f.rdbuf());
