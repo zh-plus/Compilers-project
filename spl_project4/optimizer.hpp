@@ -22,22 +22,31 @@ namespace SPL {
 		int end;
 	};
 
+	class Basic_Blocks {
+	public:
+		explicit Basic_Blocks(std::vector<Quadruple *> instructions);
+
+		int index_label(Label *label);
+
+		std::vector<Quadruple *> instructions;
+
+		std::vector<Basic_Block> blocks;
+	};
+
+
 	class TAC_Optimizer {
 	public:
 		void optimize(TAC *tac);
 
 	private:
-		void create_blocks();
-
-		int index_label(Label *label);
 
 		/* Local Optimizations */
 
 		int neutral_elimination(Basic_Block *block);
 
-		TAC *tac;
+		TAC *tac = nullptr;
 
-		std::vector<Basic_Block> blocks;
+		Basic_Blocks *basic_blocks = nullptr;
 
 	};
 

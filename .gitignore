@@ -81,3 +81,6 @@ spl_project3/irsim.log
 */parser.tab.hpp
 */location.hh
 */position.hh
+*/CMakeCache.txt
+*/cmake_install.cmake
+provided

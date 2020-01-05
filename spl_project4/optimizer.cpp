@@ -25,60 +25,7 @@ namespace SPL {
 
 	void TAC_Optimizer::optimize(TAC *tac) {
 		this->tac = tac;
-		create_blocks();
-
-		for (auto &&x: this->blocks) {
-			cout << "     ===Block" << x.start << "-" << x.end << "===     " << endl;
-			x.print();
-		}
-	}
-
-	void TAC_Optimizer::create_blocks() {
-		unordered_set<int> leaders; // Leaders except 0
-		for (int i = 0, sz = tac->instructions.size(); i < sz; ++i) {
-			type_case(tac->instructions[i],
-			          [&](Goto_Quadru *quadru) {
-				          leaders.insert(i + 1);
-				          leaders.insert(index_label(quadru->label));
-			          },
-			          [&](CGoto_Quadru *quadru) {
-				          leaders.insert(i + 1);
-				          leaders.insert(index_label(quadru->label));
-			          },
-			          [&](Quadruple *quadru) {
-				          // Default: Pass
-			          });
-		}
-
-		std::vector<Quadruple *> instructions;
-		int start = 0;
-		for (int i = 0, sz = tac->instructions.size(); i < sz; ++i) {
-			if (leaders.find(i) != leaders.end()) {
-				blocks.emplace_back(start, i, instructions);
-
-				start = i;
-				instructions.clear();
-			}
-
-			instructions.push_back(tac->instructions[i]);
-
-			if (i == sz - 1) {
-				blocks.emplace_back(start, sz, instructions);
-			}
-		}
-	}
-
-	int TAC_Optimizer::index_label(Label *label) {
-		for (int i = 0, sz = tac->instructions.size(); i < sz; ++i) {
-			if (auto quadru = dynamic_cast<Label_Quadru *>(tac->instructions[i])) {
-				if (quadru->label == label) {
-					return i;
-				}
-			}
-		}
-
-		cout << "Label " << label->name << " not in instructions!" << endl;
-		return -1;
+		basic_blocks = new Basic_Blocks(tac->instructions);
 	}
 
 	/**
@@ -102,4 +49,53 @@ namespace SPL {
 		return 0;
 	}
 
+	Basic_Blocks::Basic_Blocks(std::vector<Quadruple *> instructions) {
+		this->instructions = instructions;
+
+		unordered_set<int> leaders; // Leaders except 0
+		for (int i = 0, sz = instructions.size(); i < sz; ++i) {
+			type_case(instructions[i],
+			          [&](Goto_Quadru *quadru) {
+				          leaders.insert(i + 1);
+				          leaders.insert(index_label(quadru->label));
+			          },
+			          [&](CGoto_Quadru *quadru) {
+				          leaders.insert(i + 1);
+				          leaders.insert(index_label(quadru->label));
+			          },
+			          [&](Quadruple *quadru) {
+				          // Default: Pass
+			          });
+		}
+
+		std::vector<Quadruple *> temp_instrs;
+		int start = 0;
+		for (int i = 0, sz = instructions.size(); i < sz; ++i) {
+			if (leaders.find(i) != leaders.end()) {
+				blocks.emplace_back(start, i, temp_instrs);
+
+				start = i;
+				temp_instrs.clear();
+			}
+
+			temp_instrs.push_back(instructions[i]);
+
+			if (i == sz - 1) {
+				blocks.emplace_back(start, sz, temp_instrs);
+			}
+		}
+	}
+
+	int Basic_Blocks::index_label(Label *label) {
+		for (int i = 0, sz = instructions.size(); i < sz; ++i) {
+			if (auto quadru = dynamic_cast<Label_Quadru *>(instructions[i])) {
+				if (quadru->label->name == label->name) {
+					return i;
+				}
+			}
+		}
+
+		cout << "Label " << label->name << " not in instructions!" << endl;
+		return -1;
+	}
 }

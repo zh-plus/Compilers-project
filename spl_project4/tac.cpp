@@ -3,6 +3,8 @@
 //
 
 #include "tac.hpp"
+
+#include <utility>
 #include "utils.hpp"
 
 namespace SPL {
@@ -88,6 +90,10 @@ namespace SPL {
 
 	std::string Label_Quadru::to_string() const {
 		return join({"LABEL"s, label->name, ":"s}, " ");
+	}
+
+	Label_Quadru::Label_Quadru(std::string name) {
+		label = new Label(std::move(name));
 	}
 
 	std::string Func_Quadru::to_string() const {

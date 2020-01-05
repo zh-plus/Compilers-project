@@ -2,6 +2,9 @@
 // Created by 10578 on 10/10/2019.
 //
 
+#include <sstream>
+#include <iterator>
+
 #include "utils.hpp"
 
 namespace SPL {
@@ -21,6 +24,20 @@ namespace SPL {
 		const auto strRange = strEnd - strBegin + 1;
 
 		return str.substr(strBegin, strRange);
+	}
+
+	std::vector<std::string> split(const std::string &s, const std::string &deli) {
+		std::vector<std::string> result;
+
+		size_t last = 0;
+		size_t next = 0;
+		while ((next = s.find(deli, last)) != std::string::npos) {
+			result.emplace_back(s.substr(last, next - last));
+			last = next + 1;
+		}
+		result.emplace_back(s.substr(last));
+
+		return result;
 	}
 }
 

@@ -18,6 +18,8 @@ namespace SPL {
 			name = "label" + std::to_string(get_number());
 		};
 
+		explicit Label(std::string name) : name{std::move(name)} {};
+
 		[[nodiscard]] std::string to_string() const {
 			return name;
 		}
@@ -41,6 +43,8 @@ namespace SPL {
 	public:
 		explicit Label_Quadru(Label *label) : label{label} {}
 
+		explicit Label_Quadru(std::string name);
+
 		~Label_Quadru() override {
 			delete label;
 		}
@@ -56,7 +60,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 
@@ -64,7 +67,6 @@ namespace SPL {
 	public:
 		[[nodiscard]] std::string to_string() const override;
 
-	protected:
 		std::string rhs;
 		std::string lhs;
 	};
@@ -125,6 +127,8 @@ namespace SPL {
 	public:
 		explicit Goto_Quadru(Label *label) : label{label} {};
 
+		explicit Goto_Quadru(std::string name) : label{new Label(std::move(name))} {};
+
 		~Goto_Quadru() override {
 			delete label;
 		}
@@ -136,6 +140,9 @@ namespace SPL {
 
 	class CGoto_Quadru : public Quadruple {
 	public:
+		CGoto_Quadru(std::string arg1, std::string arg2, op_type op, std::string name)
+				: arg1{std::move(arg1)}, arg2{std::move(arg2)}, op{op}, label{new Label(std::move(name))} {};
+
 		CGoto_Quadru(std::string arg1, std::string arg2, op_type op, Label *label)
 				: arg1{std::move(arg1)}, arg2{std::move(arg2)}, op{op}, label{label} {};
 
@@ -169,7 +176,6 @@ namespace SPL {
 		[[nodiscard]] std::string to_string() const override;
 
 		Label *label;
-	private:
 		std::string arg1;
 		std::string arg2;
 		op_type op;
@@ -181,7 +187,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 
@@ -191,7 +196,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 		int size;
 	};
@@ -202,7 +206,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 
@@ -212,7 +215,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 
@@ -223,7 +225,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string lhs;
 		std::string func_name;
 	};
@@ -234,7 +235,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 
@@ -244,7 +244,6 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
-	private:
 		std::string name;
 	};
 

@@ -79,9 +79,11 @@ namespace SPL {
 	}
 
 	template<typename T>
-	std::string join(std::initializer_list<T> seq, std::string const &separator) {
+	std::string join(std::initializer_list<T> seq, std::string const &separator = " ") {
 		return join(begin(seq), end(seq), separator);
 	}
+
+	std::vector<std::string> split(const std::string &s, const std::string &deli = " ");
 }
 
 #endif //COMPILERS_UTIL_HPP

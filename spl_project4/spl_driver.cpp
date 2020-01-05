@@ -23,14 +23,21 @@ namespace SPL {
 			delete ptr;
 		};
 
-		std::for_each(lexical_errors->begin(), lexical_errors->end(), delete_pointer);
-		delete lexical_errors;
+		if (lexical_errors != nullptr) {
+			std::for_each(lexical_errors->begin(), lexical_errors->end(), delete_pointer);
+			delete lexical_errors;
+		}
 
-		std::for_each(syntax_errors->begin(), syntax_errors->end(), delete_pointer);
-		delete syntax_errors;
 
-		std::for_each(semantic_errors->begin(), semantic_errors->end(), delete_pointer);
-		delete semantic_errors;
+		if (syntax_errors != nullptr) {
+			std::for_each(syntax_errors->begin(), syntax_errors->end(), delete_pointer);
+			delete syntax_errors;
+		}
+
+		if (semantic_errors != nullptr) {
+			std::for_each(semantic_errors->begin(), semantic_errors->end(), delete_pointer);
+			delete semantic_errors;
+		}
 	}
 
 	void SPL_Driver::parse(const char *filename) {
@@ -164,5 +171,11 @@ namespace SPL {
 
 	TAC *SPL_Driver::get_tac() {
 		return ir_generator->get_tac();
+	}
+
+	void SPL_Driver::ir2asm(const char *ir_filename) {
+		code_gen = new Code_Generator(std::string(ir_filename));
+		code_gen->generate();
+		code_gen->print();
 	}
 }

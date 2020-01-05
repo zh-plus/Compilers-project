@@ -20,6 +20,7 @@
 #include "error.hpp"
 #include "information.hpp"
 #include "optimizer.hpp"
+#include "mips.hpp"
 
 namespace SPL {
 
@@ -69,6 +70,8 @@ namespace SPL {
 
 		TAC *get_tac();
 
+		void ir2asm(const char *ir_filename);
+
 
 	private:
 		void parse_helper(std::istream &is);
@@ -94,6 +97,9 @@ namespace SPL {
 
 		/* Optimizer */
 		TAC_Optimizer *optimizer = nullptr;
+
+		/* MIPS32 Code Gen */
+		Code_Generator *code_gen = nullptr;
 	};
 
 	/* Useful functions */
