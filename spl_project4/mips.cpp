@@ -413,28 +413,14 @@ namespace SPL {
 		return (offset != 0 ? std::to_string(offset) : "") + "(" + name + ")";
 	}
 
-	void Code_Generator::increase_stack() {
-		emit(compose({"addi", "$sp", "$sp", "-4"}));
-		frame_offset += 4;
-
-		// Add 4 to the existed variables that in_stack == true
-		for (auto &&v: variables.variable_table) {
-			if (v.second->in_stack) {
-				v.second->stack_offset += 4;
-			}
-		}
+	void Code_Generator::increase_stack(int units) {
+		emit(compose({"addi"s, "$sp"s, "$sp"s, "-" + std::to_string(units)}));
+		frame_offset += units;
 	}
 
-	void Code_Generator::decrease_stack() {
-		emit(compose({"addi", "$sp", "$sp", "4"}));
-		frame_offset -= 4;
-
-		// Minus 4 to the existed variables that in_stack == true
-		for (auto &&v: variables.variable_table) {
-			if (v.second->in_stack) {
-				v.second->stack_offset -= 4;
-			}
-		}
+	void Code_Generator::decrease_stack(int units) {
+		emit(compose({"addi"s, "$sp"s, "$sp"s, std::to_string(units)}));
+		frame_offset -= units;
 	}
 
 	Register *Code_Generator::need_reg() {

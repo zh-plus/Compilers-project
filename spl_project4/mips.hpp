@@ -148,9 +148,9 @@ namespace SPL {
 
 		std::string offset_fmt(int offset, const std::string &name);
 
-		void increase_stack();
+		void increase_stack(int units = 4);
 
-		void decrease_stack();
+		void decrease_stack(int units = 4);
 
 	private:
 		TAC tac;
