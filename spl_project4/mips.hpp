@@ -19,8 +19,6 @@ namespace SPL {
 	struct Register {
 		explicit Register(std::string name) : name{std::move(name)} {}
 
-		bool is_imm();
-
 		std::string name;
 
 		std::string variable;
@@ -80,10 +78,6 @@ namespace SPL {
 		Variable *get(const std::string &name);
 
 		void add(Variable *variable);
-
-		void remove(const std::string &name);
-
-		void clear_reg(const std::string &name);
 
 		std::map<std::string, Variable *> variable_table;
 	};
@@ -163,8 +157,8 @@ namespace SPL {
 
 		Variable_Collection variables;
 
-		/* Used in each block. Re-calculate this entering new block. */
-		std::map<std::string, int> var_occurrences;
+//		/* Used in each block. Re-calculate this entering new block. */
+//		std::map<std::string, int> var_occurrences;
 
 		int param_num = 0;
 		int arg_num = 0;

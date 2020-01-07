@@ -8,7 +8,6 @@
 #include "mips.hpp"
 #include "type_switch.hpp"
 
-
 namespace SPL {
 	using namespace std;
 
@@ -65,17 +64,17 @@ namespace SPL {
 	}
 
 	void Code_Generator::generate(Basic_Block &block) {
-		// Get the occurrences of variables.
-		var_occurrences.clear();
-		for (auto &&code: block.instructions) {
-			for (auto &&var: *code->used_var()) {
-				if (var_occurrences.find(var) == var_occurrences.end()) {
-					var_occurrences[var] = 1;
-				} else {
-					var_occurrences[var] += 1;
-				}
-			}
-		}
+//		// Get the occurrences of variables.
+//		var_occurrences.clear();
+//		for (auto &&code: block.instructions) {
+//			for (auto &&var: *code->used_var()) {
+//				if (var_occurrences.find(var) == var_occurrences.end()) {
+//					var_occurrences[var] = 1;
+//				} else {
+//					var_occurrences[var] += 1;
+//				}
+//			}
+//		}
 
 		// Generate mips instructions.
 		for (auto &&code: block.instructions) {
@@ -529,16 +528,6 @@ namespace SPL {
 		variable_table[variable->name] = variable;
 	}
 
-	void Variable_Collection::clear_reg(const std::string &name) {
-		if (variable_table.find(name) != variable_table.end()) {
-			variable_table[name]->reg = nullptr;
-		}
-	}
-
-	void Variable_Collection::remove(const std::string &name) {
-		variable_table.erase(name);
-	}
-
 	vector<Register *> Register_Collection::get_usable() {
 		return vector<Register *>(registers.begin() + 8, registers.begin() + 24);
 	}
@@ -564,8 +553,5 @@ namespace SPL {
 		return nullptr;
 	}
 
-	bool Register::is_imm() {
-		return variable[0] == '#';
-	}
 }
 
