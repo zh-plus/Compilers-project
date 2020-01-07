@@ -32,7 +32,7 @@ int hanoi(int n, int p1, int p2, int p3) {
 }
 
 int main() {
-	int sum = 1;
+	int sum = 3;
 	hanoi(sum, 1, 2, 3);
 	return 0;
 }

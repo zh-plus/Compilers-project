@@ -12,14 +12,9 @@
 #include "tac.hpp"
 #include "utils.hpp"
 #include "optimizer.hpp"
+#include "lru.hpp"
 
 namespace SPL {
-//	enum {
-//		zero, at, v0, v1, a0, a1, a2, a3,
-//		t0, t1, t2, t3, t4, t5, t6, t7,
-//		s0, s1, s2, s3, s4, s5, s6, s7,
-//		t8, t9, k0, k1, gp, sp, fp, ra
-//	} register_enum;
 
 	struct Register {
 		explicit Register(std::string name) : name{std::move(name)} {}
@@ -50,7 +45,7 @@ namespace SPL {
 
 		std::vector<Register *> get_usable();
 
-		Register *get_reg(const std::string &name);
+		Register *get_reg(const std::string &reg_name);
 
 		Register *get_idle();
 
@@ -74,6 +69,8 @@ namespace SPL {
 		Register *reg{nullptr};
 
 		int stack_offset{0};
+
+		int frame_offset{0};
 
 		bool in_stack{false};
 	};
@@ -145,11 +142,7 @@ namespace SPL {
 
 		std::string get_imm_value(const std::string &name);
 
-		void store_all();
-
 		Register *need_reg();
-
-		Register *spill();
 
 		void save(Register *reg);
 
@@ -176,7 +169,12 @@ namespace SPL {
 		int param_num = 0;
 		int arg_num = 0;
 
+		int frame_offset = 0;
+
 		std::vector<std::string> arg_list;
+
+		/* Used in register replacement */
+		LRUAllocator<Register *> *lru;
 
 	};
 

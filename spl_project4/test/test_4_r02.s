@@ -31,69 +31,48 @@ main:
     move $t1, $t0
     move $t2, $t1
     li $t3, 0
-    addi $sp, $sp, -4
-    sw $t0, ($sp)
-    addi $sp, $sp, -4
-    sw $t1, ($sp)
-    addi $sp, $sp, -4
-    sw $t2, ($sp)
-    addi $sp, $sp, -4
-    sw $t3, ($sp)
     bgt $t2, $t3, label0
     j label1
 label0:
-    li $t0, 1
-    move $a0, $t0
+    li $t4, 1
+    move $a0, $t4
     addi $sp, $sp, -4
     sw $ra, ($sp)
     jal write
     lw $ra, ($sp)
     addi $sp, $sp, 4
-    move $t0, $v0
-    addi $sp, $sp, -4
-    sw $t0, ($sp)
+    move $t4, $v0
     j label2
 label1:
-    lw $t1, 12($sp)
-    move $t0, $t1
-    li $t2, 0
-    addi $sp, $sp, -4
-    sw $t0, ($sp)
-    addi $sp, $sp, -4
-    sw $t2, ($sp)
-    blt $t0, $t2, label3
+    move $t5, $t1
+    li $t6, 0
+    blt $t5, $t6, label3
     j label4
 label3:
-    li $t0, 1
-    li $t2, 0
-    sub $t1, $t2, $t0
-    move $a0, $t1
+    li $t7, 1
+    li $s1, 0
+    sub $s0, $s1, $t7
+    move $a0, $s0
     addi $sp, $sp, -4
     sw $ra, ($sp)
     jal write
     lw $ra, ($sp)
     addi $sp, $sp, 4
-    move $t1, $v0
-    addi $sp, $sp, -4
-    sw $t0, ($sp)
-    addi $sp, $sp, -4
-    sw $t1, ($sp)
+    move $s0, $v0
     j label5
 label4:
-    li $t0, 0
-    move $a0, $t0
+    li $s2, 0
+    move $a0, $s2
     addi $sp, $sp, -4
     sw $ra, ($sp)
     jal write
     lw $ra, ($sp)
     addi $sp, $sp, 4
-    move $t0, $v0
-    addi $sp, $sp, -4
-    sw $t0, ($sp)
+    move $s2, $v0
 label5:
 label2:
-    li $t0, 0
+    li $s3, 0
     addi $sp, $fp, 4
     lw $fp, -4($sp)
-    move $v0, $t0
+    move $v0, $s3
     jr $ra

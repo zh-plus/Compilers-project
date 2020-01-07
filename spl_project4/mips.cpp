@@ -24,6 +24,8 @@ namespace SPL {
 
 		blocks = new Basic_Blocks(tac.instructions);
 
+		lru = new LRUAllocator<Register *>(registers.get_usable().size());
+
 		// Load Read & Write asm code
 		string code = ".data\n"
 		              "_prompt: .asciiz \"Enter an integer:\"\n"
@@ -80,9 +82,9 @@ namespace SPL {
 			generate(code);
 		}
 
-		if (!block.instructions.back()->cause_jump()) {
-			store_all();
-		}
+//		if (!block.instructions.back()->cause_jump()) {
+//			store_all();
+//		}
 	}
 
 	void Code_Generator::generate(Quadruple *ir) {
@@ -119,6 +121,7 @@ namespace SPL {
 
 		// Let $fp to be current $sp
 		emit(compose({"move", "$fp", "$sp"}));
+		frame_offset = 0;
 	}
 
 	void Code_Generator::generate(Assign_Value_Quadru *ir) {
@@ -167,7 +170,7 @@ namespace SPL {
 		string code = compose({"j"s, ir->label->to_string()});
 
 		// store all first
-		store_all();
+//		store_all();
 		emit(code);
 	}
 
@@ -199,7 +202,7 @@ namespace SPL {
 		string code = compose({op_code, reg(ir->arg1), reg(ir->arg2), ir->label->to_string()});
 
 		// store all first
-		store_all();
+//		store_all();
 		emit(code);
 	}
 
@@ -308,6 +311,8 @@ namespace SPL {
 	}
 
 	string Code_Generator::reg(const string &name, bool check_dirty) {
+		string reg_name = "Undefined";
+
 		if (auto var = variables.get(name); var != nullptr) {
 			// Found in variables
 
@@ -319,12 +324,15 @@ namespace SPL {
 					var->reg->dirty = true;
 				}
 
-				return var->reg->name;
+				reg_name = var->reg->name;
+
+				lru->touch(registers.get_reg(reg_name));
 			} else if (var->in_stack) {
 				// In the memory
 				Register *temp = need_reg();
 
-				emit(compose({"lw"s, temp->name, offset_fmt(var->stack_offset, "$sp")}));
+//				emit(compose({"lw"s, temp->name, offset_fmt(var->stack_offset, "$sp")}));
+				emit(compose({"lw"s, temp->name, offset_fmt(-var->frame_offset, "$fp")}));
 
 				var->reg = temp;
 				temp->variable = var->name;
@@ -333,7 +341,7 @@ namespace SPL {
 					var->reg->dirty = true;
 				}
 
-				return temp->name;
+				reg_name = temp->name;
 			}
 		} else {
 			// Not found in variables
@@ -350,10 +358,10 @@ namespace SPL {
 			new_var->reg = temp;
 			temp->variable = new_var->name;
 
-			return temp->name;
+			reg_name = temp->name;
 		}
 
-		return "Nope!";
+		return reg_name;
 	}
 
 	string Code_Generator::imm(const string &name, bool negative) {
@@ -367,43 +375,24 @@ namespace SPL {
 	}
 
 	/**
-	 * Choose a allocated register to be re-used.
-	 * @return
-	 */
-	Register *Code_Generator::spill() {
-		Register *reg = nullptr;
-		int counter = INT32_MAX;
-		for (auto &&x: var_occurrences) {
-			if (auto var = variables.get(x.first); x.second < counter && var != nullptr && var->reg != nullptr) {
-				counter = x.second;
-				reg = var->reg;
-			}
-		}
-
-		if (reg == nullptr) {
-			cerr << "Can not be nullptr!" << endl;
-		} else {
-			save(reg);
-			reg->idle = true;
-		}
-
-		return reg;
-	}
-
-	/**
 	 * Store the register into memory.
 	 * @param reg
 	 */
 	void Code_Generator::save(Register *reg) {
-		if (Variable *var = variables.get(reg->variable); var->in_stack) {
-			if (reg->dirty) {
-				emit(compose({"sw"s, reg->name, offset_fmt(var->stack_offset, "$sp")}));
+		if (Variable *var = variables.get(reg->variable); var != nullptr) {
+			if (var->in_stack && reg->dirty) {
+//				emit(compose({"sw"s, reg->name, offset_fmt(var->stack_offset, "$sp")}));
+				emit(compose({"sw"s, reg->name, offset_fmt(-var->frame_offset, "$fp")}));
 			}
 		} else {
+			var = new Variable(reg->variable);
+
 			increase_stack();
 			emit(compose({"sw"s, reg->name, offset_fmt(0, "$sp")}));
 
+			var->reg = reg;
 			var->in_stack = true;
+			var->frame_offset = frame_offset;
 		}
 
 		reg->dirty = false;
@@ -426,6 +415,7 @@ namespace SPL {
 
 	void Code_Generator::increase_stack() {
 		emit(compose({"addi", "$sp", "$sp", "-4"}));
+		frame_offset += 4;
 
 		// Add 4 to the existed variables that in_stack == true
 		for (auto &&v: variables.variable_table) {
@@ -437,6 +427,7 @@ namespace SPL {
 
 	void Code_Generator::decrease_stack() {
 		emit(compose({"addi", "$sp", "$sp", "4"}));
+		frame_offset -= 4;
 
 		// Minus 4 to the existed variables that in_stack == true
 		for (auto &&v: variables.variable_table) {
@@ -447,34 +438,22 @@ namespace SPL {
 	}
 
 	Register *Code_Generator::need_reg() {
-		if (auto r = registers.get_idle(); r != nullptr) {
-			r->idle = false;
-			return r;
+		Register *reg = nullptr;
+		if (reg = registers.get_idle(); reg != nullptr) {
+			lru->touch(reg);
 		} else {
-			return spill();
+			// Find a register to be spilled
+			reg = lru->touch(nullptr);
+			save(reg);
 		}
+
+		reg->idle = false;
+
+		return reg;
 	}
 
 	std::string Code_Generator::get_imm_value(const std::string &name) {
 		return name.substr(1, name.size() - 1);
-	}
-
-	/**
-	 * Store all allocated register's values into memory
-	 * and mark them idle.
-	 */
-	void Code_Generator::store_all() {
-		for (auto &&r: registers.get_usable()) {
-			if (r->is_imm()) {
-				variables.remove(r->variable);
-			} else if (!r->idle) {
-				if (!variables.get(r->variable)->in_stack || r->dirty) {
-					save(r);
-				}
-				variables.clear_reg(r->variable);
-			}
-			r->idle = true;
-		}
 	}
 
 	Quadruple *string2tac(string line) {
@@ -588,14 +567,14 @@ namespace SPL {
 		return nullptr;
 	}
 
-	Register *Register_Collection::get_reg(const string &name) {
+	Register *Register_Collection::get_reg(const string &reg_name) {
 		for (Register *r: registers) {
-			if (r->variable == name) {
+			if (r->name == reg_name) {
 				return r;
 			}
 		}
 
-		cerr << "No register named " << name << endl;
+		cerr << "No register named " << reg_name << endl;
 		return nullptr;
 	}
 
