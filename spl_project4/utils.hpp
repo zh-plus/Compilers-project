@@ -65,7 +65,7 @@ namespace SPL {
 	 * @return
 	 */
 	template<typename Iter>
-	std::string join(Iter begin, Iter end, std::string const &separator) {
+	std::string join(Iter begin, Iter end, std::string const &separator = " ") {
 		std::ostringstream result;
 		if (begin != end) {
 			result << *begin++;

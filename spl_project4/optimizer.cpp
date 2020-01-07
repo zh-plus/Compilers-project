@@ -63,6 +63,9 @@ namespace SPL {
 				          leaders.insert(i + 1);
 				          leaders.insert(index_label(quadru->label));
 			          },
+			          [&](Return_Quadru *quadru) {
+				          leaders.insert(i + 1);
+			          },
 			          [&](Quadruple *quadru) {
 				          // Default: Pass
 			          });

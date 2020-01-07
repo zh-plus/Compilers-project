@@ -20,37 +20,24 @@ int read() {
 	return result;
 }
 
-int squaRever(int num) {
-	int flag = 0;
-	int array[3];
-	int j = 0;
-	array[0] = num / 100;
-	array[1] = num / 10 - 10 * array[0];
-	array[2] = num - 100 * array[0] - 10 * array[1];
-	if (array[0] != array[2]) {
-		flag = 0;
+int hanoi(int n, int p1, int p2, int p3) {
+	if (n == 1) {
+		write(p1 * 10000 + p3);
 	} else {
-		while (j < 12) {
-			if ((j * j - num) == 0)
-				flag = 1;
-			j = j + 1;
-		}
-	}
-	if (flag == 1)
-		return 1;
-	else
-		return 0;
-}
-
-int main() {
-	int i = 100;
-	while (i < 150) {
-		if (squaRever(i) == 1)
-			write(i);
-		i = i + 1;
+		hanoi(n - 1, p1, p3, p2);
+		write(p1 * 10000 + p3);
+		hanoi(n - 1, p2, p1, p3);
 	}
 	return 0;
 }
+
+int main() {
+	int sum = 1;
+	hanoi(sum, 1, 2, 3);
+	return 0;
+}
+
+
 
 
 //121

@@ -37,6 +37,10 @@ namespace SPL {
 		virtual ~Quadruple() = default;
 
 		[[nodiscard]] virtual std::string to_string() const = 0;
+
+		virtual std::vector<std::string> *used_var();
+
+		virtual bool cause_jump();
 	};
 
 	class Label_Quadru : public Quadruple {
@@ -66,6 +70,8 @@ namespace SPL {
 	class Assign_Quadru : public Quadruple {
 	public:
 		[[nodiscard]] std::string to_string() const override;
+
+		std::vector<std::string> *used_var() override;
 
 		std::string rhs;
 		std::string lhs;
@@ -117,6 +123,8 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
 		std::string lhs;
 		std::string arg1;
 		std::string arg2;
@@ -134,6 +142,8 @@ namespace SPL {
 		}
 
 		[[nodiscard]] std::string to_string() const override;
+
+		bool cause_jump() override;
 
 		Label *label;
 	};
@@ -175,6 +185,10 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
+		bool cause_jump() override;
+
 		Label *label;
 		std::string arg1;
 		std::string arg2;
@@ -187,6 +201,10 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
+		bool cause_jump() override;
+
 		std::string name;
 	};
 
@@ -195,6 +213,8 @@ namespace SPL {
 		Dec_Quadru(std::string name, int size) : name{std::move(name)}, size{size} {};
 
 		[[nodiscard]] std::string to_string() const override;
+
+		std::vector<std::string> *used_var() override;
 
 		std::string name;
 		int size;
@@ -206,6 +226,8 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
 		std::string name;
 	};
 
@@ -214,6 +236,8 @@ namespace SPL {
 		explicit Arg_Quadru(std::string name) : name{std::move(name)} {};
 
 		[[nodiscard]] std::string to_string() const override;
+
+		std::vector<std::string> *used_var() override;
 
 		std::string name;
 	};
@@ -225,6 +249,8 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
 		std::string lhs;
 		std::string func_name;
 	};
@@ -235,6 +261,8 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
 		std::string name;
 	};
 
@@ -244,11 +272,10 @@ namespace SPL {
 
 		[[nodiscard]] std::string to_string() const override;
 
+		std::vector<std::string> *used_var() override;
+
 		std::string name;
 	};
-
-	/* Helpful functions */
-	Quadruple *make_assign(std::string lhs, std::string rhs);
 
 
 	class TAC {
